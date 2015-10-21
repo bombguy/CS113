@@ -8,7 +8,7 @@ public class GameInformation : MonoBehaviour {
 		DontDestroyOnLoad (transform.gameObject);
 	}
 
-	public static int level(get;set;)
+	public static int level{ get; set;}
 //	// Use this for initialization
 //	void Start () {
 //	

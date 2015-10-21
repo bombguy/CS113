@@ -1,15 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LoadInformation : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+public class LoadInformation{
+		
+	public static void LoadAllInformation(){
+		GameInformation.level = PlayerPrefs.GetInt ("PLAYERLEVEL");
 	}
 }
