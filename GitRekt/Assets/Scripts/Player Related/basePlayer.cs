@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Runtime.Serialization;
 
-public class basePlayer {
+
+[System.Serializable] 
+public class basePlayer: ISerializable {
 	private string		playerName;
 	private int			health;
 	private int			attack;

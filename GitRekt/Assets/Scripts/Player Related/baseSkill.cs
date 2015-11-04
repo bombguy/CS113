@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using System.Runtime.Serialization;
 
-public abstract class baseSkill {
+[Serializable()]
+public abstract class baseSkill: ISerializable{
 	public enum SkillCategory
 	{
 		FLOWCONTROL,
@@ -21,7 +23,7 @@ public abstract class baseSkill {
 	public string	SkillName { get; set; }
 	public int		SkillLevel { get; set; }
 	public int		SkillExperience { get; set; }
-	public int		SkillCoodlDown { get; set; }
+	public int		SkillCoolDown { get; set; }
 	public int		Power { get; set; }
 	
 	public abstract void 	cast();
