@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spells : MonoBehaviour {
+public class SpellsUI : MonoBehaviour {
 
 	public void CallSpell(int spell_num)
 	{
