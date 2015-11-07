@@ -47,9 +47,9 @@ public class CombatStateMachine:MonoBehaviour {
 	}
 
     //Combat functions
-    public void combat(basePlayer friendly,basePlayer target, baseSkill skill) {
-        //Algorithm:
-        target.Health = target.Health - ((skill.Power * friendly.Attack) + friendly.Attack); 
+    public void combat(basePlayer player, basePlayer target, baseSkill skill) {
+        //Algorithm: 
+		console.log(
     }
     public void victory() { }
     public void loss() { }

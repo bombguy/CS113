@@ -16,7 +16,6 @@ public class BattleGUI : MonoBehaviour {
     private int playerHealth;
     private string playerHealthLabel;
      
-
 	// Use this for initialization
 	void Start () {
         playerName = "Test";
@@ -52,7 +51,7 @@ public class BattleGUI : MonoBehaviour {
             CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.ENEMY;
         }
         if (GUI.Button(new Rect(Screen.width - 100, Screen.height - 50, 100, 30), "Basic Attack")){
-            playerHealth = Utilities.combat(playerHealth, 10);
+            //playerHealth = Utilities.combat(playerHealth, 10);
             playerHealthLabel = playerHealth.ToString();
             CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.ENEMY;
         }
