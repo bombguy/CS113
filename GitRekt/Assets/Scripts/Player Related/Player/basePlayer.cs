@@ -4,15 +4,16 @@ using System.Runtime.Serialization;
 
 
 [System.Serializable] 
-public abstract class basePlayer: ISerializable {
-	public string		playerName;
-	public int			health;
+public abstract class basePlayer: baseGameObject, ISerializable {
+	public string		name;
+	public int			maxHP;
+	public int			currentHP;
 	public int			attack;
 	public int			defense;
-	public baseSkill	spell1;
-	public baseSkill	spell2;
-	public baseSkill	spell3;
-	public baseSkill	spell4;
+	public baseSkill	skill1;
+	public baseSkill	skill2;
+	public baseSkill	skill3;
+	public baseSkill	skill4;
 	public baseSkill	basicAttack;
 	public int			flowMastery;
 	public int			functionMastery;

@@ -2,22 +2,22 @@
 using System.Collections;
 using System.Runtime.Serialization;
 
-public class BasicAttack : baseSkill {
+public class NoSkill : baseSkill {
 	public GameInformation gameInformation;
-
-	public BasicAttack () {
-		skillName = "Basic Attack";
-		skillDesciption = "Deals 100% of player's attack";
+	
+	public NoSkill () {
+		skillName = "-";
+		skillDesciption = "";
 		skillLevel = 0;
 		skillExperience = 0;
 		skillCoolDown = 0;
-		skillPower = 1;
+		skillPower = 0;
 	}
-
+	
 	public override int 	cast(int playerAttack) {
-		return skillPower * playerAttack;
+		return 0;
 	}
-
+	
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
 		return;
 	}

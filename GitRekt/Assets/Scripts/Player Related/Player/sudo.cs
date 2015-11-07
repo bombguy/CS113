@@ -3,15 +3,16 @@
 public class sudo : basePlayer {
 
 	public sudo () {
-		playerName = "Susan Domo";
-		health = 100;
+		name = "Susan Domo";
+		maxHP = 100;
+		currentHP = maxHP;
 		attack = 10;
 		defense = 0;
 		basicAttack = new BasicAttack ();
-		spell1 = null;
-		spell2 = null;
-		spell3 = null;
-		spell4 = null;
+		skill1 = new NoSkill();
+		skill2 = new NoSkill();
+		skill3 = new NoSkill();
+		skill4 = new NoSkill();
 		flowMastery = 0;
 		functionMastery = 0;
 		datastructureMastery = 0;
@@ -19,8 +20,8 @@ public class sudo : basePlayer {
 	}
 
 	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("SUDO_NAME", playerName, typeof(string));
-		info.AddValue("SUDO_HEALTH", health, typeof(int));
+		info.AddValue("SUDO_NAME", name, typeof(string));
+		info.AddValue("SUDO_HEALTH", maxHP, typeof(int));
 		info.AddValue("SUDO_ATTACK", attack, typeof(int));
 		info.AddValue("SUDO_DEFENSE", defense, typeof(int));
 

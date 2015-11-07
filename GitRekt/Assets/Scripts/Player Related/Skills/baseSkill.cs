@@ -20,6 +20,6 @@ public abstract class baseSkill: ISerializable{
 	public int				skillCoolDown;
 	public int				skillPower;
 
-	public abstract void 	cast();
+	public abstract int 	cast(int playerAttack);
 	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
 }

@@ -2,12 +2,15 @@
 using System.Collections;
 
 public class GameInformation : MonoBehaviour {
-	public static sudo Susan;
-	public static rmdir Raymond;
+	public static baseEnemy[] enemies;
+	public static basePlayer[] players;
 
 	void Start() {
-		Susan = new sudo ();
-		Raymond = new rmdir ();
+		players = new basePlayer[2];
+		players [0] = new sudo ();
+		players [1] = new rmdir ();
+
+		enemies = new baseEnemy[2];
 	}
 
 	void Awake(){

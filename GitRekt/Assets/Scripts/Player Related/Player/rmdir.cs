@@ -3,15 +3,16 @@
 public class rmdir : basePlayer {
 
 	public rmdir () {
-		playerName = "Raymond Dirginham";
-		health = 100;
-		attack = 10;
+		name = "Raymond Dirginham";
+		maxHP = 100;
+		currentHP = maxHP;
+		attack = 15;
 		defense = 0;
 		basicAttack = new BasicAttack ();
-		spell1 = null;
-		spell2 = null;
-		spell3 = null;
-		spell4 = null;
+		skill1 = new NoSkill();
+		skill2 = new NoSkill();
+		skill3 = new NoSkill();
+		skill4 = new NoSkill();
 		flowMastery = 0;
 		functionMastery = 0;
 		datastructureMastery = 0;
@@ -19,8 +20,8 @@ public class rmdir : basePlayer {
 	}
 
 	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("RMDIR_NAME", playerName, typeof(string));
-		info.AddValue("RMDIR_HEALTH", health, typeof(int));
+		info.AddValue("RMDIR_NAME", name, typeof(string));
+		info.AddValue("RMDIR_HEALTH", maxHP, typeof(int));
 		info.AddValue("RMDIR_ATTACK", attack, typeof(int));
 		info.AddValue("RMDIR_DEFENSE", defense, typeof(int));
 

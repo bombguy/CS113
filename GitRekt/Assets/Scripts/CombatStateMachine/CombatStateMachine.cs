@@ -4,15 +4,16 @@ using System.Collections.Generic;
 
 public class CombatStateMachine:MonoBehaviour {
 
-    public enum CombatStates {START,PLAYER,ENEMY,GOAL};
+    public enum CombatStates {START,PLAYERSELECT,PLAYERACTION,PLAYERTARGET,ENEMY,GOAL};
     public static CombatStates CurrentState;
-    public basePlayer[] PlayerParty { get; set; }
-    public basePlayer[] EnemyParty { get; set; }
     private bool goal; // used to check if we hit a goal state
     private CombatStartState startState = new CombatStartState();
 
     void Start () {
         CurrentState = CombatStates.START;
+		for (int i = 0; i < GameInformation.enemies.Length; i++) {
+			GameInformation.enemies[i] = new C();
+		}
         goal = false;
     }
 	
@@ -23,9 +24,9 @@ public class CombatStateMachine:MonoBehaviour {
             case (CombatStates.START):
                 //toDo:generate everything
                 startState.PrepareBattle();
-                CurrentState = CombatStates.PLAYER;
+                CurrentState = CombatStates.PLAYERSELECT;
                 break;
-            case (CombatStates.PLAYER):
+            case (CombatStates.PLAYERSELECT):
                 /*event driven state machine?
                 */
 				if(goal)
@@ -45,12 +46,6 @@ public class CombatStateMachine:MonoBehaviour {
                 break;
         }
 	}
-
-    //Combat functions
-    public void combat(basePlayer player, basePlayer target, baseSkill skill) {
-        //Algorithm: 
-
-    }
     public void victory() { }
     public void loss() { }
     
