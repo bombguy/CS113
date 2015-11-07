@@ -31,7 +31,7 @@ public class BattleGUI : MonoBehaviour {
 
     void OnGUI()
     {
-		//test
+		//Debug/ show health of everyone
 		DisplayEnemies();
 		DisplayPlayers();
 
@@ -48,13 +48,21 @@ public class BattleGUI : MonoBehaviour {
 			DisplayPlayers();
 		}
 		if (CombatStateMachine.CurrentState == CombatStateMachine.CombatStates.ENEMY)
-			test();
-
+			EnemyAction();
     }
-	private void test() {
-		if (GUI.Button (new Rect (Screen.width - 500, Screen.height - 50, 100, 30), "Player Turn")) {
-			CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.PLAYERSELECT;
-		}
+
+	private void Combat(baseGameObject actor, baseGameObject target) {
+		int damage = (actor as baseEnemy).basicAttack.cast ((actor as baseEnemy).attack);
+		(target as basePlayer).currentHP -= damage;
+	}
+
+	private void EnemyAction() {
+		//select random enemy/target
+		baseEnemy random_enemy = enemies [Random.Range (0, enemies.Length)];
+		basePlayer random_target = players [Random.Range (0, players.Length)];
+
+		Combat (random_enemy, random_target);
+		CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.PLAYERSELECT;
 	}
 
 	private void DisplayPlayers() {
