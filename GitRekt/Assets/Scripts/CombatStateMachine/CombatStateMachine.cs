@@ -49,7 +49,7 @@ public class CombatStateMachine:MonoBehaviour {
     //Combat functions
     public void combat(basePlayer player, basePlayer target, baseSkill skill) {
         //Algorithm: 
-		console.log(
+
     }
     public void victory() { }
     public void loss() { }
