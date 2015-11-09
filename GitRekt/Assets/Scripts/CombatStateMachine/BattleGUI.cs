@@ -54,6 +54,9 @@ public class BattleGUI : MonoBehaviour {
 	private void Combat(baseGameObject actor, baseGameObject target) {
 		int damage = (actor as baseEnemy).basicAttack.cast ((actor as baseEnemy).attack);
 		(target as basePlayer).currentHP -= damage;
+		if ((target as basePlayer).currentHP<=0)
+			(target as basePlayer).currentHP = 0;
+		 
 	}
 
 	private void EnemyAction() {
@@ -85,6 +88,9 @@ public class BattleGUI : MonoBehaviour {
 					print ("target: " + (selectedTarget as baseEnemy).name + " HP: " + (selectedTarget as baseEnemy).currentHP);
 					print ("skill: " + selectedSkill.skillName + " damage: " + selectedSkill.cast(selectedPlayer.attack));
 					(selectedTarget as baseEnemy).currentHP = (selectedTarget as baseEnemy).currentHP - selectedSkill.cast(selectedPlayer.attack);
+					if((selectedTarget as baseEnemy).currentHP <= 0)
+						// Need to destory game object.
+						(selectedTarget as baseEnemy).currentHP = 0;
 					CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.ENEMY;
 				}
 			}
