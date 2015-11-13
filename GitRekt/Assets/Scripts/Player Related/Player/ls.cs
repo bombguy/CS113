@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Serialization;
-
+[System.Serializable] 
 public class ls : basePlayer {
 	
 	public ls () {

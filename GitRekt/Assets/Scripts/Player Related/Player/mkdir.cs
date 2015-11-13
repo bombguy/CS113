@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Serialization;
-
+[System.Serializable] 
 public class mkdir : basePlayer {
 	
 	public mkdir () {
