@@ -1,6 +1,11 @@
 ﻿using System.Runtime.Serialization;
+<<<<<<< HEAD
 using UnityEngine.EventSystems;
 public class rmdir : basePlayer, IPointerClickHandler {
+=======
+[System.Serializable] 
+public class rmdir : basePlayer {
+>>>>>>> 95b79f28e1ecaf27dd65fa234b08e8e5809b5509
 
 	public rmdir () {
 		name = "Raymond Dirginham";

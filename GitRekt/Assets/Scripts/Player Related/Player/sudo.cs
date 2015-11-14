@@ -1,6 +1,11 @@
 ﻿using System.Runtime.Serialization;
+<<<<<<< HEAD
 using UnityEngine.EventSystems;
 public class sudo : basePlayer, IPointerClickHandler {
+=======
+[System.Serializable] 
+public class sudo : basePlayer {
+>>>>>>> 95b79f28e1ecaf27dd65fa234b08e8e5809b5509
 
 	public sudo () {
 		name = "Susan Domo";

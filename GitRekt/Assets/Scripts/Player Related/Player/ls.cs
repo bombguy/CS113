@@ -1,7 +1,13 @@
 ﻿using System.Runtime.Serialization;
+<<<<<<< HEAD
 using UnityEngine.EventSystems;
 public class ls : basePlayer, IPointerClickHandler
 {
+=======
+[System.Serializable] 
+public class ls : basePlayer {
+	
+>>>>>>> 95b79f28e1ecaf27dd65fa234b08e8e5809b5509
 	public ls () {
 		name = "Lisa";
 		maxHP = 100;
