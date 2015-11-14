@@ -1,13 +1,8 @@
 ﻿using System.Runtime.Serialization;
-<<<<<<< HEAD
 using UnityEngine.EventSystems;
 
+[System.Serializable]
 public class mkdir : basePlayer, IPointerClickHandler {
-=======
-[System.Serializable] 
-public class mkdir : basePlayer {
->>>>>>> 95b79f28e1ecaf27dd65fa234b08e8e5809b5509
-	
 	public mkdir () {
 		name = "Miku Dirginham";
 		maxHP = 100;
