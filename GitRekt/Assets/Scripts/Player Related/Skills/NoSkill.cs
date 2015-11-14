@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Runtime.Serialization;
-
+using UnityEngine.EventSystems;
 public class NoSkill : baseSkill {
 	public GameInformation gameInformation;
 	
@@ -21,4 +21,9 @@ public class NoSkill : baseSkill {
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
 		return;
 	}
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        BattleManager.skill = this;
+    }
 }

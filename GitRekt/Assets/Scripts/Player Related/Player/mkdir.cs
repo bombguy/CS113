@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
+using UnityEngine.EventSystems;
 
-public class mkdir : basePlayer {
+public class mkdir : basePlayer, IPointerClickHandler {
 	
 	public mkdir () {
 		name = "Miku Dirginham";
@@ -32,4 +33,10 @@ public class mkdir : basePlayer {
 		info.AddValue("MKDIR_DATABASE_MASTERY", datastructureMastery, typeof(int));
 		info.AddValue("MKDIR_NETWORK_MASTERY", networkMastery, typeof(int));
 	}
+    public void OnPointerClick(PointerEventData eventData){
+        if (BattleManager.selectedUnit == null)
+            BattleManager.selectedUnit = this;
+        else
+            BattleManager.healTarget = this;
+    }
 }

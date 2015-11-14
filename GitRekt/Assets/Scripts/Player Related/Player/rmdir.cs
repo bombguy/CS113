@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
-
-public class rmdir : basePlayer {
+using UnityEngine.EventSystems;
+public class rmdir : basePlayer, IPointerClickHandler {
 
 	public rmdir () {
 		name = "Raymond Dirginham";
@@ -32,4 +32,10 @@ public class rmdir : basePlayer {
 		info.AddValue("RMDIR_DATABASE_MASTERY", datastructureMastery, typeof(int));
 		info.AddValue("RMDIR_NETWORK_MASTERY", networkMastery, typeof(int));
 	}
+    public void OnPointerClick(PointerEventData eventData){
+        if (BattleManager.selectedUnit == null)
+            BattleManager.selectedUnit = this;
+        else
+            BattleManager.healTarget = this;
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Runtime.Serialization;
+using UnityEngine.EventSystems;
 
 public class BasicAttack : baseSkill {
 	public GameInformation gameInformation;
@@ -21,4 +22,5 @@ public class BasicAttack : baseSkill {
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
 		return;
 	}
+
 }

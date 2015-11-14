@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
-
-public class ls : basePlayer {
-	
+using UnityEngine.EventSystems;
+public class ls : basePlayer, IPointerClickHandler
+{
 	public ls () {
 		name = "Lisa";
 		maxHP = 100;
@@ -32,4 +32,13 @@ public class ls : basePlayer {
 		info.AddValue("LS_DATABASE_MASTERY", datastructureMastery, typeof(int));
 		info.AddValue("LS_NETWORK_MASTERY", networkMastery, typeof(int));
 	}
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (BattleManager.selectedUnit == null){
+            BattleManager.selectedUnit = this;
+        }
+        else{
+            BattleManager.healTarget = this;    
+        }
+   }
 }

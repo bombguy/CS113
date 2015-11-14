@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
-
-public class sudo : basePlayer {
+using UnityEngine.EventSystems;
+public class sudo : basePlayer, IPointerClickHandler {
 
 	public sudo () {
 		name = "Susan Domo";
@@ -32,4 +32,11 @@ public class sudo : basePlayer {
 		info.AddValue("SUDO_DATABASE_MASTERY", datastructureMastery, typeof(int));
 		info.AddValue("SUDO_NETWORK_MASTERY", networkMastery, typeof(int));
 	}
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (BattleManager.selectedUnit == null)
+            BattleManager.selectedUnit = this;
+        else
+            BattleManager.healTarget = this;
+    }
 }
