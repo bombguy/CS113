@@ -13,13 +13,13 @@ public abstract class baseSkill: ISerializable{
 	}
 
 	public string			skillName;
-	public string			skillDesciption;
+	public string			skillDescription;
 	public SkillCategory	skillCategory;	
 	public int				skillLevel;
 	public int				skillExperience;
 	public int				skillCoolDown;
-	public int				skillPower;
+	public double			skillPower;
 
-	public abstract int 	cast(int playerAttack);
+	public abstract void 	cast(GameObject castor, GameObject target);
 	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
 }
