@@ -19,7 +19,20 @@ public class ls : basePlayer, IPointerClickHandler
 		datastructureMastery = 0;
 		networkMastery = 0;
 	}
-	
+
+	public ls(SerializationInfo info, StreamingContext ctxt)
+	{
+		name = (string)info.GetValue("LS_NAME",typeof(string));
+		maxHP = (int)info.GetValue("LS_HEALTH",typeof(int));
+		attack = (int)info.GetValue("LS_ATTACK",typeof(int));
+		defense = (int)info.GetValue ("LS_DEFENSE", typeof(int));
+
+		flowMastery = (int)info.GetValue("LS_FLOWCONTROL_MASTERY",typeof(int));
+		functionMastery = (int)info.GetValue("LS_FUNCTION_MASTERY",typeof(int));
+		datastructureMastery = (int)info.GetValue("LS_DATABASE_MASTERY",typeof(int));
+		networkMastery = (int)info.GetValue ("LS_NETWORK_MASTERY", typeof(int));
+	}
+
 	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
 		info.AddValue("LS_NAME", name, typeof(string));
 		info.AddValue("LS_HEALTH", maxHP, typeof(int));
@@ -33,6 +46,7 @@ public class ls : basePlayer, IPointerClickHandler
 		info.AddValue("LS_DATABASE_MASTERY", datastructureMastery, typeof(int));
 		info.AddValue("LS_NETWORK_MASTERY", networkMastery, typeof(int));
 	}
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (BattleManager.selectedUnit == null){

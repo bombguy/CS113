@@ -14,9 +14,24 @@ public class sudo : basePlayer, IPointerClickHandler {
 		skill3 = new NoSkill();
 		skill4 = new NoSkill();
 		flowMastery = 0;
-		functionMastery = 0;
+		functionMastery = 0; 
 		datastructureMastery = 0;
 		networkMastery = 0;
+
+	}
+
+	public sudo(SerializationInfo info, StreamingContext ctxt)
+	{
+		name = (string)info.GetValue("SUDO_NAME",typeof(string));
+		maxHP = (int)info.GetValue("SUDO_HEALTH",typeof(int));
+		attack = (int)info.GetValue("SUDO_ATTACK",typeof(int));
+		defense = (int)info.GetValue ("SUDO_DEFENSE", typeof(int));
+		currentHP = maxHP;
+		
+		flowMastery = (int)info.GetValue("SUDO_FLOWCONTROL_MASTERY",typeof(int));
+		functionMastery = (int)info.GetValue("SUDO_FUNCTION_MASTERY",typeof(int));
+		datastructureMastery = (int)info.GetValue("SUDO_DATABASE_MASTERY",typeof(int));
+		networkMastery = (int)info.GetValue ("SUDO_NETWORK_MASTERY", typeof(int));
 	}
 
 	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
