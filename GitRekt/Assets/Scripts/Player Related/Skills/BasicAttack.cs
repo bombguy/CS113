@@ -7,12 +7,15 @@ public class BasicAttack : baseSkill {
 	public GameInformation gameInformation;
 
 	public BasicAttack () {
+		skillID = 1;
 		skillName = "Basic Attack";
-		skillDescription = "Deals" + (skillPower * 100) + "% of player's attack";
 		skillLevel = 0;
 		skillExperience = 0;
 		skillCoolDown = 0;
 		skillPower = 1;
+		skillCategory = SkillCategory.NONE;
+		skillDescription = "Deals " + (skillPower * 100) + "% of player's attack";
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 
 	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {

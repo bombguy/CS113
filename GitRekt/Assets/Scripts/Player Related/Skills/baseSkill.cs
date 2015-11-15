@@ -9,9 +9,11 @@ public abstract class baseSkill: ISerializable{
 		FLOWCONTROL,
 		FUNCTION,
 		DATASTRUCTURE,
-		NETWORK
+		NETWORK,
+		NONE
 	}
 
+	public int				skillID;
 	public string			skillName;
 	public string			skillDescription;
 	public SkillCategory	skillCategory;	
@@ -19,6 +21,7 @@ public abstract class baseSkill: ISerializable{
 	public int				skillExperience;
 	public int				skillCoolDown;
 	public double			skillPower;
+	public Sprite			skillIcon;
 
 	public abstract void 	cast(MonoBehaviour castor, MonoBehaviour target);
 	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
