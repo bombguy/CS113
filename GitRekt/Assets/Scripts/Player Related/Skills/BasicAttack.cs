@@ -15,9 +15,9 @@ public class BasicAttack : baseSkill {
 		skillPower = 1;
 	}
 
-	public override void 	cast(GameObject castor, GameObject target) {
+	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int damage = (castor as basePlayer).attack * skillPower;
+		int damage = (int)((castor as basePlayer).attack * skillPower);
 		(target as baseEnemy).currentHP -= damage;
 
 		//skill coolddown here

@@ -14,7 +14,7 @@ public class FireWall : baseSkill {
 		skillPower = 0;
 	}
 	
-	public override void 	cast(GameObject castor, GameObject target) {
+	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		int effect = 10 + (skillLevel * 5);
 		(target as basePlayer).defense += effect;
