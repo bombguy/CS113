@@ -1,24 +1,23 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
-
-public class BasicAttack : baseSkill {
+//TARGET ALL ALLIES NOT FULLY IMPLEMENTED
+public class Graph : baseSkill {
 	public GameInformation gameInformation;
 	
-	public BasicAttack () {
-		skillName = "Basic Attack";
-		skillDescription = "Deals" + (skillPower * 100) + "% of player's attack";
+	public Graph () {
+		skillName = "Graph";
+		skillDescription = "Heals all allies by " + (skillPower * 300) + "% of player's attack.";
 		skillLevel = 0;
 		skillExperience = 0;
-		skillCoolDown = 0;
+		skillCoolDown = 2;
 		skillPower = 1;
 	}
 	
 	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int damage = (int)((castor as basePlayer).attack * skillPower);
-		(target as baseEnemy).currentHP -= damage;
+		int (castor as basePlayer).currentHP += (int)((castor as basePlayer).attack * skillPower * 150);
 		
 		//skill coolddown here
 		
@@ -32,3 +31,11 @@ public class BasicAttack : baseSkill {
 			skillPower += .05;
 		}
 	}
+	
+	
+	
+	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
+		return;
+	}
+	
+}

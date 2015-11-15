@@ -1,23 +1,23 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
-
-public class BasicAttack : baseSkill {
+//DEBUFF NOT IMPLEMENTED (CONFUSION)
+public class Loop : baseSkill {
 	public GameInformation gameInformation;
 	
-	public BasicAttack () {
-		skillName = "Basic Attack";
-		skillDescription = "Deals" + (skillPower * 100) + "% of player's attack";
+	public Loop () {
+		skillName = "Loop";
+		skillDescription = "Deals" + (skillPower * 200) + "% of player's attack with chance of Confusion/";
 		skillLevel = 0;
 		skillExperience = 0;
-		skillCoolDown = 0;
+		skillCoolDown = 3;
 		skillPower = 1;
 	}
 	
 	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int damage = (int)((castor as basePlayer).attack * skillPower);
+		int damage = (int)((castor as basePlayer).attack * skillPower * 200);
 		(target as baseEnemy).currentHP -= damage;
 		
 		//skill coolddown here
@@ -32,3 +32,11 @@ public class BasicAttack : baseSkill {
 			skillPower += .05;
 		}
 	}
+	
+	
+	
+	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
+		return;
+	}
+	
+}
