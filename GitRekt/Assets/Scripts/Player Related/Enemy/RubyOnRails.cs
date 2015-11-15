@@ -1,4 +1,5 @@
-﻿public class RubyOnRails : baseEnemy {
+﻿using UnityEngine.EventSystems;
+public class RubyOnRails : baseEnemy, IPointerClickHandler {
 	public RubyOnRails() {
 		name = "Ruby On Rails";
 		maxHP = 150;
@@ -7,4 +8,8 @@
 		defense = 0;
 		basicAttack = new BasicAttack();
 	}
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        BattleManager.attackTarget = this;
+    }
 }
