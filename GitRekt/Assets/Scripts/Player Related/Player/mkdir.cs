@@ -19,6 +19,19 @@ public class mkdir : basePlayer, IPointerClickHandler {
 		datastructureMastery = 0;
 		networkMastery = 0;
 	}
+
+	public mkdir(SerializationInfo info, StreamingContext ctxt)
+	{
+		name = (string)info.GetValue("MKDIR_NAME",typeof(string));
+		maxHP = (int)info.GetValue("MKDIR_HEALTH",typeof(int));
+		attack = (int)info.GetValue("MKDIR_ATTACK",typeof(int));
+		defense = (int)info.GetValue ("MKDIR_DEFENSE", typeof(int));
+		
+		flowMastery = (int)info.GetValue("MKDIR_FLOWCONTROL_MASTERY",typeof(int));
+		functionMastery = (int)info.GetValue("MKDIR_FUNCTION_MASTERY",typeof(int));
+		datastructureMastery = (int)info.GetValue("MKDIR_DATABASE_MASTERY",typeof(int));
+		networkMastery = (int)info.GetValue ("MKDIR_NETWORK_MASTERY", typeof(int));
+	}
 	
 	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
 		info.AddValue("MKDIR_NAME", name, typeof(string));

@@ -20,6 +20,19 @@ public class rmdir : basePlayer, IPointerClickHandler {
 		networkMastery = 0;
 	}
 
+	public rmdir(SerializationInfo info, StreamingContext ctxt)
+	{
+		name = (string)info.GetValue("RMDIR_NAME",typeof(string));
+		maxHP = (int)info.GetValue("RMDIR_HEALTH",typeof(int));
+		attack = (int)info.GetValue("RMDIR_ATTACK",typeof(int));
+		defense = (int)info.GetValue ("RMDIR_DEFENSE", typeof(int));
+		
+		flowMastery = (int)info.GetValue("RMDIR_FLOWCONTROL_MASTERY",typeof(int));
+		functionMastery = (int)info.GetValue("RMDIR_FUNCTION_MASTERY",typeof(int));
+		datastructureMastery = (int)info.GetValue("RMDIR_DATABASE_MASTERY",typeof(int));
+		networkMastery = (int)info.GetValue ("RMDIR_NETWORK_MASTERY", typeof(int));
+	}
+
 	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
 		info.AddValue("RMDIR_NAME", name, typeof(string));
 		info.AddValue("RMDIR_HEALTH", maxHP, typeof(int));

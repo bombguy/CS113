@@ -25,11 +25,11 @@ public class GameInformation : MonoBehaviour {
 
 	public void saveGame(){
 		SaveInformation.SaveAllInformation ();
-		Console.WriteLine ("Saved");
+		Debug.Log ("saved");
 	}
 	public void loadGame(){
 		LoadInformation.LoadAllInformation ();
-		Console.WriteLine ("Loaded");
+		Debug.Log ("Loaded");
 	}
 
 }
