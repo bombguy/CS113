@@ -1,30 +1,27 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
-
-public class BasicAttack : baseSkill {
+// "TAKING A BREAK" NOT IMPLEMENTED
+public class BreakAndContinue : baseSkill {
 	public GameInformation gameInformation;
 	
-	public BasicAttack () {
-		skillID = 1;
-		skillName = "Basic Attack";
+	public BreakAndContinue () {
+		skillName = "Break and Continue";
+		skillDescription = "Takes a break, then deals" + (skillPower * 400) + "% of player's attack";
 		skillLevel = 0;
 		skillExperience = 0;
-		skillCoolDown = 0;
+		skillCoolDown = 5;
 		skillPower = 1;
-		skillCategory = SkillCategory.NONE;
-		skillDescription = "Deals " + (skillPower * 100) + "% of player's attack";
-		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
 	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int damage = (int)((castor as basePlayer).attack * skillPower);
+		int damage = (int)((castor as basePlayer).attack * skillPower * 400);
 		(target as baseEnemy).currentHP -= damage;
 		
 		//skill coolddown here
-		
+
 		//skill experience gain
 		skillExperience++;
 		
@@ -35,3 +32,11 @@ public class BasicAttack : baseSkill {
 			skillPower += .05;
 		}
 	}
+	
+	
+	
+	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
+		return;
+	}
+	
+}

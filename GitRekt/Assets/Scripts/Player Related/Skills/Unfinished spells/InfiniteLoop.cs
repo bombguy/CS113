@@ -1,27 +1,22 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
-
-public class BasicAttack : baseSkill {
+//STUN DEBUFF NOT IMPLEMENTED
+public class InfiniteLoop : baseSkill {
 	public GameInformation gameInformation;
 	
-	public BasicAttack () {
-		skillID = 1;
-		skillName = "Basic Attack";
+	public InfiniteLoop () {
+		skillName = "Infinite Loop";
+		skillDescription = "Causes opponent to become stunned for 2 turns.";
 		skillLevel = 0;
 		skillExperience = 0;
-		skillCoolDown = 0;
+		skillCoolDown = 10;
 		skillPower = 1;
-		skillCategory = SkillCategory.NONE;
-		skillDescription = "Deals " + (skillPower * 100) + "% of player's attack";
-		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
 	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int damage = (int)((castor as basePlayer).attack * skillPower);
-		(target as baseEnemy).currentHP -= damage;
 		
 		//skill coolddown here
 		
@@ -35,3 +30,11 @@ public class BasicAttack : baseSkill {
 			skillPower += .05;
 		}
 	}
+	
+	
+	
+	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
+		return;
+	}
+	
+}
