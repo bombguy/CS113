@@ -7,13 +7,18 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class SaveInformation{
 
 	public static void SaveAllInformation(){
-		Stream stream = File.Open ("SaveInfo.gr", FileMode.Create);
 		BinaryFormatter bformatter = new BinaryFormatter ();
 		foreach(basePlayer bp in GameInformation.players)
 		{
+			Stream stream = File.Open((bp.name+".gr"),FileMode.Create);
 			bformatter.Serialize(stream,bp);
+			bformatter.Serialize (stream,bp.skill1);
+			bformatter.Serialize (stream,bp.skill2);
+			bformatter.Serialize (stream,bp.skill3);
+			bformatter.Serialize (stream,bp.skill4);
+			stream.Close ();
+
 		}
-		stream.Close ();
 
 
 

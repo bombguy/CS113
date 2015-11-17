@@ -13,6 +13,18 @@ public class FireWall : baseSkill {
 		skillCoolDown = 3;
 		skillPower = 0;
 	}
+	public FireWall(SerializationInfo info, StreamingContext ctxt)
+	{
+		skillName = "Fire Wall";
+		skillDescription = "Increases party member's defense by " + (10 + skillLevel * 5);
+
+
+		skillLevel = (int)info.GetValue("FIREWALL_SKILLEVEL",typeof(int));
+		skillExperience = (int)info.GetValue("FIREWALL_SKILLEXPERIENCE",typeof(int));
+		skillCoolDown = (int)info.GetValue("FIREWALL_SKILLCOOLDOWN",typeof(int));
+		skillPower = (int)info.GetValue("FIREWALL_SKILLPOWER",typeof(int));
+
+	}
 	
 	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
@@ -30,7 +42,12 @@ public class FireWall : baseSkill {
 	}
 	
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		return;
+		info.AddValue("FIREWALL_SKILLLEVEL", skillLevel, typeof(int));
+		info.AddValue("FIREWALL_SKILLEXPERIENCE", skillExperience, typeof(int));
+		info.AddValue("FIREWALL_COOLDOWN", skillCoolDown, typeof(int));
+		info.AddValue("FIREWALL_SKILLPOWER", skillPower, typeof(int));
+
+
 	}
 	
 }
