@@ -13,6 +13,10 @@ public class NoSkill : baseSkill {
 		skillCoolDown = 0;
 		skillPower = 0;
 	}
+
+	public override void	cast(MonoBehaviour castor, MonoBehaviour target) {
+		return;
+	}
 	
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
 		return;

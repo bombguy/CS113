@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using System.Collections;
 
 public class baseEnemy : MonoBehaviour{
 	public string		name;

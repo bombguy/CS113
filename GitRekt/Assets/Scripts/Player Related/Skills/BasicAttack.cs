@@ -5,26 +5,29 @@ using UnityEngine.EventSystems;
 
 public class BasicAttack : baseSkill {
 	public GameInformation gameInformation;
-
+	
 	public BasicAttack () {
+		skillID = 1;
 		skillName = "Basic Attack";
-		skillDescription = "Deals" + (skillPower * 100) + "% of player's attack";
 		skillLevel = 0;
 		skillExperience = 0;
 		skillCoolDown = 0;
 		skillPower = 1;
+		skillCategory = SkillCategory.NONE;
+		skillDescription = "Deals " + (skillPower * 100) + "% of player's attack";
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
-
-	public override void 	cast(GameObject castor, GameObject target) {
+	
+	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int damage = (castor as basePlayer).attack * skillPower;
+		int damage = (int)((castor as basePlayer).attack * skillPower);
 		(target as baseEnemy).currentHP -= damage;
-
+		
 		//skill coolddown here
-
+		
 		//skill experience gain
 		skillExperience++;
-
+		
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
@@ -32,9 +35,3 @@ public class BasicAttack : baseSkill {
 			skillPower += .05;
 		}
 	}
-
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		return;
-	}
-
-}

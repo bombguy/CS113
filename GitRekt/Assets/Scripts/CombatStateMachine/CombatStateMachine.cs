@@ -85,8 +85,7 @@ public class CombatStateMachine:MonoBehaviour{
         yield return null;
     }
     private void EnemyAttack(baseEnemy attacker, basePlayer target){
-        int damage = attacker.basicAttack.cast(attacker.attack);
-        target.currentHP -= damage;
+		attacker.basicAttack.cast (attacker, target);
         if (target.currentHP <= 0)
             target.currentHP = 0;
     }
@@ -103,14 +102,12 @@ public class CombatStateMachine:MonoBehaviour{
      * Same thing said about healz
      */
     private void playerAttack(basePlayer attacker, baseEnemy target, baseSkill skill) {
-        int damage = skill.cast(attacker.attack);
-        target.currentHP -= damage;
+        skill.cast(attacker,target);
         if (target.currentHP <= 0)
             Destroy(target);
     }
     private void playerHeal(basePlayer healer, basePlayer target, baseSkill skill) {
-        int heal = skill.cast(healer.defense);
-        target.currentHP += heal;
+        skill.cast(healer, target);
         if (target.currentHP > target.maxHP)
             target.currentHP = target.maxHP;
     }
