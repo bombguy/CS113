@@ -10,11 +10,16 @@ public class SlotScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		skill = new BasicAttack();
+		//skill = GameInformation.inventorySkills [Inventory.index];
 		skillImage = gameObject.transform.GetChild (0).GetComponent<Image>();
 		skillDetail = gameObject.transform.GetChild (1).GetComponent<Text>();
 	}
+
+	public void addSkillToSlot(baseSkill input_skill) {
+		skill = input_skill;
+	}
 	
+
 	// Update is called once per frame
 	void Update () {
 		if (skill != null) {
