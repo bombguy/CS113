@@ -1,42 +1,65 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Runtime.Serialization;
-using UnityEngine.EventSystems;
 
-public class FunctionsWithInput : baseSkill {
+public class FunctionsWithOutput : baseSkill {
 	public GameInformation gameInformation;
 	
-	public FunctionsWithInput () {
-		skillName = "Functions With Input";
-		skillDescription = "Deal damage for " + (skillPower * 200) + "% of player's attack.";
+	public FunctionsWithOutput () {
+		skillID = 8;
+		skillName = "Functions With Output";
+		skillDescription = "Unit will enter code and output solutions will be sent to the opponent damaging them.";
+		hasAdditionalEffect = false;
+		targetEnemy = true;
+		targetPlayer = false;
+		
+		//define effect
+		//No Effect
+		
+		
+		
 		skillLevel = 0;
 		skillExperience = 0;
-		skillCoolDown = 2;
-		skillPower = 1;
+		skillCoolDown = 5;
+		skillPower = 0;
+		
+		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int (castor as basePlayer).attack += (int)((castor as basePlayer).attack * skillPower * 200);
-		(target as baseEnemy).currentHP -= damage;
+		int attack = (skillLevel * 5) + 20;
 
-		//skill coolddown here
-		
 		//skill experience gain
 		skillExperience++;
 		
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			//(castor as basePlayer).category++;
-			skillPower += .05;
+			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
 	}
 	
-	
+	public FunctionsWithOutput(SerializationInfo info, StreamingContext ctxt)
+	{
+		skillName = "Functions With Output";
+		skillDescription = "Unit will enter code and output solutions will be sent to the opponent damaging them.";
+		
+		skillLevel = (int)info.GetValue("FUNCTIONSWITHOUTPUT_SKILLEVEL",typeof(int));
+		skillExperience = (int)info.GetValue("FUNCTIONSWITHOUTPUT_SKILLEXPERIENCE",typeof(int));
+		skillCoolDown = (int)info.GetValue("FUNCTIONSWITHOUTPUT_SKILLCOOLDOWN",typeof(int));
+		skillPower = (int)info.GetValue("FUNCTIONSWITHOUTPUT_SKILLPOWER",typeof(int));
+		
+	}
 	
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		return;
+		info.AddValue("FUNCTIONSWITHOUTPUT_SKILLLEVEL", skillLevel, typeof(int));
+		info.AddValue("FUNCTIONSWITHOUTPUT_SKILLEXPERIENCE", skillExperience, typeof(int));
+		info.AddValue("FUNCTIONSWITHOUTPUT_COOLDOWN", skillCoolDown, typeof(int));
+		info.AddValue("FUNCTIONSWITHOUTPUT_SKILLPOWER", skillPower, typeof(int));
+		
+		
 	}
 	
 }

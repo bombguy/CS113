@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 0f101c9077465154a879f7ba654428f8
 timeCreated: 1447618490
+=======
+guid: 6e5480d63a4d21d4cac9420ebdfa51e0
+timeCreated: 1447832323
+>>>>>>> spell
 licenseType: Free
 MonoImporter:
   serializedVersion: 2

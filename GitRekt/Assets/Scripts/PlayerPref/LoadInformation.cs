@@ -36,12 +36,12 @@ public class LoadInformation{
 
 		foreach(basePlayer bp in GameInformation.players)
 		{
-			Stream stream = File.Open((bp.name+".gr"),FileMode.Create);
+			Stream fstream = File.Open((bp.name+".gr"),FileMode.Create);
 			bformatter.Serialize(stream,bp);
-			bformatter.Serialize (stream,bp.skill1);
-			bformatter.Serialize (stream,bp.skill2);
-			bformatter.Serialize (stream,bp.skill3);
-			bformatter.Serialize (stream,bp.skill4);
+			bformatter.Serialize (fstream,bp.skill1);
+			bformatter.Serialize (fstream,bp.skill2);
+			bformatter.Serialize (fstream,bp.skill3);
+			bformatter.Serialize (fstream,bp.skill4);
 			stream.Close ();
 			
 		}

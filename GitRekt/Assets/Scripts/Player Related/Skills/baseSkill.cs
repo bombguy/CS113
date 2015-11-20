@@ -13,16 +13,43 @@ public abstract class baseSkill: ISerializable{
 		NONE
 	}
 
+	public struct Effect
+	{
+		public enum Status
+		{
+			STUN,
+			CONFUSED,
+			AOE,
+			HEAL,
+			DOT,
+			GOD
+		}
+		public Status status;
+		public int power;
+		public int duration;
+	}
+
+	//if skill does anything else other than just damage
+	public bool hasAdditionalEffect;
+
+	//if the skill can target player: true
+	public bool targetPlayer;
+
+	//if the skill can target enemy: true
+	public bool targetEnemy;
+
+	public SkillCategory	skillCategory;
+	public Effect			additionalEffect;
+
 	public int				skillID;
 	public string			skillName;
 	public string			skillDescription;
-	public SkillCategory	skillCategory;	
 	public int				skillLevel;
 	public int				skillExperience;
 	public int				skillCoolDown;
 	public double			skillPower;
 	public Sprite			skillIcon;
 
-	public abstract void 	cast(MonoBehaviour castor, MonoBehaviour target);
+	public abstract int 	cast(MonoBehaviour castor, MonoBehaviour target);
 	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
 }

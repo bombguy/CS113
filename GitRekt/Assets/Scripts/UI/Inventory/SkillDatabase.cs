@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public static class SkillDatabase : MonoBehaviour {
+public class SkillDatabase : MonoBehaviour {
 	public List<baseSkill> skills;
 
 	// Use this for initialization

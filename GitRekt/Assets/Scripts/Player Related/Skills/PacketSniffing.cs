@@ -6,35 +6,31 @@ public class PacketSniffing : baseSkill {
 	public GameInformation gameInformation;
 	
 	public PacketSniffing () {
+		skillID = 14;
 		skillName = "Packet Sniffing";
-		skillDescription = "Damages enemy " + (10 + skillLevel * 5) + "and heals for " +(2+skillLevel*5);
+		skillDescription = "Damages enemy " + (10 + skillLevel * 5) + "and heals for " + (2 + skillLevel * 5);
+		hasAdditionalEffect = true;
+		targetEnemy = true;
+		targetPlayer = false;
+
+		//define effect
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.HEAL;
+		additionalEffect.power = 2 + skillLevel * 5;
+		additionalEffect.duration = 1;
+
 		skillLevel = 0;
 		skillExperience = 0;
 		skillCoolDown = 3;
 		skillPower = 0;
-	}
 
-	public PacketSniffing(SerializationInfo info, StreamingContext ctxt)
-	{
-		skillName = "Packet Sniffing";
-		skillDescription = "Damages enemy " + (10 + skillLevel * 5) + "and heals for " +(2+skillLevel*5);
-		
-		
-		skillLevel = (int)info.GetValue("PACKETSNIFFING_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("PACKETSNIFFING_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("PACKETSNIFFING_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("PACKETSNIFFING_SKILLPOWER",typeof(int));
-		
+		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
-
 	
-	public override void 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		int attack = 10 + (skillLevel * 5);
-		int heal = 2 + (skillLevel * 5);
-		(target as baseEnemy).maxHP -= attack;
-		(castor as basePlayer).maxHP += heal;
-		
+
 		//skill experience gain
 		skillExperience++;
 
@@ -43,6 +39,18 @@ public class PacketSniffing : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
+	}
+
+	public PacketSniffing(SerializationInfo info, StreamingContext ctxt)
+	{
+		skillName = "Packet Sniffing";
+		skillDescription = "Damages enemy " + (10 + skillLevel * 5) + "and heals for " +(2+skillLevel*5);
+		
+		skillLevel = (int)info.GetValue("PACKETSNIFFING_SKILLEVEL",typeof(int));
+		skillExperience = (int)info.GetValue("PACKETSNIFFING_SKILLEXPERIENCE",typeof(int));
+		skillCoolDown = (int)info.GetValue("PACKETSNIFFING_SKILLCOOLDOWN",typeof(int));
+		skillPower = (int)info.GetValue("PACKETSNIFFING_SKILLPOWER",typeof(int));
 	}
 	
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
