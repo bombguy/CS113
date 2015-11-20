@@ -6,18 +6,15 @@ public class IfElse : baseSkill {
 	public GameInformation gameInformation;
 	
 	public IfElse () {
-		skillID = 2;
-		skillName = "IfElse";
+		skillID = 11;
+		skillName = "If Else";
 		skillDescription = "All or Nothing, Doubles the attack or nothing at all.";
 		hasAdditionalEffect = false;
 		targetEnemy = true;
 		targetPlayer = false;
 		
 		//define effect
-		additionalEffect = new Effect ();
-		additionalEffect.status = Effect.Status.HEAL;
-		additionalEffect.power = skillLevel * 2;
-		additionalEffect.duration = 1;
+		//NO EFFECT
 		
 		skillLevel = 0;
 		skillExperience = 0;
@@ -29,7 +26,7 @@ public class IfElse : baseSkill {
 	
 	public override int 	cast(GameObject castor, GameObject target) {
 		//skill effect
-		int attack = 10 + (skillLevel * 5);
+		int attack = (10 + (skillLevel * 5)) * 2;
 		
 		//skill experience gain
 		skillExperience++;
@@ -43,21 +40,21 @@ public class IfElse : baseSkill {
 	
 	public IfElse(SerializationInfo info, StreamingContext ctxt)
 	{
-		skillName = "Packet Sniffing";
-		skillDescription = "Damages enemy " + (10 + skillLevel * 5) + "and heals for " +(2+skillLevel*5);
+		skillName = "If Else";
+		skillDescription = "All or Nothing, Doubles the attack or nothing at all.";
 		
-		skillLevel = (int)info.GetValue("PACKETSNIFFING_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("PACKETSNIFFING_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("PACKETSNIFFING_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("PACKETSNIFFING_SKILLPOWER",typeof(int));
+		skillLevel = (int)info.GetValue("IFELSE_SKILLEVEL",typeof(int));
+		skillExperience = (int)info.GetValue("IFELSE_SKILLEXPERIENCE",typeof(int));
+		skillCoolDown = (int)info.GetValue("IFELSE_SKILLCOOLDOWN",typeof(int));
+		skillPower = (int)info.GetValue("IFELSE_SKILLPOWER",typeof(int));
 		
 	}
 	
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("PACKETSNIFFING_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("PACKETSNIFFING_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("PACKETSNIFFING_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("PACKETSNIFFING_SKILLPOWER", skillPower, typeof(int));
+		info.AddValue("IFELSE_SKILLLEVEL", skillLevel, typeof(int));
+		info.AddValue("IFELSE_SKILLEXPERIENCE", skillExperience, typeof(int));
+		info.AddValue("IFELSE_COOLDOWN", skillCoolDown, typeof(int));
+		info.AddValue("IFELSE_SKILLPOWER", skillPower, typeof(int));
 		
 		
 	}

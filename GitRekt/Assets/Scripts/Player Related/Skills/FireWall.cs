@@ -6,30 +6,31 @@ public class FireWall : baseSkill {
 	public GameInformation gameInformation;
 	
 	public FireWall () {
+		skillID = 6;
 		skillName = "Fire Wall";
-		skillDescription = "Increases party member's defense by " + (10 + skillLevel * 5);
+		skillDescription = "Builds a firewall in front of target, increasing defense for three turns.";
+		hasAdditionalEffect = true;
+		targetEnemy = false;
+		targetPlayer = true;
+		
+		//define effect
+		additionalEffect = new Effect ();
+		//Duration of spell 3 turns
+		additionalEffect.duration = 3;
+		
+		
+		
 		skillLevel = 0;
 		skillExperience = 0;
-		skillCoolDown = 3;
+		skillCoolDown = 5;
 		skillPower = 0;
-	}
-	public FireWall(SerializationInfo info, StreamingContext ctxt)
-	{
-		skillName = "Fire Wall";
-		skillDescription = "Increases party member's defense by " + (10 + skillLevel * 5);
-
-
-		skillLevel = (int)info.GetValue("FIREWALL_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("FIREWALL_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("FIREWALL_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("FIREWALL_SKILLPOWER",typeof(int));
-
+		
+		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override void 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int 	cast(GameObject castor, GameObject target) {
 		//skill effect
-		int effect = 10 + (skillLevel * 5);
-		(target as basePlayer).defense += effect;
+		int defense = (skillLevel * 5) + 10;
 
 		//skill experience gain
 		skillExperience++;
@@ -41,13 +42,26 @@ public class FireWall : baseSkill {
 		}
 	}
 	
+	public FireWall(SerializationInfo info, StreamingContext ctxt)
+	{
+		skillName = "Fire Wall";
+		skillDescription = "Builds a firewall in front of target, increasing defense for three turns.";
+		
+		skillLevel = (int)info.GetValue("FIREWALL_SKILLEVEL",typeof(int));
+		skillExperience = (int)info.GetValue("FIREWALL_SKILLEXPERIENCE",typeof(int));
+		skillCoolDown = (int)info.GetValue("FIREWALL_SKILLCOOLDOWN",typeof(int));
+		skillPower = (int)info.GetValue("FIREWALL_SKILLPOWER",typeof(int));
+		
+	}
+	
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
 		info.AddValue("FIREWALL_SKILLLEVEL", skillLevel, typeof(int));
 		info.AddValue("FIREWALL_SKILLEXPERIENCE", skillExperience, typeof(int));
 		info.AddValue("FIREWALL_COOLDOWN", skillCoolDown, typeof(int));
 		info.AddValue("FIREWALL_SKILLPOWER", skillPower, typeof(int));
-
-
+		
+		
 	}
 	
 }
+

@@ -7,8 +7,8 @@ public class FunctionsWithInputOutput : baseSkill {
 	
 	public FunctionsWithInputOutput () {
 		skillID = 7;
-		skillName = "FunctionsWithInputOutput";
-		skillDescription = "Unit will be supplying health, while the opponent will receive damage.";
+		skillName = "Functions With I/O";
+		skillDescription = "Unit will be supplying health, to deal massive damage to opponent.";
 		hasAdditionalEffect = false;
 		targetEnemy = false;
 		targetPlayer = true;
@@ -25,7 +25,7 @@ public class FunctionsWithInputOutput : baseSkill {
 	public override int 	cast(GameObject castor, GameObject target) {
 		//skill effect
 		int health = 100 / (skillLevel + 1)
-		int attack = (skillLevel * 5) + 10; // Replace '5' with health variable from line 33
+		int attack = (skillLevel * health) + 10; // Replace '5' with health variable from line 33
 		
 		//skill experience gain
 		skillExperience++;
@@ -39,8 +39,8 @@ public class FunctionsWithInputOutput : baseSkill {
 	
 	public FunctionsWithInputOutput(SerializationInfo info, StreamingContext ctxt)
 	{
-		skillName = "FunctionsWithInputOutput";
-		skillDescription = "Functions surround the unit, increasing attack for three turns.";
+		skillName = "Functions With I/O";
+		skillDescription = "Unit will be supplying health, to deal massive damage to opponent.";
 		
 		skillLevel = (int)info.GetValue("FUNCTIONSWITHINPUTOUTPUT_SKILLEVEL",typeof(int));
 		skillExperience = (int)info.GetValue("FUNCTIONSWITHINPUTOUTPUT_SKILLEXPERIENCE",typeof(int));

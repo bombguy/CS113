@@ -14,10 +14,10 @@ public class DDOS : baseSkill {
 		targetPlayer = false;
 		
 		//define effect
-			additionalEffect = new Effect ();
-			additionalEffect.status = Effect.Status.STUN;
-			additionalEffect.power = 0;
-			additionalEffect.duration = 1;
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.STUN;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
 			
 		 
 		

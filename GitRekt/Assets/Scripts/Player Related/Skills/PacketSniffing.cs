@@ -6,7 +6,7 @@ public class PacketSniffing : baseSkill {
 	public GameInformation gameInformation;
 	
 	public PacketSniffing () {
-		skillID = 2;
+		skillID = 14;
 		skillName = "Packet Sniffing";
 		skillDescription = "Damages enemy " + (10 + skillLevel * 5) + "and heals for " + (2 + skillLevel * 5);
 		hasAdditionalEffect = true;
