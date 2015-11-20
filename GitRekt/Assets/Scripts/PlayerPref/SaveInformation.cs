@@ -8,18 +8,20 @@ public class SaveInformation{
 
 	public static void SaveAllInformation(){
 		BinaryFormatter bformatter = new BinaryFormatter ();
+		Stream playerStream = File.Open(("Players.gr"),FileMode.Create);
 		foreach(basePlayer bp in GameInformation.players)
 		{
-			Stream stream = File.Open((bp.name+".gr"),FileMode.Create);
-			bformatter.Serialize(stream,bp);
-			bformatter.Serialize (stream,bp.skill1);
-			bformatter.Serialize (stream,bp.skill2);
-			bformatter.Serialize (stream,bp.skill3);
-			bformatter.Serialize (stream,bp.skill4);
-			stream.Close ();
-
+			bformatter.Serialize(playerStream,bp);
 		}
+		playerStream.Close ();
 
+
+		Stream inventoryStream  = File.Open ("Inventory.gr",FileMode.Create);
+		foreach (baseSkill bs in GameInformation.inventorySkills) 
+		{
+			bformatter.Serialize(inventoryStream,bs);
+		}
+		playerStream.Close ();
 
 
 	}

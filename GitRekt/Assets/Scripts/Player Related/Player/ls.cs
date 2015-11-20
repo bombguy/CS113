@@ -45,6 +45,11 @@ public class ls : basePlayer, IPointerClickHandler
 		info.AddValue("LS_FUNCTION_MASTERY", functionMastery, typeof(int));
 		info.AddValue("LS_DATABASE_MASTERY", datastructureMastery, typeof(int));
 		info.AddValue("LS_NETWORK_MASTERY", networkMastery, typeof(int));
+
+		info.AddValue ("LS_SPELL1", skill1.skillName, typeof(string));
+		info.AddValue ("LS_SPELL2", skill2.skillName, typeof(string));
+		info.AddValue ("LS_SPELL3", skill3.skillName, typeof(string));
+		info.AddValue ("LS_SPELL4", skill4.skillName, typeof(string));
 	}
 
     public void OnPointerClick(PointerEventData eventData)

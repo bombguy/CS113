@@ -33,6 +33,8 @@ public class mkdir : basePlayer, IPointerClickHandler {
 		networkMastery = (int)info.GetValue ("MKDIR_NETWORK_MASTERY", typeof(int));
 
 
+
+
 	}
 	
 	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
@@ -47,6 +49,12 @@ public class mkdir : basePlayer, IPointerClickHandler {
 		info.AddValue("MKDIR_FUNCTION_MASTERY", functionMastery, typeof(int));
 		info.AddValue("MKDIR_DATABASE_MASTERY", datastructureMastery, typeof(int));
 		info.AddValue("MKDIR_NETWORK_MASTERY", networkMastery, typeof(int));
+
+
+		info.AddValue ("MKDIR_SPELL1", skill1.skillName, typeof(string));
+		info.AddValue ("MKDIR_SPELL2", skill2.skillName, typeof(string));
+		info.AddValue ("MKDIR_SPELL3", skill3.skillName, typeof(string));
+		info.AddValue ("MKDIR_SPELL4", skill4.skillName, typeof(string));
 
 	}
     public void OnPointerClick(PointerEventData eventData){

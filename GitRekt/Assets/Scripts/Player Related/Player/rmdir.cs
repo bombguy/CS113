@@ -45,6 +45,11 @@ public class rmdir : basePlayer, IPointerClickHandler {
 		info.AddValue("RMDIR_FUNCTION_MASTERY", functionMastery, typeof(int));
 		info.AddValue("RMDIR_DATABASE_MASTERY", datastructureMastery, typeof(int));
 		info.AddValue("RMDIR_NETWORK_MASTERY", networkMastery, typeof(int));
+
+		info.AddValue ("RMDIR_SPELL1", skill1.skillName, typeof(string));
+		info.AddValue ("RMDIR_SPELL2", skill2.skillName, typeof(string));
+		info.AddValue ("RMDIR_SPELL3", skill3.skillName, typeof(string));
+		info.AddValue ("RMDIR_SPELL4", skill4.skillName, typeof(string));
 	}
     public void OnPointerClick(PointerEventData eventData){
         if (BattleManager.selectedUnit == null)

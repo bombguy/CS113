@@ -46,6 +46,12 @@ public class sudo : basePlayer, IPointerClickHandler {
 		info.AddValue("SUDO_FUNCTION_MASTERY", functionMastery, typeof(int));
 		info.AddValue("SUDO_DATABASE_MASTERY", datastructureMastery, typeof(int));
 		info.AddValue("SUDO_NETWORK_MASTERY", networkMastery, typeof(int));
+
+		info.AddValue ("SUDO_SPELL1", skill1.skillName, typeof(string));
+		info.AddValue ("SUDO_SPELL2", skill2.skillName, typeof(string));
+		info.AddValue ("SUDO_SPELL3", skill3.skillName, typeof(string));
+		info.AddValue ("SUDO_SPELL4", skill4.skillName, typeof(string));
+
 	}
     public void OnPointerClick(PointerEventData eventData)
     {
