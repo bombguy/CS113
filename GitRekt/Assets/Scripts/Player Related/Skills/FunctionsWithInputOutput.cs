@@ -13,7 +13,8 @@ public class FunctionsWithInputOutput : baseSkill {
 		targetEnemy = false;
 		targetPlayer = true;
 		
-		
+		additionalEffect = new Effect ();
+
 		skillLevel = 0;
 		skillExperience = 0;
 		skillCoolDown = 4;

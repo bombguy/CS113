@@ -9,13 +9,13 @@ public class BasicConnection : baseSkill {
 		skillID = 3;
 		skillName = "Basic Connection";
 		skillDescription = "Throws a cable at targeted unit and transfers data, depending on target, it may heal allies or damage enemies.";
-		hasAdditionalEffect = true;
+		hasAdditionalEffect = false;
 		targetEnemy = true;
 		targetPlayer = true;
 		
 		//define effect
 		//***If target is ally, heal, otherwise do damage***
-		if (targetEnemy == false) {
+		if (targetEnemy == true) {
 
 			additionalEffect = new Effect ();
 			additionalEffect.status = Effect.Status.HEAL;
@@ -33,6 +33,12 @@ public class BasicConnection : baseSkill {
 	}
 	
 	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+		//is it player?
+		//if (target.GetType ().IsAssignableFrom (basePlayer)) {
+		//	Debug.Log ("its a player");
+		//} else
+		//	Debug.Log ("its enemy");
+
 		//skill effect
 		int attack = (skillLevel * 5) + 10;
 

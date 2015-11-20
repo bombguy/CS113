@@ -14,7 +14,8 @@ public class IfElse : baseSkill {
 		targetPlayer = false;
 		
 		//define effect
-		//NO EFFECT
+		additionalEffect = new Effect ();
+
 		
 		skillLevel = 0;
 		skillExperience = 0;

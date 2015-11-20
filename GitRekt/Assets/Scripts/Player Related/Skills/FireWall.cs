@@ -15,8 +15,9 @@ public class FireWall : baseSkill {
 		
 		//define effect
 		additionalEffect = new Effect ();
-		//Duration of spell 3 turns
-		additionalEffect.duration = 3;
+		additionalEffect.status = Effect.Status.DEFENSE;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
 		
 		
 		

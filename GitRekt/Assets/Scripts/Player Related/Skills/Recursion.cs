@@ -9,12 +9,16 @@ public class Recursion : baseSkill {
 		skillID = 15;
 		skillName = "Recursion";
 		skillDescription = "A giant loop surrounds opponent's side of the field, dealing damage to all opponents.";
-		hasAdditionalEffect = false;
+		hasAdditionalEffect = true;
 		targetEnemy = true;
 		targetPlayer = false;
 		
 		//define effect
-		//target all opponents
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.AOE;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
+	
 		
 		
 		
