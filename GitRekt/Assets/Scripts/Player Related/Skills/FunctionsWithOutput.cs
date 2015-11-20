@@ -14,8 +14,8 @@ public class FunctionsWithOutput : baseSkill {
 		targetPlayer = false;
 		
 		//define effect
-		//No Effect
-		
+		additionalEffect = new Effect ();
+
 		
 		
 		skillLevel = 0;
