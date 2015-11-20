@@ -14,9 +14,9 @@ public class Graph : baseSkill {
 		targetPlayer = true;
 		
 		//define effect
-		//NEEDS TO SELECT ALL ALLIED UNITS
+		//NEEDS TO HEAL ALL UNITS
 		additionalEffect = new Effect ();
-		additionalEffect.status = Effect.Status.HEAL;
+		additionalEffect.status = Effect.Status.AOE;
 		additionalEffect.power = 0;
 		additionalEffect.duration = 1;
 		

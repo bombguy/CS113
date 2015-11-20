@@ -15,7 +15,8 @@ public class Arrays : baseSkill {
 		
 		//define effect
 		additionalEffect = new Effect ();
-		//Duration of spell 3 turns
+		additionalEffect.status = Effect.Status.DEFENSE;
+		additionalEffect.power = 0;
 		additionalEffect.duration = 3;
 		
 		skillLevel = 0;
@@ -28,7 +29,6 @@ public class Arrays : baseSkill {
 	
 	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int attack = (skillLevel * 5) + 10;
 
 		//skill experience gain
 		skillExperience++;
@@ -38,7 +38,7 @@ public class Arrays : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
-		return attack;
+		return 0;
 
 	}
 	

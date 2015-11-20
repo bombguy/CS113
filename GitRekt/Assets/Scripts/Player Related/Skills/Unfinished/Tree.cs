@@ -16,7 +16,10 @@ public class Tree : baseSkill {
 		//define effect
 		//target all opponents
 		//Power is multiplied by number of opponents
-		
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.AOE;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
 		
 		
 		skillLevel = 0;

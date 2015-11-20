@@ -15,7 +15,8 @@ public class DefaultFunctions : baseSkill {
 		
 		//define effect
 		additionalEffect = new Effect ();
-		//Duration of spell 3 turns
+		additionalEffect.status = Effect.Status.ATTACK;
+		additionalEffect.power = 0;
 		additionalEffect.duration = 3;
 
 		

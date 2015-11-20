@@ -22,7 +22,10 @@ public abstract class baseSkill: ISerializable{
 			AOE,
 			HEAL,
 			DOT,
-			GOD
+			GOD,
+			ATTACK,
+			DEFENSE,
+			SKIP
 		}
 		public Status status;
 		public int power;
