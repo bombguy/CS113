@@ -24,7 +24,7 @@ public class IfElse : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		int attack = (10 + (skillLevel * 5)) * 2;
 		
@@ -36,6 +36,8 @@ public class IfElse : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
+
 	}
 	
 	public IfElse(SerializationInfo info, StreamingContext ctxt)

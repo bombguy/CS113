@@ -26,9 +26,9 @@ public class Arrays : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int defense = (skillLevel * 5) + 10;
+		int attack = (skillLevel * 5) + 10;
 
 		//skill experience gain
 		skillExperience++;
@@ -38,6 +38,8 @@ public class Arrays : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
+
 	}
 	
 	public Arrays(SerializationInfo info, StreamingContext ctxt)

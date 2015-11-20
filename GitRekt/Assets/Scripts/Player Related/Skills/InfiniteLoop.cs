@@ -29,7 +29,7 @@ public class InfiniteLoop : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		
 		//skill experience gain
@@ -40,6 +40,7 @@ public class InfiniteLoop : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return 0;
 	}
 	
 	public InfiniteLoop(SerializationInfo info, StreamingContext ctxt)

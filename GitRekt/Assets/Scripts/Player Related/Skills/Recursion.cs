@@ -26,17 +26,18 @@ public class Recursion : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int attack = 25 + (skillLevel * 5)
+		int attack = 25 + (skillLevel * 5);
 		//skill experience gain
 		skillExperience++;
-		
+
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
 	}
 	
 	public Recursion(SerializationInfo info, StreamingContext ctxt)

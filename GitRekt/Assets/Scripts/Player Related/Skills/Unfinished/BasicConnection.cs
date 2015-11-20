@@ -32,7 +32,7 @@ public class BasicConnection : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		int attack = (skillLevel * 5) + 10;
 
@@ -44,6 +44,7 @@ public class BasicConnection : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
 	}
 	
 	public BasicConnection(SerializationInfo info, StreamingContext ctxt)

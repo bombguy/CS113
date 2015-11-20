@@ -26,7 +26,7 @@ public class FunctionsWithOutput : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		int attack = (skillLevel * 5) + 20;
 		//skill experience gain
@@ -37,6 +37,7 @@ public class FunctionsWithOutput : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
 	}
 	
 	public FunctionsWithOutput(SerializationInfo info, StreamingContext ctxt)

@@ -13,18 +13,14 @@ public class Loop : baseSkill {
 		targetEnemy = true;
 		targetPlayer = false;
 
-
-		Random rnd = new Random()
-		int condition = rnd.Next(0,1)
-		
-		if (condition == 1){
 			
-			//define effect
-			additionalEffect = new Effect ();
-			additionalEffect.status = Effect.Status.CONFUSED;
-			additionalEffect.power = 0;				
-			additionalEffect.duration = 3;
-		}
+		//define effect
+		//Generate chance of effect
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.CONFUSED;
+		additionalEffect.power = 0;				
+		additionalEffect.duration = 3;
+
 
 
 		
@@ -38,9 +34,9 @@ public class Loop : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int attack = (skillLevel * 5) + 10
+		int attack = (skillLevel * 5) + 10;
 		//skill experience gain
 		skillExperience++;
 		
@@ -49,6 +45,7 @@ public class Loop : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
 	}
 	
 	public Loop(SerializationInfo info, StreamingContext ctxt)

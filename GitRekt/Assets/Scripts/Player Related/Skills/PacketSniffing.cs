@@ -27,7 +27,7 @@ public class PacketSniffing : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		int attack = 10 + (skillLevel * 5);
 		
@@ -39,6 +39,7 @@ public class PacketSniffing : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
 	}
 
 	public PacketSniffing(SerializationInfo info, StreamingContext ctxt)

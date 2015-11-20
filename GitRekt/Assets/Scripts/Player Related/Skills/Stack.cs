@@ -26,9 +26,9 @@ public class Stack : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
-		int attack = 50 + (skillLevel * 5)
+		int attack = 50 + (skillLevel * 5);
 		//skill experience gain
 		skillExperience++;
 		
@@ -37,6 +37,7 @@ public class Stack : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return attack;
 	}
 	
 	public Stack(SerializationInfo info, StreamingContext ctxt)

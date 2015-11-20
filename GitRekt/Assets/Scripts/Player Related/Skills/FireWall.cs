@@ -28,7 +28,7 @@ public class FireWall : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(GameObject castor, GameObject target) {
+	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		int defense = (skillLevel * 5) + 10;
 
@@ -40,6 +40,8 @@ public class FireWall : baseSkill {
 			skillLevel++;
 			(castor as basePlayer).networkMastery++;
 		}
+		return defense;
+
 	}
 	
 	public FireWall(SerializationInfo info, StreamingContext ctxt)
