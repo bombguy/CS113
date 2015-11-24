@@ -7,7 +7,10 @@ public class Python : baseEnemy, IPointerClickHandler {
 		attack = 10;
 		defense = 0;
 		basicAttack = new BasicAttack();
-	}
+        effected = false;
+        duration = 0;
+        effect = Status.NONE;
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {

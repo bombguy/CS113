@@ -19,6 +19,23 @@ public abstract class basePlayer: MonoBehaviour , ISerializable {
 	public int			functionMastery;
 	public int			datastructureMastery;
 	public int			networkMastery;
-	
+    public enum Status
+    {
+        NONE,
+        STUN,
+        CONFUSED,
+        AOE,
+        HEAL,
+        DOT,
+        GOD,
+        ATTACK,
+        DEFENSE,
+        SKIP
+    }
+    //Battle Members for effects and the such.
+    public bool         effected;
+    public Status       effect;
+    public int          duration;
+    public abstract basePlayer deepCopy();
 	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
 }

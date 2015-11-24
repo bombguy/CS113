@@ -7,6 +7,9 @@ public class Cpp : baseEnemy, IPointerClickHandler {
 		attack = 30;
 		defense = 0;
 		basicAttack = new BasicAttack();
+        effected = false;
+        duration = 0;
+        effect = Status.NONE;
 	}
 
     public void OnPointerClick(PointerEventData eventData)
