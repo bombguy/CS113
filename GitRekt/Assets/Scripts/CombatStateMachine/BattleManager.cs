@@ -75,4 +75,13 @@ public class BattleManager : MonoBehaviour {
             CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.PLAYERSELECT;
     }
 
+    public static void deadUnit(basePlayer unit) {
+        playerParty.Remove(unit);
+        Destroy(unit);
+    }
+    public static void deadUnit(baseEnemy unit) {
+        enemyParty.Remove(unit);
+        Destroy(unit);
+    }
+
 }
