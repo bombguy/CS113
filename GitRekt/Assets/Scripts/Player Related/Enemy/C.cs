@@ -11,7 +11,7 @@ public class C : baseEnemy, IPointerClickHandler {
         effected = false;
         duration = 0;
         effect = Status.NONE;
-
+        effective_skill = new NoSkill();
 	}
 
 

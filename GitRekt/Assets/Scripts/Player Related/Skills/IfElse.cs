@@ -28,9 +28,11 @@ public class IfElse : baseSkill {
 	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		int attack = (10 + (skillLevel * 5)) * 2;
+        if (Random.Range(0, 1) != 0)
+            attack = 0;
 		
 		//skill experience gain
-		skillExperience++;
+		++skillExperience;
 		
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {

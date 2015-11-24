@@ -9,7 +9,7 @@ public class BattleManager : MonoBehaviour {
     public static List<baseEnemy> enemyParty;
 
     public static basePlayer selectedUnit;
-    public static basePlayer healTarget;
+    public static basePlayer buffTarget;
     public static baseEnemy attackTarget;
     public static baseSkill skill;
 
@@ -22,7 +22,7 @@ public class BattleManager : MonoBehaviour {
 	}
     void InitBattle() {
         selectedUnit = null;
-        healTarget = null ;
+        buffTarget = null ;
         attackTarget = null;
         skill = null;
         turnCounter = 1;
@@ -45,34 +45,21 @@ public class BattleManager : MonoBehaviour {
                 enemyParty.Add(new RubyOnRails());
     }
 	/*
-     * Update checks every frame if our touch events are finsihed. If so
-     * We go to the coroutine In either Player heal or Player Attack. 
      */
 	void Update () {
-        while (CombatStateMachine.CurrentState == CombatStateMachine.CombatStates.PLAYERSELECT)
-        {
-            if (attackTarget != null && skill != null && selectedUnit != null)
-            {
-                CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.PLAYERENEMY;
-            }
-            else if (selectedUnit != null && healTarget != null && selectedUnit != null)
-            {
-                CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.PLAYERPLAYER;
-            }
-        }
 	}
-
-    public static void endTurn() {
+    public static void endAction() {
         selectedUnit = null;
-        healTarget = null;
+        buffTarget = null;
         attackTarget = null;
         skill = null;
+        --actions;
+    }
+
+    public static void endTurn()
+    {
         ++turnCounter;
         actions = 4;
-        if (CombatStateMachine.CurrentState == CombatStateMachine.CombatStates.PLAYERENEMY || CombatStateMachine.CurrentState == CombatStateMachine.CombatStates.PLAYERPLAYER)
-            CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.ENEMY;
-        else
-            CombatStateMachine.CurrentState = CombatStateMachine.CombatStates.PLAYERSELECT;
     }
 
     public static void deadUnit(basePlayer unit) {

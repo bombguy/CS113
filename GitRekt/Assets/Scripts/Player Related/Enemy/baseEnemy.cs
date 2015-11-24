@@ -12,6 +12,7 @@ public class baseEnemy : MonoBehaviour{
     public bool         effected;
     public int          duration;
     public Status       effect;
+    public baseSkill effective_skill;
     public enum Status
     {
         NONE,

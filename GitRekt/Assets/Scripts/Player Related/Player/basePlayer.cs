@@ -36,6 +36,7 @@ public abstract class basePlayer: MonoBehaviour , ISerializable {
     public bool         effected;
     public Status       effect;
     public int          duration;
+    public baseSkill effective_skill;
     public abstract basePlayer deepCopy();
 	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
 }

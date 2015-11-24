@@ -21,6 +21,7 @@ public class rmdir : basePlayer, IPointerClickHandler {
         effected = false;
         duration = 0;
         effect = Status.NONE;
+        effective_skill = new NoSkill();
     }
     public override basePlayer deepCopy()
     {
@@ -75,6 +76,6 @@ public class rmdir : basePlayer, IPointerClickHandler {
         if (BattleManager.selectedUnit == null)
             BattleManager.selectedUnit = this;
         else
-            BattleManager.healTarget = this;
+            BattleManager.buffTarget = this;
     }
 }
