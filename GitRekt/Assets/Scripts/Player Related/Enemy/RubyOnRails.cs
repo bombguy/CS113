@@ -7,6 +7,10 @@ public class RubyOnRails : baseEnemy, IPointerClickHandler {
 		attack = 20;
 		defense = 0;
 		basicAttack = new BasicAttack();
+        effected = false;
+        duration = 0;
+        effect = Status.NONE;
+        effective_skill = new NoSkill();
 	}
     public void OnPointerClick(PointerEventData eventData)
     {

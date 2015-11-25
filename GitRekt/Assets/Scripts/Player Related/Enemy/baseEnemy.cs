@@ -8,4 +8,23 @@ public class baseEnemy : MonoBehaviour{
 	public int			attack;
 	public int			defense;
 	public baseSkill	basicAttack;
+    //Battle Members for effects and the such.
+    public bool         effected;
+    public int          duration;
+    public Status       effect;
+    public baseSkill effective_skill;
+    public enum Status
+    {
+        NONE,
+        STUN,
+        CONFUSED,
+        AOE,
+        HEAL,
+        DOT,
+        GOD,
+        ATTACK,
+        DEFENSE,
+        SKIP
+    }
+
 }

@@ -23,7 +23,7 @@ public class FunctionsWithInputOutput : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(MonoBehaviour castor, MonoBehaviour target) {
 		//skill effect
 		int health = 100 / (skillLevel + 1);
 		int attack = (skillLevel * health) + 10;

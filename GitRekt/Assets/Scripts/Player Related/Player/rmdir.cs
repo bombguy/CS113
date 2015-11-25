@@ -18,8 +18,29 @@ public class rmdir : basePlayer, IPointerClickHandler {
 		functionMastery = 0;
 		datastructureMastery = 0;
 		networkMastery = 0;
-	}
-
+        effected = false;
+        duration = 0;
+        effect = Status.NONE;
+        effective_skill = new NoSkill();
+    }
+    public override basePlayer deepCopy()
+    {
+        basePlayer copy = new rmdir();
+        copy.maxHP = this.maxHP;
+        copy.currentHP = this.currentHP;
+        copy.attack = this.attack;
+        copy.defense = this.defense;
+        copy.basicAttack = this.basicAttack;
+        copy.skill1 = this.skill1;
+        copy.skill2 = this.skill2;
+        copy.skill3 = this.skill3;
+        copy.skill4 = this.skill4;
+        copy.flowMastery = this.flowMastery;
+        copy.functionMastery = this.functionMastery;
+        copy.datastructureMastery = this.datastructureMastery;
+        copy.networkMastery = this.networkMastery;
+        return copy;
+    }
 	public rmdir(SerializationInfo info, StreamingContext ctxt)
 	{
 		name = (string)info.GetValue("RMDIR_NAME",typeof(string));
@@ -55,6 +76,6 @@ public class rmdir : basePlayer, IPointerClickHandler {
         if (BattleManager.selectedUnit == null)
             BattleManager.selectedUnit = this;
         else
-            BattleManager.healTarget = this;
+            BattleManager.buffTarget = this;
     }
 }
