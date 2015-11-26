@@ -66,6 +66,7 @@ public class CombatStateMachine : MonoBehaviour
             Destroy(BattleManager.playerParty[i]);
         }
         //pass back application to map
+        SaveInformation.SaveAllInformation();
     }
     private void loss()
     {
@@ -75,6 +76,7 @@ public class CombatStateMachine : MonoBehaviour
             Destroy(BattleManager.enemyParty[i]);
         }
         //pass back application to map
+        BattleManager.endBattle();
     }
     private void checkWin()
     {
@@ -109,7 +111,7 @@ public class CombatStateMachine : MonoBehaviour
      */
     
     /*
-     * Flow:
+     * Aglorithm:
      * Check what we are interacting with. Player or Enemy Target?
      *  Check what effect are on the Attacking Unit.
      *      Process those effects.

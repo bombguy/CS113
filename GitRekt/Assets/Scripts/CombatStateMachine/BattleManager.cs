@@ -12,15 +12,25 @@ public class BattleManager : MonoBehaviour {
     public static basePlayer buffTarget;
     public static baseEnemy attackTarget;
     public static baseSkill skill;
-
+    
+    public static bool hasUnit; // check if unit has been selected
+    public static bool hasTarget; // check if unit has target
+    public static bool hasSkill; // check if skill has been selected/Used
     public static int actions;
     public static int turnCounter;	
 	void Awake () {
         stateMachine = GetComponent<CombatStateMachine>();
         playerParty = new List<basePlayer>();
+        enemyParty = new List<baseEnemy>();
+        
+        hasUnit = false;
+        hasTarget = false;
+        hasSkill = false;
+        
         InitBattle();
 	}
     void InitBattle() {
+        LoadInformation.LoadAllInformation();
         selectedUnit = null;
         buffTarget = null ;
         attackTarget = null;
@@ -44,8 +54,7 @@ public class BattleManager : MonoBehaviour {
             for (int i = 0; i < GameInformation.enemies.Length; ++i)
                 enemyParty.Add(new RubyOnRails());
     }
-	/*
-     */
+
 	void Update () {
 	}
     public static void endAction() {
@@ -61,7 +70,11 @@ public class BattleManager : MonoBehaviour {
         ++turnCounter;
         actions = 4;
     }
-
+    public static void endBattle()
+    {
+        SaveInformation.SaveAllInformation();
+        ChangeScene.ChangeToScene("Map");
+    }
     public static void deadUnit(basePlayer unit) {
         playerParty.Remove(unit);
         Destroy(unit);

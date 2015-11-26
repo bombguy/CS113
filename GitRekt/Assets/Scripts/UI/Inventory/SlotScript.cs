@@ -7,7 +7,6 @@ public class SlotScript : MonoBehaviour {
 	public baseSkill skill;
 	private Image skillImage;
 	private Text  skillDetail;
-
 	// Use this for initialization
 	void Start () {
 		//skill = GameInformation.inventorySkills [Inventory.index];
@@ -17,21 +16,17 @@ public class SlotScript : MonoBehaviour {
 
 	public void addSkillToSlot(baseSkill input_skill) {
 		skill = input_skill;
-	}
+        skillImage.sprite = skill.skillIcon;
+        skillDetail.text = "Skill Name: " + skill.skillName +
+                    "\nCategory: " + skill.skillCategory +
+                    "\nEffect: " + skill.skillDescription;
+    }
 	
 
 	// Update is called once per frame
 	void Update () {
-		if (skill != null) {
-			skillImage.enabled = true;
-			skillImage.sprite = skill.skillIcon;
-			skillDetail.text = "Skill Name: " + skill.skillName +
-								"\nCategory: " + skill.skillCategory +
-								"\nEffect: " + skill.skillDescription;
-			//skillDetail.text = skill.skillName;
-		} else {
-			skillImage.enabled = false;
-		}
+        if (skill == null)
+            skillDetail.enabled = false;
 	}
 
 	public void showDetail() {
