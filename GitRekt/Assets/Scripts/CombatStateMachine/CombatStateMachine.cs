@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class CombatStateMachine : MonoBehaviour
 {
     public AI enemy;
-    public enum CombatStates { PLAYERSELECT, PLAYERENEMY, PLAYERPLAYER, ENEMY, WIN, LOSE };
+    public enum CombatStates { STARTTURN,PLAYERSELECT, PLAYERENEMY, PLAYERPLAYER, ENEMY, WIN, LOSE };
     public static CombatStates CurrentState;
     private bool goal;
     void Start()
@@ -21,12 +21,20 @@ public class CombatStateMachine : MonoBehaviour
         Debug.Log(CurrentState);
         switch (CurrentState)
         {
+            case(CombatStates.STARTTURN):
+                BattleManager.beginTurn();
+                CurrentState = CombatStates.PLAYERSELECT;
+                break;
             case (CombatStates.PLAYERSELECT):
                 //Check Unit selected.
                 if (BattleManager.selectedUnit != null && BattleManager.attackTarget != null && BattleManager.skill != null)
+                {
                     CurrentState = CombatStates.PLAYERENEMY;
+                }
                 else if (BattleManager.selectedUnit != null && BattleManager.buffTarget != null && BattleManager.skill != null)
+                {
                     CurrentState = CombatStates.PLAYERPLAYER;
+                }
                 break;
             case (CombatStates.PLAYERENEMY):
                 StartCoroutine("player_target_enemy");
@@ -48,7 +56,7 @@ public class CombatStateMachine : MonoBehaviour
                 if (goal)
                     CurrentState = CombatStates.LOSE;
                 else
-                    CurrentState = CombatStates.PLAYERSELECT;
+                    CurrentState = CombatStates.STARTTURN;
                 break;
             case (CombatStates.LOSE):
                 loss();

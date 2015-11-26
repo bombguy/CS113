@@ -13,20 +13,16 @@ public class BattleManager : MonoBehaviour {
     public static baseEnemy attackTarget;
     public static baseSkill skill;
     
-    public static bool hasUnit; // check if unit has been selected
-    public static bool hasTarget; // check if unit has target
-    public static bool hasSkill; // check if skill has been selected/Used
     public static int actions;
-    public static int turnCounter;	
+    public static int turnCounter;
+	
+    //GUI handlers
 	void Awake () {
         stateMachine = GetComponent<CombatStateMachine>();
+
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
-        
-        hasUnit = false;
-        hasTarget = false;
-        hasSkill = false;
-        
+            
         InitBattle();
 	}
     void InitBattle() {
@@ -56,8 +52,14 @@ public class BattleManager : MonoBehaviour {
     }
 
 	void Update () {
+
 	}
+    public static void beginTurn() {
+      
+    }
+    
     public static void endAction() {
+
         selectedUnit = null;
         buffTarget = null;
         attackTarget = null;
