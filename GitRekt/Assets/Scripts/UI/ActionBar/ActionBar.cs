@@ -4,9 +4,12 @@ using UnityEngine.UI;
 
 public class ActionBar : MonoBehaviour {
     public skill_button[] skills;
+    public skill_button selected_skill;
     public basePlayer current_unit;
+    public bool hasSelected;
+ 
 	void Awake(){
-
+    
     }
     // Use this for initialization
 	void Start () {
@@ -16,11 +19,21 @@ public class ActionBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        updateSelected();
 	}
+    
     public void checkCoolDowns() {
         for (int i=0; i < skills.Length; ++i)
             skills[i].checkCooldown();
+    }
+    public void updateSelected() {
+        for (int i = 0; i < skills.Length; ++i)
+            if (skills[i].selected)
+            {
+                selected_skill.addSkilltoButton(skills[i].current_skill);
+                skills[i].selected = false;
+                hasSelected = true;
+            }
     }
     void testActionBar() {
         baseSkill[] test_skills = new baseSkill[5];
@@ -30,15 +43,16 @@ public class ActionBar : MonoBehaviour {
         test_skills[3] = new IfElse();
         test_skills[4] = new BasicAttack();
         for (int i = 0; i < 5; ++i)
-            skills[i].setSkill(test_skills[i]);
+            skills[i].addSkilltoButton(test_skills[i]);
+        selected_skill.addSkilltoButton(new NoSkill());
 
     }
-    void loadActionBar(basePlayer unit) {
+    public void loadActionBar(basePlayer unit) {
         current_unit = unit;
-        skills[0].setSkill(unit.skill1);
-        skills[1].setSkill(unit.skill2);
-        skills[2].setSkill(unit.skill3);
-        skills[3].setSkill(unit.skill4);
-        skills[4].setSkill(unit.basicAttack);
+        skills[0].addSkilltoButton(unit.skill1);
+        skills[1].addSkilltoButton(unit.skill2);
+        skills[2].addSkilltoButton(unit.skill3);
+        skills[3].addSkilltoButton(unit.skill4);
+        skills[4].addSkilltoButton(unit.basicAttack);
     }
 }

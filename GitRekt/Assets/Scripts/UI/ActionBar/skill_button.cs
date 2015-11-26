@@ -6,11 +6,10 @@ public class skill_button : MonoBehaviour {
     Button skillButton;
     Image skillImage;
     Text skillName;
-    baseSkill current_skill;
-    
+    public baseSkill current_skill;
+    public bool selected;
     //cooldowns
     bool onCoolDown;
-    bool test;
     int cooldown_duration;
 
     // Use this for initialization
@@ -21,21 +20,18 @@ public class skill_button : MonoBehaviour {
         skillName = GetComponentInChildren<Text>();
         cooldown_duration = 0;
         onCoolDown = !skillButton.interactable;
-        test = true;
+        selected = false;
     }
-
 
     // Update is called once per frame
     void Update()
-    {    }
+    {
+    }
 
     //Skill Selected but possibly not one used. 
     public void skillSelected()
     {
-        if (test == true)
-            skillUsed();
-        else
-            BattleManager.skill = current_skill;
+        selected = true;
     }
 
     public void skillUsed()
@@ -47,18 +43,13 @@ public class skill_button : MonoBehaviour {
     {
         if (onCoolDown)
         {
-            if (BattleManager.turnCounter % cooldown_duration == 0)
+            if (cooldown_duration == 0)
                 clearCooldown();
+            else
+                --cooldown_duration;
         }
     }
-    
-    public void setSkill(baseSkill in_skill) {
-        addSkilltoButton(in_skill);
-    }
-
-
-    //Private
-    void addSkilltoButton(baseSkill in_skill)
+    public void addSkilltoButton(baseSkill in_skill)
     {
         current_skill = in_skill;
         skillImage.sprite = Resources.Load<Sprite>("Skill/" + current_skill.skillName.ToLower());

@@ -1,5 +1,5 @@
 ﻿using UnityEngine.EventSystems;
-public class RubyOnRails : baseEnemy, IPointerClickHandler {
+public class RubyOnRails : baseEnemy {
 	public RubyOnRails() {
 		name = "Ruby On Rails";
 		maxHP = 150;
@@ -12,8 +12,4 @@ public class RubyOnRails : baseEnemy, IPointerClickHandler {
         effect = Status.NONE;
         effective_skill = new NoSkill();
 	}
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        BattleManager.attackTarget = this;
-    }
 }

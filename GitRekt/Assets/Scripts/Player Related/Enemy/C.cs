@@ -1,6 +1,6 @@
 ﻿using UnityEngine.EventSystems;
 
-public class C : baseEnemy, IPointerClickHandler {
+public class C : baseEnemy {
 	public C() {
 		name = "C";
 		maxHP = 100;
@@ -13,10 +13,4 @@ public class C : baseEnemy, IPointerClickHandler {
         effect = Status.NONE;
         effective_skill = new NoSkill();
 	}
-
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        BattleManager.attackTarget = this;
-    }
 }

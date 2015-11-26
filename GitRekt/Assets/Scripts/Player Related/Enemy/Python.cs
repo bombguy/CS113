@@ -1,5 +1,5 @@
 ﻿using UnityEngine.EventSystems;
-public class Python : baseEnemy, IPointerClickHandler {
+public class Python : baseEnemy {
 	public Python() {
 		name = "Python";
 		maxHP = 140;
@@ -11,10 +11,5 @@ public class Python : baseEnemy, IPointerClickHandler {
         duration = 0;
         effect = Status.NONE;
         effective_skill = new NoSkill();
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        BattleManager.attackTarget = this;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
 [System.Serializable] 
-public class rmdir : basePlayer, IPointerClickHandler {
+public class rmdir : basePlayer {
 
 	public rmdir () {
 		name = "Raymond Dirginham";
@@ -72,10 +72,4 @@ public class rmdir : basePlayer, IPointerClickHandler {
 		info.AddValue ("RMDIR_SPELL3", skill3.skillName, typeof(string));
 		info.AddValue ("RMDIR_SPELL4", skill4.skillName, typeof(string));
 	}
-    public void OnPointerClick(PointerEventData eventData){
-        if (BattleManager.selectedUnit == null)
-            BattleManager.selectedUnit = this;
-        else
-            BattleManager.buffTarget = this;
-    }
 }

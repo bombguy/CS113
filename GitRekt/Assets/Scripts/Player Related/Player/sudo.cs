@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
 [System.Serializable] 
-public class sudo : basePlayer, IPointerClickHandler {
+public class sudo : basePlayer {
 	public sudo () {
 		name = "Susan Domo";
 		maxHP = 100;
@@ -73,11 +73,4 @@ public class sudo : basePlayer, IPointerClickHandler {
 		info.AddValue ("SUDO_SPELL4", skill4.skillName, typeof(string));
 
 	}
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (BattleManager.selectedUnit == null)
-            BattleManager.selectedUnit = this;
-        else
-            BattleManager.buffTarget = this;
-    }
 }

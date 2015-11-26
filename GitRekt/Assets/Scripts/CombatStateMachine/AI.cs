@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class AI : MonoBehaviour {
-
+public class AI:MonoBehaviour {
 	public basePlayer lowestHealthTarget(List<basePlayer> playerTeam){
 		if(playerTeam.Count == 1)
 			return playerTeam[0];

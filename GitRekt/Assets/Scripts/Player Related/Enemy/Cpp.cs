@@ -1,5 +1,5 @@
 ﻿using UnityEngine.EventSystems;
-public class Cpp : baseEnemy, IPointerClickHandler {
+public class Cpp : baseEnemy {
 	public Cpp() {
 		name = "C++";
 		maxHP = 300;
@@ -12,9 +12,4 @@ public class Cpp : baseEnemy, IPointerClickHandler {
         effect = Status.NONE;
         effective_skill = new NoSkill();
 	}
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        BattleManager.attackTarget = this;
-    }
 }

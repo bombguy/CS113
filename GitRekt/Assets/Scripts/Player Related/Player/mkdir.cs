@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 
 [System.Serializable]
-public class mkdir : basePlayer, IPointerClickHandler {
+public class mkdir : basePlayer{
 	public mkdir () {
 		name = "Miku Dirginham";
 		maxHP = 100;
@@ -78,10 +78,4 @@ public class mkdir : basePlayer, IPointerClickHandler {
 		info.AddValue ("MKDIR_SPELL4", skill4.skillName, typeof(string));
 
 	}
-    public void OnPointerClick(PointerEventData eventData){
-        if (BattleManager.selectedUnit == null)
-            BattleManager.selectedUnit = this;
-        else
-            BattleManager.buffTarget = this;
-    }
 }
