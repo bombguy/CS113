@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class BattleManager : MonoBehaviour {
     public CombatStateMachine stateMachine;
-
+    public static ActionBar actionbar;
+    //public static ActionBar[] actionBars;
     public static List<basePlayer> playerParty;
     public static List<baseEnemy> enemyParty;
 
@@ -19,7 +20,7 @@ public class BattleManager : MonoBehaviour {
     //GUI handlers
 	void Awake () {
         stateMachine = GetComponent<CombatStateMachine>();
-
+        actionbar = GetComponent<ActionBar>();
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
             
@@ -54,9 +55,7 @@ public class BattleManager : MonoBehaviour {
 	void Update () {
 
 	}
-    public static void beginTurn() {
-      
-    }
+
     
     public static void endAction() {
 
@@ -66,7 +65,11 @@ public class BattleManager : MonoBehaviour {
         skill = null;
         --actions;
     }
-
+    public static void beginTurn()
+    {
+        // For each action bar check the cooldowns.
+        actionbar.checkCoolDowns();
+    }
     public static void endTurn()
     {
         ++turnCounter;
