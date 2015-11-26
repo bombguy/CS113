@@ -14,9 +14,11 @@ public class BattleManager : MonoBehaviour {
     
     public   int actions;
     public   int turnCounter;
-
+    
+    //GUI Handlers
     public  ActionBar[] actionBars;
     public  ActionBar activeBar;
+
 
 	void Awake () {
         playerParty = new List<basePlayer>();
@@ -31,24 +33,16 @@ public class BattleManager : MonoBehaviour {
             playerParty.Add(GameInformation.players[i].deepCopy());
             actionBars[i].loadActionBar(playerParty[i]);
         }
-            if (GameInformation.level == 1)
-                for (int i = 0; i < GameInformation.enemies.Length; ++i)
-                    enemyParty.Add(new C());
-            else if (GameInformation.level == 2)
-                for (int i = 0; i < GameInformation.enemies.Length; ++i)
-                    enemyParty.Add(new Cpp());
-            else if (GameInformation.level == 3)
-                for (int i = 0; i < GameInformation.enemies.Length; ++i)
-                    enemyParty.Add(new Python());
-            else if (GameInformation.level == 4)
-                for (int i = 0; i < GameInformation.enemies.Length; ++i)
-                    enemyParty.Add(new RubyOnRails());
     }
 
 	void Update () {
-        checkActive();
+        checkSelectedUnit();
+        checkActiveActionBar();
 	}
-    public void checkActive() {
+    public void checkSelectedUnit() { 
+        
+    }
+    public void checkActiveActionBar() {
         if (activeBar.hasSelected) {
             skill = activeBar.selected_skill.current_skill;
             Debug.Log("SKILL CHOSEN:" +skill.skillName);
