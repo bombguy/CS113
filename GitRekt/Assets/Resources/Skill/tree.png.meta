@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 22f608fbaf37c4a8e9154563ef8d1ea8
-timeCreated: 1447816197
+guid: 77c7a4f7aa6d5ef4193da419a061f8f8
+timeCreated: 1448413757
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -37,7 +37,6 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1

@@ -12,8 +12,8 @@ public class actionBarSlot {
 
 	public void addSkillToSlot(baseSkill input_skill) {
 		skill = input_skill;
-        skillImage = Texture2D.whiteTexture; // Temp unit I fix Spell Names in Skills
-        //skillImage = Resources.Load<Texture2D>("Art/Spells/"+skill.skillName);
+        //skillImage = Texture2D.whiteTexture; // Temp unit I fix Spell Names in Skills
+        skillImage = Resources.Load<Texture2D>("Skills/"+input_skill.skillName.ToLower());
         //skillDetail.text = "Skill Name: " + skill.skillName +
           //          "\nCategory: " + skill.skillCategory +
             //        "\nEffect: " + skill.skillDescription;
