@@ -28,7 +28,7 @@ public class skill_button : MonoBehaviour {
     {
     }
 
-    //Skill Selected but possibly not one used. 
+    //public methods
     public void skillSelected()
     {
         selected = true;
@@ -58,6 +58,7 @@ public class skill_button : MonoBehaviour {
         cooldown_duration = current_skill.skillCoolDown;
     }
 
+    //private
     void applyCooldown()
     {
         onCoolDown = true;

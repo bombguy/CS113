@@ -24,7 +24,7 @@ public class sudo : basePlayer {
 	}
     public override basePlayer deepCopy()
     {
-        basePlayer copy = new sudo();
+        basePlayer copy = gameObject.AddComponent<sudo>();
         copy.maxHP = this.maxHP;
         copy.currentHP = this.currentHP;
         copy.attack = this.attack;

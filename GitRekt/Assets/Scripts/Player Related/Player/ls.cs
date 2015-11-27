@@ -26,7 +26,7 @@ public class ls : basePlayer
     }
     public override basePlayer deepCopy()
     {
-        basePlayer copy = new ls();
+        basePlayer copy = gameObject.AddComponent<ls>();
         copy.maxHP = this.maxHP;
         copy.currentHP = this.currentHP;
         copy.attack = this.attack;
@@ -40,6 +40,7 @@ public class ls : basePlayer
         copy.functionMastery = this.functionMastery;
         copy.datastructureMastery = this.datastructureMastery;
         copy.networkMastery = this.networkMastery;
+
         return copy;
     }
     public ls(SerializationInfo info, StreamingContext ctxt)

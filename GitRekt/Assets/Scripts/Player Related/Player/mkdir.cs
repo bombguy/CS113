@@ -25,7 +25,7 @@ public class mkdir : basePlayer{
 	}
     public override basePlayer deepCopy()
     {
-        basePlayer copy = new mkdir();
+        basePlayer copy = gameObject.AddComponent<mkdir>(); 
         copy.maxHP = this.maxHP;
         copy.currentHP = this.currentHP;
         copy.attack = this.attack;

@@ -3,26 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BattleManager : MonoBehaviour {
+    public basePlayer _selectedUnit;
+    public basePlayer _buffTarget;
+    public baseEnemy _attackTarget;
+    public baseSkill _skill;
    
-    public   List<basePlayer> playerParty;
-    public   List<baseEnemy> enemyParty;
-
-    public   basePlayer selectedUnit;
-    public   basePlayer buffTarget;
-    public   baseEnemy attackTarget;
-    public   baseSkill skill;
-    
+    public List<basePlayer> playerParty;
+    public List<baseEnemy> enemyParty;   
     public   int actions;
     public   int turnCounter;
-    
+
+    //Bools for control
+    public  bool skill_active;
+    public  bool selected_unit;
+    public  bool target_unit;
+    public  bool buff_unit;
     //GUI Handlers
     public  ActionBar[] actionBars;
     public  ActionBar activeBar;
 
-
+    public PanelController playerPanel;
 	void Awake () {
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
+
+
 	}
     void InitBattle() {
         //LoadInformation.LoadAllInformation();
@@ -39,23 +44,33 @@ public class BattleManager : MonoBehaviour {
         checkSelectedUnit();
         checkActiveActionBar();
 	}
-    public void checkSelectedUnit() { 
-        
+    public void checkSelectedUnit() {
+        if (playerPanel.hasSelected)
+        {
+            _selectedUnit = playerPanel.current_unit.unit;
+            selected_unit = true;
+            //playerPanel.hasSelected = false;
+            Debug.Log("UNIT SELECTED: " + _selectedUnit.name);
+        }
     }
     public void checkActiveActionBar() {
         if (activeBar.hasSelected) {
-            skill = activeBar.selected_skill.current_skill;
-            Debug.Log("SKILL CHOSEN:" +skill.skillName);
+            _skill = activeBar.selected_skill.current_skill;
+            skill_active = true;
+            Debug.Log("SKILL CHOSEN:" +_skill.skillName);
         }
 
     }
     
     public void endAction() {
-
-        selectedUnit = null;
-        buffTarget = null;
-        attackTarget = null;
-        skill = null;
+        _selectedUnit = null;
+        _buffTarget = null;
+        _attackTarget = null;
+        _skill = null;
+        skill_active = false;
+        target_unit = false;
+        buff_unit = false;
+        selected_unit = false;
         --actions;
     }
     public void beginTurn()

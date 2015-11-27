@@ -30,11 +30,11 @@ public class CombatStateMachine : MonoBehaviour
                 break;
             case (CombatStates.PLAYERSELECT):
                 //Check Unit selected.
-                if (battleManager.selectedUnit != null && battleManager.attackTarget != null && battleManager.skill != null)
+                if (battleManager.skill_active && battleManager.target_unit && battleManager.selected_unit)
                 {
                     CurrentState = CombatStates.PLAYERENEMY;
                 }
-                else if (battleManager.selectedUnit != null && battleManager.buffTarget != null && battleManager.skill != null)
+                else if (battleManager.skill_active && battleManager.buff_unit && battleManager.selected_unit)
                 {
                     CurrentState = CombatStates.PLAYERPLAYER;
                 }
@@ -71,21 +71,12 @@ public class CombatStateMachine : MonoBehaviour
     }
     private void win()
     {
-        int playersLeft = battleManager.playerParty.Count;
-        for (int i = 0; i < playersLeft; ++i)
-        {
-            Destroy(battleManager.playerParty[i]);
-        }
         //pass back application to map
         SaveInformation.SaveAllInformation();
+        ChangeScene.ChangeToScene("Map");
     }
     private void loss()
     {
-        int enemiesLeft = battleManager.enemyParty.Count;
-        for (int i = 0; i < enemiesLeft; ++i)
-        {
-            Destroy(battleManager.enemyParty[i]);
-        }
         //pass back application to map
         battleManager.endBattle();
     }
@@ -132,34 +123,34 @@ public class CombatStateMachine : MonoBehaviour
     //Player targeted Enemy
     IEnumerator player_target_enemy()
     {
-        switch (battleManager.selectedUnit.effect)
+        switch (battleManager._selectedUnit.effect)
         {
             // All possible states
             case (basePlayer.Status.ATTACK):
-                decreaseEffect(battleManager.selectedUnit, battleManager.skill);
-                playerAttack(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
+                decreaseEffect(battleManager._selectedUnit, battleManager._skill);
+                playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.CONFUSED):
-                unitConfused(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
+                unitConfused(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.DEFENSE):
-                decreaseEffect(battleManager.selectedUnit, battleManager.skill);
-                playerAttack(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
+                decreaseEffect(battleManager._selectedUnit, battleManager._skill);
+                playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.DOT):
-                unitDOTed(battleManager.selectedUnit, battleManager.skill);
-                playerAttack(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
+                unitDOTed(battleManager._selectedUnit, battleManager._skill);
+                playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.SKIP):
-                unitSkipped(battleManager.selectedUnit,battleManager.attackTarget,battleManager.skill);
-                if (!battleManager.selectedUnit.effected)
-                    playerAttack(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
+                unitSkipped(battleManager._selectedUnit,battleManager._attackTarget,battleManager._skill);
+                if (!battleManager._selectedUnit.effected)
+                    playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.STUN):
-                unitStunned(battleManager.selectedUnit,battleManager.skill);
+                unitStunned(battleManager._selectedUnit,battleManager._skill);
                 break;
             default:
-                playerAttack(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
+                playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
                 break;
         }
         yield return null;
@@ -167,34 +158,34 @@ public class CombatStateMachine : MonoBehaviour
     //Player targeted other player
     IEnumerator player_target_player()
     {
-        switch (battleManager.selectedUnit.effect)
+        switch (battleManager._selectedUnit.effect)
         {
             //All possible states our players can be in
             case (basePlayer.Status.ATTACK):
-                decreaseEffect(battleManager.selectedUnit, battleManager.skill);
-                playerBuff(battleManager.selectedUnit, battleManager.buffTarget, battleManager.skill);
+                decreaseEffect(battleManager._selectedUnit, battleManager._skill);
+                playerBuff(battleManager._selectedUnit, battleManager._buffTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.CONFUSED):
-                unitConfused(battleManager.selectedUnit, battleManager.buffTarget, battleManager.skill);
+                unitConfused(battleManager._selectedUnit, battleManager._buffTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.DEFENSE):
-                decreaseEffect(battleManager.selectedUnit, battleManager.skill);
-                playerBuff(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
+                decreaseEffect(battleManager._selectedUnit, battleManager._skill);
+                playerBuff(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.DOT):
-                unitDOTed(battleManager.selectedUnit, battleManager.skill);
-                playerBuff(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
+                unitDOTed(battleManager._selectedUnit, battleManager._skill);
+                playerBuff(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.SKIP):
-                unitSkipped(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
-                if (!battleManager.selectedUnit.effected)
-                    playerBuff(battleManager.selectedUnit, battleManager.attackTarget, battleManager.skill);
+                unitSkipped(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                if (!battleManager._selectedUnit.effected)
+                    playerBuff(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
                 break;
             case (basePlayer.Status.STUN):
-                unitStunned(battleManager.selectedUnit,battleManager.skill);
+                unitStunned(battleManager._selectedUnit,battleManager._skill);
                 break;
             default:
-                playerBuff(battleManager.selectedUnit, battleManager.buffTarget, battleManager.skill);
+                playerBuff(battleManager._selectedUnit, battleManager._buffTarget, battleManager._skill);
                 break;
         }
         yield return null;
@@ -328,7 +319,7 @@ public class CombatStateMachine : MonoBehaviour
                 enemyAttack(unit, target, skill);
                 break;
             case (baseEnemy.Status.SKIP):
-                unitSkipped(unit, target, battleManager.skill);
+                unitSkipped(unit, target, battleManager._skill);
                 if (!unit.effected)
                     enemyAttack(unit, target, skill);
                 break;

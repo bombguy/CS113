@@ -2,19 +2,28 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class playerButton : MonoBehaviour {
-	// Use this for initialization
+public class playerButton : MonoBehaviour
+{
+    public Button _playerButton; 
     public basePlayer unit;
     public bool selected;
-	void Start () {
+
+    void Start() {
         unit = GetComponent<basePlayer>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-    public void playerSelected(){
+        _playerButton = GetComponent<Button>();
+        selected = false;
+    }
+    void Update() { 
+        
+    }
+
+    public void playerSelected()
+    {
         selected = true;
+    }
+    public void addUnitToButton(basePlayer input)
+    {
+        unit = input; // possible place to instantiate
+        _playerButton.GetComponentInChildren<Text>().text = unit.name;
     }
 }

@@ -21,10 +21,19 @@ public class ActionBar : MonoBehaviour {
 	void Update () {
         updateSelected();
 	}
-    
+    //Public Methods
     public void checkCoolDowns() {
         for (int i=0; i < skills.Length; ++i)
             skills[i].checkCooldown();
+    }
+    public void loadActionBar(basePlayer unit)
+    {
+        current_unit = unit;
+        skills[0].addSkilltoButton(unit.skill1);
+        skills[1].addSkilltoButton(unit.skill2);
+        skills[2].addSkilltoButton(unit.skill3);
+        skills[3].addSkilltoButton(unit.skill4);
+        skills[4].addSkilltoButton(unit.basicAttack);
     }
     public void updateSelected() {
         for (int i = 0; i < skills.Length; ++i)
@@ -35,6 +44,7 @@ public class ActionBar : MonoBehaviour {
                 hasSelected = true;
             }
     }
+    //private
     void testActionBar() {
         baseSkill[] test_skills = new baseSkill[5];
         test_skills[0] = new Arrays();
@@ -47,12 +57,5 @@ public class ActionBar : MonoBehaviour {
         selected_skill.addSkilltoButton(new NoSkill());
 
     }
-    public void loadActionBar(basePlayer unit) {
-        current_unit = unit;
-        skills[0].addSkilltoButton(unit.skill1);
-        skills[1].addSkilltoButton(unit.skill2);
-        skills[2].addSkilltoButton(unit.skill3);
-        skills[3].addSkilltoButton(unit.skill4);
-        skills[4].addSkilltoButton(unit.basicAttack);
-    }
+    
 }

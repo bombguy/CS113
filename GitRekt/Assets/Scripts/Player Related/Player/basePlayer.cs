@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 
 [System.Serializable] 
-public abstract class basePlayer: MonoBehaviour , ISerializable {
+public abstract class basePlayer: MonoBehaviour, ISerializable {
 	public string		name;
 	public int			maxHP;
 	public int			currentHP;

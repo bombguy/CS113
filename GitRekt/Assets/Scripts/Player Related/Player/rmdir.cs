@@ -25,7 +25,7 @@ public class rmdir : basePlayer {
     }
     public override basePlayer deepCopy()
     {
-        basePlayer copy = new rmdir();
+        basePlayer copy = gameObject.AddComponent<rmdir>();
         copy.maxHP = this.maxHP;
         copy.currentHP = this.currentHP;
         copy.attack = this.attack;
