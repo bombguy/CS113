@@ -30,11 +30,11 @@ public class CombatStateMachine : MonoBehaviour
                 break;
             case (CombatStates.PLAYERSELECT):
                 //Check Unit selected.
-                if (battleManager.skill_active && battleManager.target_unit && battleManager.selected_unit)
+                if (battleManager.playerPlayer)
                 {
                     CurrentState = CombatStates.PLAYERENEMY;
                 }
-                else if (battleManager.skill_active && battleManager.buff_unit && battleManager.selected_unit)
+                else if (battleManager.playerEnemy)
                 {
                     CurrentState = CombatStates.PLAYERPLAYER;
                 }

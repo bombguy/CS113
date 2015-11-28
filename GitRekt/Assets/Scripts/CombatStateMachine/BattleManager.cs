@@ -13,86 +13,72 @@ public class BattleManager : MonoBehaviour {
     public   int actions;
     public   int turnCounter;
 
-    //Bools for control
-    public  bool skill_active;
-    public  bool selected_unit;
-    public  bool target_unit;
-    public  bool buff_unit;
-    //GUI Handlers
-    public  ActionBar[] actionBars;
-    public  ActionBar activeBar;
+    public bool playerPlayer;
+    public bool playerEnemy;
 
-    public PanelController playerPanel;
-    public enemyPanelController enemyPanel;
+    //GUI Manager
+    public GUIManager _gui;
 	void Awake () {
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
-
+        _gui = GetComponent<Canvas>().GetComponentInChildren<GUIManager>();
 
 	}
     void InitBattle() {
-        //LoadInformation.LoadAllInformation();
+        LoadInformation.LoadAllInformation();
         turnCounter = 1;
         actions = 4;
+        for(int i = 0; i<GameInformation.players.Length;++i)
+            playerParty.Add(GameInformation.players[i]);
+        for (int i = 0; i < GameInformation.enemies.Length; ++i)
+            //enemyParty.Add(GameInformation.enemies[i]);
+            enemyParty.Add(new C());
+        
+        _gui.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
 
-        for (int i = 0; i < GameInformation.players.Length; ++i){
-            playerParty.Add(GameInformation.players[i].deepCopy());
-            actionBars[i].loadActionBar(playerParty[i]);
-        }
     }
 
 	void Update () {
-        checkSelectedUnit();
-        checkActiveActionBar();
-        checkTarget();
+        _gui.updateGUI();
+        updateBM();
 	}
-    public void checkSelectedUnit() {
-        if (playerPanel.hasSelected)
-        {
-            _selectedUnit = playerPanel._currentPlayer._player;
-            selected_unit = true;
-            playerPanel.hasSelected = false;
-            Debug.Log("UNIT SELECTED: " + _selectedUnit.name);
+    public void updateBM() {
+        if (_gui.hasAction()) {
+            _selectedUnit = _gui.getUnit();
+            _skill = _gui.getSkill();
+            if (_gui.hasAttack())
+            {
+                _attackTarget = _gui.getEnemy();
+                playerPlayer = true;
+            }
+            else
+            {
+                _buffTarget = _gui.getBuffed();
+                playerEnemy = true;
+            }
         }
     }
-    public void checkActiveActionBar() {
-        if (activeBar.hasSelected) {
-            _skill = activeBar.selected_skill.current_skill;
-            skill_active = true;
-            Debug.Log("SKILL CHOSEN:" +_skill.skillName);
-        }
 
-    }
-    public void checkTarget() {
-        if (enemyPanel.hasSelected) {
-            _attackTarget = enemyPanel._currentEnemy._enemy;
-            target_unit = true;
-            enemyPanel.hasSelected = false;
-            Debug.Log("ENEMY CHOSEN:" + _attackTarget.name);
-        }
-    }
     public void endAction() {
         _selectedUnit = null;
         _buffTarget = null;
         _attackTarget = null;
         _skill = null;
-        skill_active = false;
-        target_unit = false;
-        buff_unit = false;
-        selected_unit = false;
+        playerEnemy = false;
+        playerPlayer = false;
         --actions;
+        _gui.endAction();
     }
     public void beginTurn()
     {
-        // For each action bar check the cooldowns.
-        for (int i = 0; i < actionBars.Length; ++i)
-            actionBars[i].checkCoolDowns();
-    }
-    public void endTurn()
-    {
         ++turnCounter;
         actions = 4;
+        _gui.beginTurn();
     }
+    public void endTurn() {
+        _gui.endTurn();
+    }
+    
     public void endBattle()
     {
         SaveInformation.SaveAllInformation();

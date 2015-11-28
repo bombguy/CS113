@@ -3,11 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class skill_button : MonoBehaviour {
-    Button skillButton;
-    Image skillImage;
-    Text skillName;
-    public baseSkill current_skill;
-    public bool selected;
+    Button _skillButton;
+    baseSkill _skill;
+    bool selected;
     //cooldowns
     bool onCoolDown;
     int cooldown_duration;
@@ -15,12 +13,12 @@ public class skill_button : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        skillImage = GetComponent<Image>();
-        skillButton = GetComponent<Button>();
-        skillName = GetComponentInChildren<Text>();
+        _skillButton = GetComponent<Button>();
+        _skill = new NoSkill();
         cooldown_duration = 0;
-        onCoolDown = !skillButton.interactable;
+        onCoolDown = false;
         selected = false;
+        cooldown_duration = 0;
     }
 
     // Update is called once per frame
@@ -33,13 +31,13 @@ public class skill_button : MonoBehaviour {
     {
         selected = true;
     }
-
+    public Button getButton() { return _skillButton; }
+    public bool isSelected() { return selected; }
     public void skillUsed()
     {
         applyCooldown();    //Put Skill on Cooldown.
     }
-    
-    public void checkCooldown()
+    public void updateCooldown()
     {
         if (onCoolDown)
         {
@@ -49,24 +47,32 @@ public class skill_button : MonoBehaviour {
                 --cooldown_duration;
         }
     }
-    public void addSkilltoButton(baseSkill in_skill)
+    public void setButton(baseSkill in_skill)
     {
-        current_skill = in_skill;
-        skillImage.sprite = Resources.Load<Sprite>("Skill/" + current_skill.skillName.ToLower());
-        skillName.text = in_skill.skillName;
-        skillButton.image = skillImage;
-        cooldown_duration = current_skill.skillCoolDown;
+        _skill = in_skill;
+        _skillButton.image.sprite = Resources.Load<Sprite>("Skill/" + _skill.skillName.ToLower());
+        _skillButton.GetComponentInChildren<Text>().text = in_skill.skillName;
+        cooldown_duration = _skill.skillCoolDown;
     }
-
+    public void setButton(skill_button inButton) {
+        this._skillButton = inButton.getButton();
+        this._skill = inButton.getSkill();
+        this.selected = inButton.isSelected();
+        this.onCoolDown = inButton.getCoolDown();
+        this.cooldown_duration = inButton.getCoolDownDuration();
+    }
+    public baseSkill getSkill() { return _skill; }
+    public bool getCoolDown() { return onCoolDown; }
+    public int getCoolDownDuration() { return cooldown_duration; }
     //private
     void applyCooldown()
     {
         onCoolDown = true;
-        skillButton.interactable = false;
+        _skillButton.interactable = false;
     }
     void clearCooldown()
     {
         onCoolDown = false;
-        skillButton.interactable = true;
+        _skillButton.interactable = true;
     }
 }
