@@ -4,13 +4,15 @@ using UnityEngine.UI;
 
 public class playerButton : MonoBehaviour
 {
-    public Button _playerButton; 
-    public basePlayer unit;
+    Button _playerButton; 
+    public basePlayer _player;
     public bool selected;
 
     void Start() {
-        unit = GetComponent<basePlayer>();
+        _player = GetComponent<basePlayer>();
         _playerButton = GetComponent<Button>();
+        if(_player != null)
+            _playerButton.GetComponentInChildren<Text>().text = _player.name;
         selected = false;
     }
     void Update() { 
@@ -23,7 +25,7 @@ public class playerButton : MonoBehaviour
     }
     public void addUnitToButton(basePlayer input)
     {
-        unit = input; // possible place to instantiate
-        _playerButton.GetComponentInChildren<Text>().text = unit.name;
+        _player = input; // possible place to instantiate
+        _playerButton.GetComponentInChildren<Text>().text = _player.name;
     }
 }

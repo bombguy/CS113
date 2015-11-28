@@ -72,8 +72,7 @@ public class CombatStateMachine : MonoBehaviour
     private void win()
     {
         //pass back application to map
-        SaveInformation.SaveAllInformation();
-        ChangeScene.ChangeToScene("Map");
+        battleManager.endBattle();
     }
     private void loss()
     {

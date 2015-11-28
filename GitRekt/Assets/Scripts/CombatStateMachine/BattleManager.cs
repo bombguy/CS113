@@ -23,6 +23,7 @@ public class BattleManager : MonoBehaviour {
     public  ActionBar activeBar;
 
     public PanelController playerPanel;
+    public enemyPanelController enemyPanel;
 	void Awake () {
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
@@ -43,13 +44,14 @@ public class BattleManager : MonoBehaviour {
 	void Update () {
         checkSelectedUnit();
         checkActiveActionBar();
+        checkTarget();
 	}
     public void checkSelectedUnit() {
         if (playerPanel.hasSelected)
         {
-            _selectedUnit = playerPanel.current_unit.unit;
+            _selectedUnit = playerPanel._currentPlayer._player;
             selected_unit = true;
-            //playerPanel.hasSelected = false;
+            playerPanel.hasSelected = false;
             Debug.Log("UNIT SELECTED: " + _selectedUnit.name);
         }
     }
@@ -61,7 +63,14 @@ public class BattleManager : MonoBehaviour {
         }
 
     }
-    
+    public void checkTarget() {
+        if (enemyPanel.hasSelected) {
+            _attackTarget = enemyPanel._currentEnemy._enemy;
+            target_unit = true;
+            enemyPanel.hasSelected = false;
+            Debug.Log("ENEMY CHOSEN:" + _attackTarget.name);
+        }
+    }
     public void endAction() {
         _selectedUnit = null;
         _buffTarget = null;
