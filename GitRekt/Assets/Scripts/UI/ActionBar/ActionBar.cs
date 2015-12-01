@@ -8,6 +8,7 @@ public class ActionBar : MonoBehaviour {
     
     public bool _hasSelected;
     public skill_button _selectedButton;
+    public baseSkill _skill;
     public basePlayer _unit;
 
 	void Awake(){
@@ -24,8 +25,7 @@ public class ActionBar : MonoBehaviour {
             _buttons[3].setButton(new DDOS());
             _buttons[4].setButton(new BasicAttack());
     }
-  
-    //Setting actionbars based on Spell
+
     public void setActionBar(basePlayer unit)
     {
         _unit = unit;
@@ -70,6 +70,7 @@ public class ActionBar : MonoBehaviour {
         for (int i = 0; i < _buttons.Length; ++i) {
             if (_buttons[i].selected)
             {
+                _skill = _buttons[i]._skill;
                 _selectedButton.setButton(_buttons[i]._skill);
                 _buttons[i].selected = false;
                 _hasSelected = true;

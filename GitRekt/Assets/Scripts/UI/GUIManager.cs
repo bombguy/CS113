@@ -83,7 +83,7 @@ public class GUIManager : MonoBehaviour {
         {
             if (_skill != null && _skill.targetEnemy)
             {
-                _enemy = enemyPanel._currentEnemy._enemy;
+                _enemy = enemyPanel._selectedEnemy;
                 action = true;
                 attack = true;
             }

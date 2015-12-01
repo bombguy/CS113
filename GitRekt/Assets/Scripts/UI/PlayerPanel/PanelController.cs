@@ -9,7 +9,7 @@ public class PanelController : MonoBehaviour
 {
     playerButton[] _playerButtons;
     
-    public basePlayer[] _players;
+    //public basePlayer[] _players;
     
     public basePlayer _currentPlayer;
     public baseSkill _currentSkill;
@@ -25,7 +25,6 @@ public class PanelController : MonoBehaviour
         hasSelected = false;
     }
     public void setPlayerButtons(basePlayer[] players) {
-        _players = players;
         for (int i = 0; i < _playerButtons.Length; ++i) {
             _playerButtons[i].setButton(players[i]);
         }
@@ -66,7 +65,7 @@ public class PanelController : MonoBehaviour
         ActionBar toUpdate = fetchActionBar(_currentPlayer);
         if (toUpdate != null) {
             if (toUpdate._hasSelected) {
-                _currentSkill = toUpdate._selectedButton._skill;
+                _currentSkill = toUpdate._skill;
                 toUpdate._hasSelected = false;
                 skillSelected = true;
             }

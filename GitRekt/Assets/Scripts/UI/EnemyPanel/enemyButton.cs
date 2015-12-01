@@ -8,18 +8,13 @@ public class enemyButton : MonoBehaviour {
 	// Use this for initialization
     void Awake() {
         _enemyButton = GetComponent<Button>();
+        _enemy = gameObject.AddComponent<baseEnemy>();
     }
 	void Start () {
         _enemyButton.GetComponentInChildren<Text>().text = "-";
         selected = false;
 	}
     void Update() { }
-    public void resetSelected() { selected = false; }
-    public bool isSelected() { return selected; }
-    public baseEnemy getEnemy()
-    {
-        return _enemy;
-    }
 
     public void enemySelected()
     {
