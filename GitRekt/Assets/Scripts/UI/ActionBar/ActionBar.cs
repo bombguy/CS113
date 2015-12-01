@@ -5,65 +5,73 @@ using UnityEngine.UI;
 public class ActionBar : MonoBehaviour {
     baseSkill _noSkill;
     skill_button[] _buttons;
-    skill_button _selectedButton;
-    basePlayer _unit;
-    bool _hasSelected;
+    
+    public bool _hasSelected;
+    public skill_button _selectedButton;
+    public basePlayer _unit;
+
 	void Awake(){
         _buttons = GetComponentsInChildren<skill_button>();
-        _selectedButton = _buttons[_buttons.Length-1];
     }
-    public void setBlank() {
-        _noSkill = new NoSkill();
-        for (int i = 0; i < _buttons.Length; ++i)
-            _buttons[i].setButton(_noSkill);
+    void Start() {
+        _selectedButton = _buttons[_buttons.Length - 1];
+        testActionBar();
     }
-    public skill_button[] getButtons(){return _buttons;}
-    public skill_button getSelectedButton() { return _selectedButton; }
-    public basePlayer getUnit() { return _unit; }
-    public baseSkill getSkill() { return _selectedButton.getSkill(); }
+    public void testActionBar() {
+            _buttons[0].setButton(new FireWall());
+            _buttons[1].setButton(new FunctionsWithOutput());
+            _buttons[2].setButton(new Arrays());
+            _buttons[3].setButton(new DDOS());
+            _buttons[4].setButton(new BasicAttack());
+    }
+  
+    //Setting actionbars based on Spell
     public void setActionBar(basePlayer unit)
     {
         _unit = unit;
-        _buttons[0].setButton(unit.skill1);
-        _buttons[1].setButton(unit.skill2);
-        _buttons[2].setButton(unit.skill3);
-        _buttons[3].setButton(unit.skill4);
-        _buttons[4].setButton(unit.basicAttack);
-    }
-    public void setActionBar(ActionBar inputBar){
-        _buttons = inputBar.getButtons();
-        _selectedButton = inputBar.getSelectedButton();
-        _unit = inputBar.getUnit();
-        _hasSelected = inputBar.hasSelected();
-    }
-    public ActionBar getActionBar() { return this; }
-    public bool hasSelected() { return _hasSelected; }
-    public void resetSelected() { _hasSelected = false; }
-    public void applySkillSelection() {
-        _selectedButton.skillUsed();
+
+        if (unit.skill1.skillName == "-") {
+
+        }
+        else{
+            _buttons[0].setButton(unit.skill1);
+            _buttons[1].setButton(unit.skill2);
+            _buttons[2].setButton(unit.skill3);
+            _buttons[3].setButton(unit.skill4);
+            _buttons[4].setButton(unit.basicAttack);
+        }
     }
 
+    //Used to updateCooldowns after turns
     public void updateCooldowns()
     {
         for (int i = 0; i < _buttons.Length; ++i)
             _buttons[i].updateCooldown();
     }
-    // Use this for initialization
-	void Start () {
-        //ToDo add unit ie each unit has its own actionBar.
-        _hasSelected = false;
-        _noSkill = new NoSkill();
-	}
+    //Used to hide and Show the ActionBar
+    public void hideActionBar() {
+        for (int i = 0; i < _buttons.Length; ++i) {
+            _buttons[i].hideButton();
+        }
+        GetComponent<Image>().enabled = false;
+    }
+    public void displayActionBar() {
+        for (int i = 0; i < _buttons.Length; ++i) {
+            _buttons[i].displayButton();
+        }
+        GetComponent<Image>().enabled = true;
+    }
 	
-	// Update is called once per frame
+    // Update is called once per frame
 	void Update () {
         updateSelected();
 	}
     public void updateSelected() {
         for (int i = 0; i < _buttons.Length; ++i) {
-            if (_buttons[i].isSelected())
+            if (_buttons[i].selected)
             {
-                _selectedButton.setButton(_buttons[i].getSkill());
+                _selectedButton.setButton(_buttons[i]._skill);
+                _buttons[i].selected = false;
                 _hasSelected = true;
             }
                 

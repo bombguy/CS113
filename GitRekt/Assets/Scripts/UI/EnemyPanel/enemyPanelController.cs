@@ -2,22 +2,34 @@
 using System.Collections;
 
 public class enemyPanelController : MonoBehaviour {
-    public enemyButton[] _enemyButtons;
+    enemyButton[] _enemyButtons;
     public enemyButton _currentEnemy;
-    public bool hasSelected;
-	// Use this for initialization
-    public enemyButton[] getEnemyButtons() { return _enemyButtons; }
+    public bool _hasSelected;
+
+    public void Awake() {
+        _enemyButtons = GetComponentsInChildren<enemyButton>();
+    }
+    public void Start() {
+        _currentEnemy = _enemyButtons[_enemyButtons.Length - 1];
+        //testEnemies();
+    }
+    public void testEnemies() {
+        for (int i = 0; i < _enemyButtons.Length-1; ++i) { 
+            baseEnemy test = new C();
+            _enemyButtons[i].setButton(test);
+        }
+    }
     public void setEnemyButtons(baseEnemy[] enemies)
     {
-        for (int i = 0; 0 < enemies.Length; ++i)
+        for (int i = 0; i < enemies.Length; ++i)
         {
             _enemyButtons[i].setButton(enemies[i]);
         }
     }
-    public baseEnemy getEnemy() { return _currentEnemy.getEnemy(); }
-    public void resetSelected() { hasSelected = false; }
-    public bool isSelected() { return hasSelected; }
-
+    public void disableEnemy() {
+        _currentEnemy.buttonDisable();
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -32,7 +44,7 @@ public class enemyPanelController : MonoBehaviour {
             {
                 _currentEnemy.setButton(_enemyButtons[i].getEnemy());
                 _enemyButtons[i].resetSelected();
-                hasSelected = true;
+                _hasSelected = true;
             }
         }
     }

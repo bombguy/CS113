@@ -21,9 +21,11 @@ public class BattleManager : MonoBehaviour {
 	void Awake () {
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
-        _gui = GetComponent<Canvas>().GetComponentInChildren<GUIManager>();
-
+        _gui = GameObject.Find("GUI").GetComponentInChildren<GUIManager>();
 	}
+    void Start() {
+        testBattle();
+    }
     void InitBattle() {
         LoadInformation.LoadAllInformation();
         turnCounter = 1;
@@ -31,11 +33,26 @@ public class BattleManager : MonoBehaviour {
         for(int i = 0; i<GameInformation.players.Length;++i)
             playerParty.Add(GameInformation.players[i]);
         for (int i = 0; i < GameInformation.enemies.Length; ++i)
-            //enemyParty.Add(GameInformation.enemies[i]);
-            enemyParty.Add(new C());
+            enemyParty.Add(GameInformation.enemies[i]);
         
         _gui.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
+    }
+    void testBattle() {
+        turnCounter = 1;
+        actions = 4;
+        basePlayer ls = new ls();
+        basePlayer mkdir = new mkdir();
+        basePlayer rmdir = new rmdir();
+        basePlayer sudo = new sudo();
+        playerParty.Add(ls);
+        playerParty.Add(mkdir);
+        playerParty.Add(rmdir);
+        playerParty.Add(sudo);
 
+        for (int i = 0; i < 4; ++i)
+            enemyParty.Add(new C());
+
+        _gui.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
     }
 
 	void Update () {

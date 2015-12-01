@@ -7,7 +7,7 @@ public class NoSkill : baseSkill {
 	
 	public NoSkill () {
 		skillName = "-";
-		skillDescription = "";
+		skillDescription = " ";
 		skillLevel = 0;
 		skillExperience = 0;
 		skillCoolDown = 0;
