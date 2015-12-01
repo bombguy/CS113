@@ -29,6 +29,18 @@ public class LoadInformation{
 //		GameInformation.players [0].skill2 = (baseSkill)bformatter.Deserialize (stream);
 //		GameInformation.players [0].skill3 = (baseSkill)bformatter.Deserialize (stream);
 //		GameInformation.players [0].skill4 = (baseSkill)bformatter.Deserialize (stream);
+		Stream stream1 = File.Open("Inventory.gr", FileMode.Open);
+		GameInformation.inventorySkills [0] = (Arrays)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [1] = (DDOS)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [2] = (DefaultFunctions)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [3] = (FireWall)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [4] = (FunctionsWithInputOutput)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [5] = (FunctionsWithOutput)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [6] = (Hash)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [7] = (IfElse)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [8] = (InfiniteLoop)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [9] = (PacketSniffing)bformatter.Deserialize (stream1);
+		GameInformation.inventorySkills [11] = (Stack)bformatter.Deserialize (stream1);
 
 
 	}
