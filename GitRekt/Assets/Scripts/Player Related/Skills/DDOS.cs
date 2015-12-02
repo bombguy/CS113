@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Runtime.Serialization;
 
+[System.Serializable]
 public class DDOS : baseSkill {
 	public GameInformation gameInformation;
 	

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Runtime.Serialization;
 
+[System.Serializable]
 public class Stack : baseSkill {
 	public GameInformation gameInformation;
 	

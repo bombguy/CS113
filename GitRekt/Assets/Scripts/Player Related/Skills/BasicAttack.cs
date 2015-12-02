@@ -3,6 +3,7 @@ using System.Collections;
 using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
 public class BasicAttack : baseSkill {
 	public GameInformation gameInformation;
 	

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Runtime.Serialization;
 
+[System.Serializable]
 public class InfiniteLoop : baseSkill {
 	public GameInformation gameInformation;
 	
