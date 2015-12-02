@@ -1,9 +1,12 @@
 fileFormatVersion: 2
-guid: cfda05bcb57043045810b803ef91f7ac
-timeCreated: 1448413760
+guid: 6c7cc70acb8866740bbb568cc6f60297
+timeCreated: 1448964199
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: sudo spritesheet_0
+    21300002: sudo spritesheet_1
+    21300004: sudo spritesheet_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -37,19 +40,48 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 70
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: sudo spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4
+        width: 55
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sudo spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 4
+        width: 50
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sudo spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 4
+        width: 51
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

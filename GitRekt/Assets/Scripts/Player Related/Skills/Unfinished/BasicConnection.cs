@@ -29,7 +29,7 @@ public class BasicConnection : baseSkill {
 		skillCoolDown = 3;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
 	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
