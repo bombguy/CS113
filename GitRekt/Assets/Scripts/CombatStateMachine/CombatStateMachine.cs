@@ -21,7 +21,7 @@ public class CombatStateMachine : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(CurrentState);
+        //Debug.Log(CurrentState);
         switch (CurrentState)
         {
             case(CombatStates.STARTTURN):
@@ -193,7 +193,7 @@ public class CombatStateMachine : MonoBehaviour
     {
         for (int i = 0; i < battleManager.actions; i++)
         {
-            baseEnemy attacker = battleManager.enemyParty[Random.Range(0, GameInformation.enemies.Length)];
+            baseEnemy attacker = battleManager.enemyParty[Random.Range(0, battleManager.enemyParty.Count)];
             basePlayer target = enemy.lowestHealthTarget(battleManager.playerParty);
             enemyTurnPhase(attacker, target, attacker.basicAttack);
         }

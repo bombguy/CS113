@@ -13,8 +13,10 @@ public class ActionBar : MonoBehaviour {
 
 	void Awake(){
         _buttons = GetComponentsInChildren<skill_button>();
+
     }
     void Start() {
+        _noSkill = new NoSkill();
         _selectedButton = _buttons[_buttons.Length - 1];
         testActionBar();
     }
@@ -42,12 +44,16 @@ public class ActionBar : MonoBehaviour {
         }
     }
 
-    //Used to updateCooldowns after turns
+    //Cooldowns
+    public void applyCoolDown() {
+        _selectedButton.skillUsed();
+    }
     public void updateCooldowns()
     {
         for (int i = 0; i < _buttons.Length; ++i)
             _buttons[i].updateCooldown();
     }
+    
     //Used to hide and Show the ActionBar
     public void hideActionBar() {
         for (int i = 0; i < _buttons.Length; ++i) {
@@ -61,7 +67,7 @@ public class ActionBar : MonoBehaviour {
         }
         GetComponent<Image>().enabled = true;
     }
-	
+
     // Update is called once per frame
 	void Update () {
         updateSelected();
@@ -70,10 +76,18 @@ public class ActionBar : MonoBehaviour {
         for (int i = 0; i < _buttons.Length; ++i) {
             if (_buttons[i].selected)
             {
-                _skill = _buttons[i]._skill;
-                _selectedButton.setButton(_buttons[i]._skill);
-                _buttons[i].selected = false;
-                _hasSelected = true;
+                if (_skill == null || _skill != _buttons[i]._skill) {
+                    _skill = _buttons[i]._skill;
+                    _selectedButton.setButton(_buttons[i]._skill);
+                    _buttons[i].selected = false;
+                    _hasSelected = true;    
+                }
+                else if (_skill == _buttons[i]._skill) {
+                    _skill = null;
+                    _selectedButton.setButton(_noSkill);
+                    _buttons[i].selected = false;
+                    _hasSelected = false;
+                }
             }
                 
         }

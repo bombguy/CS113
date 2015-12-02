@@ -16,6 +16,8 @@ public class BasicAttack : baseSkill {
 		skillCategory = SkillCategory.NONE;
 		skillDescription = "Deals " + (skillPower * 100) + "% of player's attack";
 		//skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
+        targetEnemy = true;
+        targetPlayer = true;
 	}
 
 	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {

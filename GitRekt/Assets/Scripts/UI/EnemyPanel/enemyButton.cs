@@ -31,6 +31,7 @@ public class enemyButton : MonoBehaviour {
     }
     public void setButton(baseEnemy input)
     {
+        Debug.Log("In setButton");
         _enemy = input;
         _enemyButton.GetComponentInChildren<Text>().text = _enemy.name;
     }

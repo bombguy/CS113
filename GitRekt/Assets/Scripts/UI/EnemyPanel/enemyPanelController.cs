@@ -14,7 +14,6 @@ public class enemyPanelController : MonoBehaviour {
     public void Start() {
         _hasSelected = false;
         _selectedEnemy = null;
-        testEnemies();
     }
     public void testEnemies() {
         enemies = new baseEnemy[4];
@@ -36,7 +35,7 @@ public class enemyPanelController : MonoBehaviour {
     void Update()
     {
         updateSelected();
-        updateDebug();
+        //updateDebug();
     }
     void updateDebug() {
         if (_selectedEnemy != null)
