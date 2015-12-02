@@ -27,7 +27,7 @@ public class Arrays : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
 
 		//skill experience gain
@@ -36,11 +36,15 @@ public class Arrays : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return 0;
 
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
 	public Arrays(SerializationInfo info, StreamingContext ctxt)
 	{

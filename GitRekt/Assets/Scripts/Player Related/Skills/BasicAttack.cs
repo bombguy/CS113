@@ -16,11 +16,13 @@ public class BasicAttack : baseSkill {
 		skillCategory = SkillCategory.NONE;
 		skillDescription = "Deals " + (skillPower * 100) + "% of player's attack";
 		//skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
+        targetEnemy = true;
+        targetPlayer = true;
 	}
 
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
-		int damage = (int)((castor as basePlayer).attack * skillPower);
+		int damage = (int)(caster.attack * skillPower);
 
 		//skill coolddown here
 		
@@ -35,7 +37,10 @@ public class BasicAttack : baseSkill {
 		}
 		return damage;
 	}
-
+    public override int cast(baseEnemy caster)
+    {
+        return caster.attack;
+    }
 	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
 		return;
 	}

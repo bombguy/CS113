@@ -21,11 +21,6 @@ public class Loop : baseSkill {
 		additionalEffect.power = 0;				
 		additionalEffect.duration = 3;
 
-
-
-		
-		
-		
 		skillLevel = 0;
 		skillExperience = 0;
 		skillCoolDown = 5;
@@ -34,7 +29,7 @@ public class Loop : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
 		int attack = (skillLevel * 5) + 10;
 		//skill experience gain
@@ -43,10 +38,14 @@ public class Loop : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return attack;
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
 	public Loop(SerializationInfo info, StreamingContext ctxt)
 	{

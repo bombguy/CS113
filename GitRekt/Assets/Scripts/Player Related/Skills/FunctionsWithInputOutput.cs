@@ -23,9 +23,10 @@ public class FunctionsWithInputOutput : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
-	public override int cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
 		int health = 100 / (skillLevel + 1);
+        caster.currentHP -= health; // Trading health for attack.
 		int attack = (skillLevel * health) + 10;
 
 		//skill experience gain
@@ -34,10 +35,14 @@ public class FunctionsWithInputOutput : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return attack;
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
 	public FunctionsWithInputOutput(SerializationInfo info, StreamingContext ctxt)
 	{
