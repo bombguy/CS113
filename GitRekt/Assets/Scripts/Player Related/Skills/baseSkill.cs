@@ -53,6 +53,7 @@ public abstract class baseSkill: ISerializable{
 	public double			skillPower;
 	public Sprite			skillIcon;
 
-	public abstract int 	cast(MonoBehaviour castor, MonoBehaviour target);
+	public abstract int 	cast(basePlayer caster);
+    public abstract int     cast(baseEnemy caster);
 	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
 }

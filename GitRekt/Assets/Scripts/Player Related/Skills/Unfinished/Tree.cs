@@ -30,7 +30,7 @@ public class Tree : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
 		// int attack = (5*skillLevel) + 10) * numberofnodes
 
@@ -40,11 +40,15 @@ public class Tree : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		//return attack
 		return 0;
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
 	public Tree(SerializationInfo info, StreamingContext ctxt)
 	{

@@ -29,7 +29,7 @@ public class DDOS : baseSkill {
 		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int 	cast(basePlayer caster) {
 		//skill effect
 
 		//skill experience gain
@@ -38,10 +38,14 @@ public class DDOS : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return 0;
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
 	public DDOS(SerializationInfo info, StreamingContext ctxt)
 	{
