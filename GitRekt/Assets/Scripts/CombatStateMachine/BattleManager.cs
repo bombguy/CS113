@@ -18,22 +18,25 @@ public class BattleManager : MonoBehaviour {
     //CombatStateMachine
     CombatStateMachine csm;
 	void Awake () {
+        //GameInformation.loadGame();
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
         csm = GetComponent<CombatStateMachine>();
 	}
     void Start() {
-        testBattle();
+        InitBattle();
         csm.updateMachine();
     }
     void InitBattle() {
-        LoadInformation.LoadAllInformation();
         turnCounter = 1;
         actions = 4;
-        for(int i = 0; i<GameInformation.players.Length;++i)
-            playerParty.Add(GameInformation.players[i]);
-        for (int i = 0; i < GameInformation.enemies.Length; ++i)
-            enemyParty.Add(GameInformation.enemies[i]);    
+        for (int i = 0; i < GameInformation.players.Length; ++i) {
+            playerParty.Add(GameInformation.players[i].deepCopy());
+        }
+            
+        if(GameInformation.level == 1)
+            for (int i = 0; i < GameInformation.enemies.Length; ++i)
+                enemyParty.Add(GameInformation.enemies[i]);    
         GUIManager.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
     }
     void testBattle() {
