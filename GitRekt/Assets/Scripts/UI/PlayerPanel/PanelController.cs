@@ -8,20 +8,13 @@ using System.Collections;
 public class PanelController : MonoBehaviour
 {
     playerButton[] _playerButtons;
-    
-    //public basePlayer[] _players;
-    
-    public basePlayer _currentPlayer;
-    public baseSkill _currentSkill;
+    basePlayer _currentPlayer;
 
-    public bool hasSelected;
-    public bool targetMode;
     void Awake() {
         _playerButtons = GetComponentsInChildren<playerButton>();
     }
     void Start(){
-        hasSelected = false;
-        targetMode = false;
+
     }
     public void setPlayerButtons(basePlayer[] players) {
         for (int i = 0; i < _playerButtons.Length; ++i) {
@@ -29,27 +22,17 @@ public class PanelController : MonoBehaviour
         }
     }
     public void endAction() {
-        // Put skill on cooldown, disable player Button
-        playerButton _current = fetchPlayerButton(_currentPlayer);
-        _current._actionBar.applyCoolDown(); // Apply CoolDown
-        _current.buttonDisable();
-        _current.hideActionBar();
-        
-    }
-    public void endTurn() {
-        hasSelected = false;
-        targetMode = false;
-        //might have to set basePlayer and baseSkill back to null here.
+        fetchActionBar(_currentPlayer).endAction();
+        fetchPlayerButton(_currentPlayer).buttonDisable();
+        _currentPlayer = null;
     }
     public void beginTurn() {
         //Start of each turn update Cooldowns and enable all buttons to press.
+        Debug.Log("Begin Turn- PanelController.");
         for (int i = 0; i < _playerButtons.Length; ++i)
         {
             _playerButtons[i].buttonEnable();
-            _playerButtons[i]._actionBar.updateCooldowns();
         }
-
-
     }
     public int count() {
         return _playerButtons.Length;
@@ -69,74 +52,46 @@ public class PanelController : MonoBehaviour
         }
         return _playerButtons[0];
     }
-    // Update is called once per frame
-    void Update()
-    {
-        updateUnit();
-        updateSkill();
-        //updateDebug();
+    // Late update after Update is called once per frame
+    void Update() {
+        updateUnit();    
     }
-    void updateDebug() {
-        if (_currentPlayer != null)
-            Debug.Log("Current Player:" + _currentPlayer);
-        if (_currentPlayer != null)
-            Debug.Log("Current Skill :" + _currentSkill);   
-    }
-    //Logic to update skill choice by actionbar. 
-    void updateSkill() {
-        ActionBar toUpdate = fetchActionBar(_currentPlayer);
-        if (toUpdate != null) {
-            if (toUpdate._hasSelected) {
-                _currentSkill = toUpdate._skill;
-                toUpdate._hasSelected = false;
-                hasSelected = true;
-                targetMode = true;
-            }
-        }
-    }
-    //Logic to displayActionBars and capture user input.
+    //Logic to displayActionBars.
     void updateUnit()
     {
         // each player Button
         for (int i = 0; i < _playerButtons.Length; ++i)
         {
             //Check if they are selected
-            if (_playerButtons[i].selected)
+            if (_playerButtons[i]._selected)
             {
-                // Check if we attempting to target a player
-                if (targetMode == false)
+                /*
+                * Cases:
+                 * -No player selected
+                 * -Current player is reselected
+                 * -Player different then current player selected.
+                */ 
+                if (_currentPlayer == null)
                 {
-                    // If not. Then we are selecting a unit to take action
-                    if (_currentPlayer == null)
-                    {
-                        _currentPlayer = _playerButtons[i]._player;
-                        _playerButtons[i].showActionBar();
-                        _playerButtons[i].selected = false;
-                        _currentSkill = null;
-                    }
-                    else if (_currentPlayer == _playerButtons[i]._player)
-                    {
-                        _currentPlayer = null;
-                        _playerButtons[i].hideActionBar();
-                        _playerButtons[i].selected = false;
-                        hasSelected = false;
-                        _currentSkill = null;
-                    }
-                    else
-                    {
-                        fetchActionBar(_currentPlayer).hideActionBar();
-                        _currentPlayer = _playerButtons[i]._player;
-                        _playerButtons[i].showActionBar();
-                        _playerButtons[i].selected = false;
-                        hasSelected = true;
-                        _currentSkill = null;
-                    }
-                }
-                //Target Mode on. Meaning were attempting to target a player.
-                else {
                     _currentPlayer = _playerButtons[i]._player;
-                    hasSelected = true;
+                    _playerButtons[i]._actionBar.displayActionBar();
+                    _playerButtons[i]._selected = false;
                 }
+                else if (_currentPlayer == _playerButtons[i]._player)
+                {
+                    _currentPlayer = null;
+                    _playerButtons[i]._actionBar._skill = null;
+                    _playerButtons[i]._actionBar.hideActionBar();
+                    _playerButtons[i]._selected = false;
+                }
+                else if (_currentPlayer != _playerButtons[i]._player)
+                {
+                    fetchActionBar(_currentPlayer).hideActionBar();
+                    _currentPlayer = _playerButtons[i]._player;
+                    _playerButtons[i]._actionBar.displayActionBar();
+                    _playerButtons[i]._selected = false;
+                }
+                Debug.Log("Unit chosen " + _currentPlayer);
             }
         }
     }

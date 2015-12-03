@@ -3,22 +3,25 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class ActionBar : MonoBehaviour {
-    baseSkill _noSkill;
     skill_button[] _buttons;
     
     public bool _hasSelected;
     public skill_button _selectedButton;
     public baseSkill _skill;
-    public basePlayer _unit;
 
+    public void endAction() {
+        _hasSelected = false;
+        _skill = null;
+        hideActionBar();
+    }
+    
 	void Awake(){
         _buttons = GetComponentsInChildren<skill_button>();
-
     }
     void Start() {
-        _noSkill = new NoSkill();
         _selectedButton = _buttons[_buttons.Length - 1];
         testActionBar();
+        _selectedButton.hideButton();
     }
     public void testActionBar() {
             _buttons[0].setButton(new FireWall());
@@ -30,7 +33,6 @@ public class ActionBar : MonoBehaviour {
 
     public void setActionBar(basePlayer unit)
     {
-        _unit = unit;
 
         if (unit.skill1.skillName == "-") {
 
@@ -44,16 +46,6 @@ public class ActionBar : MonoBehaviour {
         }
     }
 
-    //Cooldowns
-    public void applyCoolDown() {
-        _selectedButton.skillUsed();
-    }
-    public void updateCooldowns()
-    {
-        for (int i = 0; i < _buttons.Length; ++i)
-            _buttons[i].updateCooldown();
-    }
-    
     //Used to hide and Show the ActionBar
     public void hideActionBar() {
         for (int i = 0; i < _buttons.Length; ++i) {
@@ -76,17 +68,25 @@ public class ActionBar : MonoBehaviour {
         for (int i = 0; i < _buttons.Length; ++i) {
             if (_buttons[i].selected)
             {
-                if (_skill == null || _skill != _buttons[i]._skill) {
+                if (_skill == null) {
                     _skill = _buttons[i]._skill;
                     _selectedButton.setButton(_buttons[i]._skill);
+                    _selectedButton.displayButton();
                     _buttons[i].selected = false;
                     _hasSelected = true;    
                 }
-                else if (_skill == _buttons[i]._skill) {
+                else if (_skill == _buttons[i]._skill)
+                {
                     _skill = null;
-                    _selectedButton.setButton(_noSkill);
+                    _selectedButton.hideButton();
                     _buttons[i].selected = false;
                     _hasSelected = false;
+                }
+                else {
+                    _skill = _buttons[i]._skill;
+                    _selectedButton.setButton(_skill);
+                    _buttons[i].selected = false;
+                    _hasSelected = true;
                 }
             }
                 

@@ -2,22 +2,25 @@
 using System.Collections;
 using UnityEngine.UI;
 public class enemyButton : MonoBehaviour {
-   Button _enemyButton;
+   public Button _enemyButton;
    public baseEnemy _enemy;
    public bool selected;
 	// Use this for initialization
     void Awake() {
         _enemyButton = GetComponent<Button>();
-        _enemy = gameObject.AddComponent<baseEnemy>();
     }
 	void Start () {
-        _enemyButton.GetComponentInChildren<Text>().text = "-";
+        if (_enemy != null)
+            _enemyButton.GetComponentInChildren<Text>().text = _enemy.name;
+        else
+            _enemyButton.GetComponentInChildren<Text>().text = "-";
         selected = false;
 	}
     void Update() { }
 
     public void enemySelected()
     {
+        GUIManager.updateTarget(_enemy);
         selected = true;
     }
     public void buttonDisable()
@@ -31,7 +34,6 @@ public class enemyButton : MonoBehaviour {
     }
     public void setButton(baseEnemy input)
     {
-        Debug.Log("In setButton");
         _enemy = input;
         _enemyButton.GetComponentInChildren<Text>().text = _enemy.name;
     }

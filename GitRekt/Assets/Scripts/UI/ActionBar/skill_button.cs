@@ -3,15 +3,15 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class skill_button : MonoBehaviour {
-    Button _skillButton;
-    Image _skillImage;
-    Text _skillName;
-    Text _skillDescription;
-
-    bool onCoolDown;
-    int cooldown_duration;
-
+    public Button _skillButton;
+    public Image _skillImage;
+    public Text _skillName;
+    public Text _skillDescription;
     public baseSkill _skill;
+
+    public bool onCoolDown;
+    public int cooldown_duration;
+
     public bool selected;
 
 
@@ -19,7 +19,9 @@ public class skill_button : MonoBehaviour {
         _skillButton = GetComponent<Button>();
         _skillImage = GetComponent<Image>();
         _skillName = _skillButton.GetComponentsInChildren<Text>()[0];
+        _skillName.color = Color.white; 
         _skillDescription = _skillButton.GetComponentsInChildren<Text>()[1];
+        _skillDescription.color = Color.white;
     }
     // Use this for initialization
     void Start()
@@ -45,19 +47,26 @@ public class skill_button : MonoBehaviour {
     public void skillSelected()
     {
         selected = true;
+        GUIManager.updateSkill(_skill);
     }
-    public void skillUsed()
+    //Cooldown System
+    public void applyCooldown()
     {
-        applyCooldown();    //Put Skill on Cooldown.
+        onCoolDown = true;
+        _skillButton.interactable = false;
+    }
+    public void clearCooldown()
+    {
+        onCoolDown = false;
+        _skillButton.interactable = true;
     }
     public void updateCooldown()
     {
         if (onCoolDown)
         {
-            if (cooldown_duration == 0)
+            //Mod math forces us to add 1 to the cooldown_duration. ie. cooldown = 1; n%1 = 0. 
+            if (BattleManager.turnCounter % cooldown_duration + 1 == 0)
                 clearCooldown();
-            else
-                --cooldown_duration;
         }
     }
     public void setButton(baseSkill in_skill)
@@ -80,15 +89,6 @@ public class skill_button : MonoBehaviour {
         _skillImage.enabled = true;
         _skillName.enabled = true;
     }
-    //private
-    void applyCooldown()
-    {
-        onCoolDown = true;
-        _skillButton.interactable = false;
-    }
-    void clearCooldown()
-    {
-        onCoolDown = false;
-        _skillButton.interactable = true;
-    }
+    
+
 }
