@@ -28,6 +28,7 @@ public class enemyPanelController : MonoBehaviour {
         _enemies = new baseEnemy[enemies.Length];
         for (int i = 0; i < enemies.Length; ++i)
         {
+
             _enemyButtons[i].setButton(enemies[i]);
             _enemies[i] = enemies[i];
         }

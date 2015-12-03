@@ -20,8 +20,6 @@ public class BreakAndContinue : baseSkill {
 		additionalEffect.power = 0;
 		additionalEffect.duration = 1;
 		
-		
-		
 		skillLevel = 0;
 		skillExperience = 0;
 		skillCoolDown = 5;
@@ -32,7 +30,7 @@ public class BreakAndContinue : baseSkill {
 	
 	public override int 	cast(basePlayer caster) {
 		//skill effect
-		int attack = 50 + (skillLevel * 5);
+		int attack = 50 + (caster.networkMastery * 5);
 		//skill experience gain
 		skillExperience++;
 		

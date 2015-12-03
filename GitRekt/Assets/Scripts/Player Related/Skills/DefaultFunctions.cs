@@ -31,7 +31,7 @@ public class DefaultFunctions : baseSkill {
 	
 	public override int cast(basePlayer caster) {
 		//skill effect
-		int attack = (skillLevel * 5) + 10;
+		additionalEffect.power = (skillLevel * 5) + 10;
 
 		//skill experience gain
 		skillExperience++;
@@ -41,7 +41,7 @@ public class DefaultFunctions : baseSkill {
 			skillLevel++;
 			caster.networkMastery++;
 		}
-		return attack;
+		return 0;
 	}
     public override int cast(baseEnemy caster)
     {

@@ -10,7 +10,6 @@ public class BattleManager : MonoBehaviour {
    
     public static List<basePlayer> playerParty;
     public static List<baseEnemy> enemyParty;
-    public static int actions;
     public static int turnCounter;
 
     public static bool playerPlayer;
@@ -29,19 +28,19 @@ public class BattleManager : MonoBehaviour {
     }
     void InitBattle() {
         turnCounter = 1;
-        actions = 4;
         for (int i = 0; i < GameInformation.players.Length; ++i) {
             playerParty.Add(GameInformation.players[i].deepCopy());
         }
             
         if(GameInformation.level == 1)
             for (int i = 0; i < GameInformation.enemies.Length; ++i)
-                enemyParty.Add(GameInformation.enemies[i]);    
+                enemyParty.Add(GameInformation.enemies[i]);
         GUIManager.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
+
+
     }
     void testBattle() {
         turnCounter = 1;
-        actions = 4;
         basePlayer ls = gameObject.AddComponent<ls>();
         basePlayer mkdir = gameObject.AddComponent<mkdir>();
         basePlayer rmdir = gameObject.AddComponent<rmdir>();
@@ -90,8 +89,6 @@ public class BattleManager : MonoBehaviour {
     public static void endAction() {
         playerEnemy = false;
         playerPlayer = false;
-        actions--;
-        Debug.Log("BattleManager endAction() Actions =" + actions);
         GUIManager.endAction();
         //Debug.LogError("After gui.EndAction");
     }
@@ -108,7 +105,6 @@ public class BattleManager : MonoBehaviour {
     }
     public static void endTurn() {
         ++turnCounter;
-        actions = 4;
         Debug.Log("BattleManager End Turn :" + turnCounter);
         GUIManager.endTurn();
     }

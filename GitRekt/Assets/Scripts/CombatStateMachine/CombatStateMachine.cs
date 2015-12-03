@@ -9,6 +9,7 @@ public class CombatStateMachine : MonoBehaviour
     public enum CombatStates { STARTTURN,PLAYERSELECT, PLAYERENEMY, PLAYERPLAYER, ENEMY, WIN, LOSE };
     public static CombatStates CurrentState;
     private bool goal;
+    int actions;
     void Start()
     {
         Random.seed = 0;
@@ -28,6 +29,7 @@ public class CombatStateMachine : MonoBehaviour
             case (CombatStates.STARTTURN):
                 BattleManager.beginTurn();
                 Debug.Log("(CSM)  ST -> PS");
+                actions = BattleManager.playerParty.Count;
                 CurrentState = CombatStates.PLAYERSELECT;
                 break;
             case (CombatStates.PLAYERSELECT):
@@ -47,12 +49,12 @@ public class CombatStateMachine : MonoBehaviour
                 }
                 break;
             case (CombatStates.PLAYERENEMY):
-                Debug.Log(CurrentState);
+                --actions; 
                 StartCoroutine("player_target_enemy");
                 checkWin();
                 StartCoroutine("endAction");
-                Debug.Log("ACTIONS :"+BattleManager.actions);
-                if (BattleManager.actions == 0)
+                Debug.Log("ACTIONS : "+ actions);
+                if (actions == 0)
                 {
                     Debug.Log("(CSM) PE->E");
                     BattleManager.endTurn();
@@ -65,9 +67,10 @@ public class CombatStateMachine : MonoBehaviour
                 }
                 break;
             case (CombatStates.PLAYERPLAYER):
+                --actions;
                 StartCoroutine("player_target_player");
                 StartCoroutine("endAction");
-                if (BattleManager.actions == 0)
+                if (actions == 0)
                 {
                     Debug.Log("(CSM) PP->E");
                     BattleManager.endTurn();
@@ -80,7 +83,7 @@ public class CombatStateMachine : MonoBehaviour
                 }
                 break;
             case (CombatStates.ENEMY):
-                StartCoroutine("enemyAction");
+                StartCoroutine("enemyTurn");
                 if (goal)
                 {
                     Debug.Log("(CSM) E->GOAL(L)");
@@ -210,15 +213,16 @@ public class CombatStateMachine : MonoBehaviour
         }
         yield return null;
     }
-    IEnumerator enemyAction()
+    IEnumerator enemyTurn()
     {
+        actions = BattleManager.enemyParty.Count;
         Debug.Log("In enemy Action");
-        Debug.Log("Actions Left: " + BattleManager.actions);
-        for (int i = 0; i < BattleManager.actions; i++)
+        Debug.Log("Actions Left: " + actions);
+        for (int i = 0; i < actions; i++)
         {
             baseEnemy attacker = BattleManager.enemyParty[Random.Range(0, BattleManager.enemyParty.Count)];
             basePlayer target = enemy.lowestHealthTarget(BattleManager.playerParty);
-            enemyTurnPhase(attacker, target, attacker.basicAttack);
+            enemyAction(attacker, target, attacker.basicAttack);
         }
         yield return null;
     }
@@ -241,12 +245,14 @@ public class CombatStateMachine : MonoBehaviour
             if (target.effect == baseEnemy.Status.GOD)
             {
                 target.currentHP -= 0;
-                Debug.Log("God Moded");
+                Debug.Log("(CSM) Player Attack Player/Enemy-> Damage = 0; Reason: GodModed");
                 clearEffect(target, skill);
             }
             else
             {
-                target.currentHP -= skill.cast(unit);
+                int damage = skill.cast(unit);
+                Debug.Log("(CSM) Player Attack -> Damage =" + damage);
+                target.currentHP -= damage;
                 if (target.currentHP >= 0)
                     if (!target.effected)
                         applyEffect(target, skill);
@@ -267,7 +273,7 @@ public class CombatStateMachine : MonoBehaviour
             if (target.effect == basePlayer.Status.GOD)
             {
                 target.currentHP -= 0;
-                Debug.Log("God Moded");
+                Debug.Log("(CSM) PlayerAttack Player/Player Damage = 0; God Moded");
                 clearEffect(target, skill);
             }
             else
@@ -288,12 +294,13 @@ public class CombatStateMachine : MonoBehaviour
         {
             if (skill.additionalEffect.status == baseSkill.Effect.Status.ATTACK && skill.targetPlayer)
             {
-                target.attack += skill.cast(unit);
+
+                target.attack += skill.additionalEffect.power;
                 applyEffect(target, skill);
             }
             else if (skill.additionalEffect.status == baseSkill.Effect.Status.DEFENSE && skill.targetPlayer)
             {
-                target.defense += skill.cast(unit);
+                target.defense += skill.additionalEffect.power;
                 applyEffect(target, skill);
             }
         }
@@ -309,12 +316,12 @@ public class CombatStateMachine : MonoBehaviour
         {
             if (skill.additionalEffect.status == baseSkill.Effect.Status.ATTACK && skill.targetPlayer)
             {
-                target.attack += skill.cast(unit);
+                target.attack += skill.additionalEffect.power;
                 applyEffect(target, skill);
             }
             else if (skill.additionalEffect.status == baseSkill.Effect.Status.DEFENSE && skill.targetPlayer)
             {
-                target.defense += skill.cast(unit);
+                target.defense += skill.additionalEffect.power;
                 applyEffect(target, skill);
             }
         }
@@ -325,7 +332,7 @@ public class CombatStateMachine : MonoBehaviour
         }
     }
     //Enemy Turn States
-    private void enemyTurnPhase(baseEnemy unit, basePlayer target, baseSkill skill)
+    private void enemyAction(baseEnemy unit, basePlayer target, baseSkill skill)
     {
         // All possible states
         switch (unit.effect)

@@ -24,7 +24,7 @@ public class GameInformation : MonoBehaviour {
         switch (level) { 
             case 1:
                 for (int i = 0; i < enemies.Length; ++i) {
-                    enemies[i] = new C();
+                    enemies[i] = gameObject.AddComponent<C>();
                 }
                 break;
             default:

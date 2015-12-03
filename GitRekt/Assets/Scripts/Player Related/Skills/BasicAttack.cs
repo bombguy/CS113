@@ -9,8 +9,8 @@ public class BasicAttack : baseSkill {
 	public BasicAttack () {
 		skillID = 1;
 		skillName = "Basic Attack";
-		skillLevel = 0;
-		skillExperience = 0;
+		skillLevel = 1;
+		skillExperience = 1;
 		skillCoolDown = 0;
 		skillPower = 1;
 		skillCategory = SkillCategory.NONE;
@@ -31,8 +31,7 @@ public class BasicAttack : baseSkill {
 		
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
-			skillLevel++;
-			//(castor as basePlayer).category++;
+            skillLevel++;
 			skillPower += .05;
 		}
 		return damage;

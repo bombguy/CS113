@@ -42,9 +42,12 @@ public class GUIManager : MonoBehaviour {
         _skill = skill;
     }
     public static void updateTarget(baseEnemy enemy){
-        _enemy = enemy;
-        action = true;
-        attack = true;
+        if (_skill != null) {
+            _enemy = enemy;
+            action = true;
+            attack = true;  
+        }  
+        
     }
     //Load in GUI based on players and enemies
     public static void loadGUI(basePlayer[] players, baseEnemy[] enemies)
@@ -56,20 +59,20 @@ public class GUIManager : MonoBehaviour {
 
     //handle turn and action logic
     public static void endAction() {
+        if (_buffUnit != null)
+            playerPanel.endAction(_unit);
+        else
+            playerPanel.endAction();
         action = false;
         attack = false;
         _unit = null;
         _skill = null;
         _buffUnit = null;
         _enemy = null;
-        playerPanel.endAction();
+        
     }
     public static void endTurn() { 
     //Force all triggers to false.
-        Debug.Log(_unit);
-        Debug.Log(_skill);
-        Debug.Log(_enemy);
-        Debug.Log(_buffUnit);
         action = false;
         attack = false;
     }

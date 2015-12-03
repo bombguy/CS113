@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 /*
  * PanelController Responsibility:
  * Load in the Players
@@ -9,6 +10,7 @@ public class PanelController : MonoBehaviour
 {
     playerButton[] _playerButtons;
     basePlayer _currentPlayer;
+    Text playerInformation;
 
     void Awake() {
         _playerButtons = GetComponentsInChildren<playerButton>();
@@ -24,6 +26,12 @@ public class PanelController : MonoBehaviour
     public void endAction() {
         fetchActionBar(_currentPlayer).endAction();
         fetchPlayerButton(_currentPlayer).buttonDisable();
+        _currentPlayer = null;
+    }
+    public void endAction(basePlayer unit) {
+        fetchActionBar(unit).endAction();
+        fetchPlayerButton(unit).buttonDisable();
+        fetchActionBar(_currentPlayer).hideActionBar();
         _currentPlayer = null;
     }
     public void beginTurn() {
