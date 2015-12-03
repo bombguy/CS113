@@ -27,7 +27,7 @@ public class Tree : baseSkill {
 		skillCoolDown = 5;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
 	public override int cast(basePlayer caster) {

@@ -7,7 +7,7 @@ public class FunctionsWithInputOutput : baseSkill {
 	
 	public FunctionsWithInputOutput () {
 		skillID = 7;
-		skillName = "Functions With I/O";
+		skillName = "Functions With IO";
 		skillDescription = "Unit will be supplying health, to deal massive damage to opponent.";
 		hasAdditionalEffect = false;
 		targetEnemy = false;
@@ -20,7 +20,7 @@ public class FunctionsWithInputOutput : baseSkill {
 		skillCoolDown = 4;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
 	public override int cast(basePlayer caster) {

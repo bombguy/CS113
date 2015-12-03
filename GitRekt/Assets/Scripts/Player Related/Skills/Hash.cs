@@ -26,7 +26,7 @@ public class Hash : baseSkill {
 		skillCoolDown = 10;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
 	public override int cast(basePlayer caster) {
