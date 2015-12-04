@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class enemyPanelController : MonoBehaviour {
-    enemyButton[] _enemyButtons;
+    public enemyButton[] _enemyButtons;
 
     public baseEnemy _selectedEnemy;
-    public baseEnemy[] enemies;
+    public baseEnemy[] _enemies;
     public bool _hasSelected;
 
     public void Awake() {
@@ -16,18 +16,21 @@ public class enemyPanelController : MonoBehaviour {
         _selectedEnemy = null;
     }
     public void testEnemies() {
-        enemies = new baseEnemy[4];
-        enemies[0] = gameObject.AddComponent<C>();
-        enemies[1] = gameObject.AddComponent<Cpp>();
-        enemies[2] = gameObject.AddComponent<C>();
-        enemies[3] = gameObject.AddComponent<Python>();
-        setEnemyButtons(enemies);
+        _enemies = new baseEnemy[4];
+        _enemies[0] = gameObject.AddComponent<C>();
+        _enemies[1] = gameObject.AddComponent<Cpp>();
+        _enemies[2] = gameObject.AddComponent<C>();
+        _enemies[3] = gameObject.AddComponent<Python>();
+        setEnemyButtons(_enemies);
     }
     public void setEnemyButtons(baseEnemy[] enemies)
     {
+        _enemies = new baseEnemy[enemies.Length];
         for (int i = 0; i < enemies.Length; ++i)
         {
+
             _enemyButtons[i].setButton(enemies[i]);
+            _enemies[i] = enemies[i];
         }
     }
     

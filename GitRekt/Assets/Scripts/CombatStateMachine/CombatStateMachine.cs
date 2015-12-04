@@ -8,59 +8,93 @@ public class CombatStateMachine : MonoBehaviour
     public AI enemy;
     public enum CombatStates { STARTTURN,PLAYERSELECT, PLAYERENEMY, PLAYERPLAYER, ENEMY, WIN, LOSE };
     public static CombatStates CurrentState;
-    public BattleManager battleManager;
     private bool goal;
+    int actions;
     void Start()
     {
-        battleManager = GetComponent<BattleManager>();
         Random.seed = 0;
         enemy = GetComponent<AI>();
         goal = false;
-        CurrentState = CombatStates.PLAYERSELECT;
+        CurrentState = CombatStates.STARTTURN;
     }
 
     void Update()
     {
+        updateMachine();
+    }
+    public void updateMachine() {
         //Debug.Log(CurrentState);
         switch (CurrentState)
         {
-            case(CombatStates.STARTTURN):
-                battleManager.beginTurn();
+            case (CombatStates.STARTTURN):
+                BattleManager.beginTurn();
+                Debug.Log("(CSM)  ST -> PS");
+                actions = BattleManager.playerParty.Count;
                 CurrentState = CombatStates.PLAYERSELECT;
                 break;
             case (CombatStates.PLAYERSELECT):
                 //Check Unit selected.
-                if (battleManager.playerPlayer)
+                if (BattleManager.playerEnemy== true)
                 {
+                    Debug.Log("(CSM) PS->PE");
                     CurrentState = CombatStates.PLAYERENEMY;
+                    BattleManager.playerEnemy = false;
+           
                 }
-                else if (battleManager.playerEnemy)
+                else if (BattleManager.playerPlayer== true)
                 {
+                    Debug.Log("(CSM) PS->PP");
                     CurrentState = CombatStates.PLAYERPLAYER;
+                    BattleManager.playerPlayer = false;
                 }
                 break;
             case (CombatStates.PLAYERENEMY):
+                --actions; 
                 StartCoroutine("player_target_enemy");
                 checkWin();
-                battleManager.endAction();
-                if (battleManager.actions == 0)
-                    battleManager.endTurn();
+                StartCoroutine("endAction");
+                Debug.Log("ACTIONS : "+ actions);
+                if (actions == 0)
+                {
+                    Debug.Log("(CSM) PE->E");
+                    BattleManager.endTurn();
                     CurrentState = CombatStates.ENEMY;
+                }
+                else
+                {
+                    Debug.Log("(CSM) PE->PS");
+                    CurrentState = CombatStates.PLAYERSELECT;
+                }
                 break;
             case (CombatStates.PLAYERPLAYER):
+                --actions;
                 StartCoroutine("player_target_player");
-                battleManager.endAction();
-                if (battleManager.actions == 0)
-                    battleManager.endTurn();
+                StartCoroutine("endAction");
+                if (actions == 0)
+                {
+                    Debug.Log("(CSM) PP->E");
+                    BattleManager.endTurn();
                     CurrentState = CombatStates.ENEMY;
+                }
+                else
+                {
+                    Debug.Log("(CSM) PP->PS");
+                    CurrentState = CombatStates.PLAYERSELECT;
+                }
                 break;
             case (CombatStates.ENEMY):
-                StartCoroutine("enemyAction");
+                StartCoroutine("enemyTurn");
                 if (goal)
+                {
+                    Debug.Log("(CSM) E->GOAL(L)");
                     CurrentState = CombatStates.LOSE;
+                }
                 else
+                {
+                    Debug.Log("(CSM) E->ST");
                     CurrentState = CombatStates.STARTTURN;
-                break;
+                }
+                 break;
             case (CombatStates.LOSE):
                 loss();
                 break;
@@ -72,32 +106,22 @@ public class CombatStateMachine : MonoBehaviour
     private void win()
     {
         //pass back application to map
-        battleManager.endBattle();
+        BattleManager.endBattle();
     }
     private void loss()
     {
         //pass back application to map
-        battleManager.endBattle();
+        BattleManager.endBattle();
     }
     private void checkWin()
     {
-        if (battleManager.enemyParty.Count == 0)
+        if (BattleManager.enemyParty.Count == 0)
             goal = true;
         if (goal)
         {
-            battleManager.endTurn();
+            Debug.Log("(CSM) PE->GOAL(W)");
+            BattleManager.endTurn();
             CurrentState = CombatStates.WIN;
-        }
-        else
-        {
-            battleManager.endAction();
-            if (battleManager.actions == 0)
-            {
-                battleManager.endTurn();
-                CurrentState = CombatStates.ENEMY;
-            }
-            else
-                CurrentState = CombatStates.PLAYERSELECT;
         }
     }
     /*
@@ -122,34 +146,34 @@ public class CombatStateMachine : MonoBehaviour
     //Player targeted Enemy
     IEnumerator player_target_enemy()
     {
-        switch (battleManager._selectedUnit.effect)
+        switch (BattleManager._unit.effect)
         {
             // All possible states
             case (basePlayer.Status.ATTACK):
-                decreaseEffect(battleManager._selectedUnit, battleManager._skill);
-                playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                decreaseEffect(BattleManager._unit, BattleManager._skill);
+                playerAttack(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.CONFUSED):
-                unitConfused(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                unitConfused(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.DEFENSE):
-                decreaseEffect(battleManager._selectedUnit, battleManager._skill);
-                playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                decreaseEffect(BattleManager._unit, BattleManager._skill);
+                playerAttack(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.DOT):
-                unitDOTed(battleManager._selectedUnit, battleManager._skill);
-                playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                unitDOTed(BattleManager._unit, BattleManager._skill);
+                playerAttack(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.SKIP):
-                unitSkipped(battleManager._selectedUnit,battleManager._attackTarget,battleManager._skill);
-                if (!battleManager._selectedUnit.effected)
-                    playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                unitSkipped(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
+                if (!BattleManager._unit.effected)
+                    playerAttack(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.STUN):
-                unitStunned(battleManager._selectedUnit,battleManager._skill);
+                unitStunned(BattleManager._unit, BattleManager._skill);
                 break;
             default:
-                playerAttack(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                playerAttack(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
                 break;
         }
         yield return null;
@@ -157,46 +181,54 @@ public class CombatStateMachine : MonoBehaviour
     //Player targeted other player
     IEnumerator player_target_player()
     {
-        switch (battleManager._selectedUnit.effect)
+        switch (BattleManager._unit.effect)
         {
             //All possible states our players can be in
             case (basePlayer.Status.ATTACK):
-                decreaseEffect(battleManager._selectedUnit, battleManager._skill);
-                playerBuff(battleManager._selectedUnit, battleManager._buffTarget, battleManager._skill);
+                decreaseEffect(BattleManager._unit, BattleManager._skill);
+                playerBuff(BattleManager._unit, BattleManager._buffTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.CONFUSED):
-                unitConfused(battleManager._selectedUnit, battleManager._buffTarget, battleManager._skill);
+                unitConfused(BattleManager._unit, BattleManager._buffTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.DEFENSE):
-                decreaseEffect(battleManager._selectedUnit, battleManager._skill);
-                playerBuff(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                decreaseEffect(BattleManager._unit, BattleManager._skill);
+                playerBuff(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.DOT):
-                unitDOTed(battleManager._selectedUnit, battleManager._skill);
-                playerBuff(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                unitDOTed(BattleManager._unit, BattleManager._skill);
+                playerBuff(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.SKIP):
-                unitSkipped(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
-                if (!battleManager._selectedUnit.effected)
-                    playerBuff(battleManager._selectedUnit, battleManager._attackTarget, battleManager._skill);
+                unitSkipped(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
+                if (!BattleManager._unit.effected)
+                    playerBuff(BattleManager._unit, BattleManager._attackTarget, BattleManager._skill);
                 break;
             case (basePlayer.Status.STUN):
-                unitStunned(battleManager._selectedUnit,battleManager._skill);
+                unitStunned(BattleManager._unit, BattleManager._skill);
                 break;
             default:
-                playerBuff(battleManager._selectedUnit, battleManager._buffTarget, battleManager._skill);
+                playerBuff(BattleManager._unit, BattleManager._buffTarget, BattleManager._skill);
                 break;
         }
         yield return null;
     }
-    IEnumerator enemyAction()
+    IEnumerator enemyTurn()
     {
-        for (int i = 0; i < battleManager.actions; i++)
+        actions = BattleManager.enemyParty.Count;
+        Debug.Log("In enemy Action");
+        Debug.Log("Actions Left: " + actions);
+        for (int i = 0; i < actions; i++)
         {
-            baseEnemy attacker = battleManager.enemyParty[Random.Range(0, battleManager.enemyParty.Count)];
-            basePlayer target = enemy.lowestHealthTarget(battleManager.playerParty);
-            enemyTurnPhase(attacker, target, attacker.basicAttack);
+            baseEnemy attacker = BattleManager.enemyParty[Random.Range(0, BattleManager.enemyParty.Count)];
+            basePlayer target = enemy.lowestHealthTarget(BattleManager.playerParty);
+            enemyAction(attacker, target, attacker.basicAttack);
         }
+        yield return null;
+    }
+
+    IEnumerator endAction() {
+        BattleManager.endAction();
         yield return null;
     }
 
@@ -213,17 +245,19 @@ public class CombatStateMachine : MonoBehaviour
             if (target.effect == baseEnemy.Status.GOD)
             {
                 target.currentHP -= 0;
-                Debug.Log("God Moded");
+                Debug.Log("(CSM) Player Attack Player/Enemy-> Damage = 0; Reason: GodModed");
                 clearEffect(target, skill);
             }
             else
             {
-                target.currentHP -= skill.cast(unit);
+                int damage = skill.cast(unit);
+                Debug.Log("(CSM) Player Attack -> Damage =" + damage);
+                target.currentHP -= damage;
                 if (target.currentHP >= 0)
                     if (!target.effected)
                         applyEffect(target, skill);
                     else
-                        battleManager.deadUnit(target);
+                        BattleManager.deadUnit(target);
             }
         }
         Debug.Log("Attack Successful");
@@ -239,7 +273,7 @@ public class CombatStateMachine : MonoBehaviour
             if (target.effect == basePlayer.Status.GOD)
             {
                 target.currentHP -= 0;
-                Debug.Log("God Moded");
+                Debug.Log("(CSM) PlayerAttack Player/Player Damage = 0; God Moded");
                 clearEffect(target, skill);
             }
             else
@@ -249,7 +283,7 @@ public class CombatStateMachine : MonoBehaviour
                     if (!target.effected)
                         applyEffect(target, skill);
                     else
-                        battleManager.deadUnit(target);
+                        BattleManager.deadUnit(target);
             }
         }
         Debug.Log("Attack Successful");
@@ -260,12 +294,13 @@ public class CombatStateMachine : MonoBehaviour
         {
             if (skill.additionalEffect.status == baseSkill.Effect.Status.ATTACK && skill.targetPlayer)
             {
-                target.attack += skill.cast(unit);
+
+                target.attack += skill.additionalEffect.power;
                 applyEffect(target, skill);
             }
             else if (skill.additionalEffect.status == baseSkill.Effect.Status.DEFENSE && skill.targetPlayer)
             {
-                target.defense += skill.cast(unit);
+                target.defense += skill.additionalEffect.power;
                 applyEffect(target, skill);
             }
         }
@@ -281,12 +316,12 @@ public class CombatStateMachine : MonoBehaviour
         {
             if (skill.additionalEffect.status == baseSkill.Effect.Status.ATTACK && skill.targetPlayer)
             {
-                target.attack += skill.cast(unit);
+                target.attack += skill.additionalEffect.power;
                 applyEffect(target, skill);
             }
             else if (skill.additionalEffect.status == baseSkill.Effect.Status.DEFENSE && skill.targetPlayer)
             {
-                target.defense += skill.cast(unit);
+                target.defense += skill.additionalEffect.power;
                 applyEffect(target, skill);
             }
         }
@@ -297,7 +332,7 @@ public class CombatStateMachine : MonoBehaviour
         }
     }
     //Enemy Turn States
-    private void enemyTurnPhase(baseEnemy unit, basePlayer target, baseSkill skill)
+    private void enemyAction(baseEnemy unit, basePlayer target, baseSkill skill)
     {
         // All possible states
         switch (unit.effect)
@@ -318,7 +353,7 @@ public class CombatStateMachine : MonoBehaviour
                 enemyAttack(unit, target, skill);
                 break;
             case (baseEnemy.Status.SKIP):
-                unitSkipped(unit, target, battleManager._skill);
+                unitSkipped(unit, target, BattleManager._skill);
                 if (!unit.effected)
                     enemyAttack(unit, target, skill);
                 break;
@@ -342,7 +377,7 @@ public class CombatStateMachine : MonoBehaviour
             target.currentHP -= skill.cast(attacker);
             if (skill.hasAdditionalEffect)
                 if (target.currentHP <= 0)
-                    battleManager.deadUnit(target);
+                    BattleManager.deadUnit(target);
                 else if (!target.effected)
                     applyEffect(target, skill);
         }
@@ -359,7 +394,7 @@ public class CombatStateMachine : MonoBehaviour
             target.currentHP -= skill.cast(attacker);
             if (skill.hasAdditionalEffect)
                 if (target.currentHP <= 0)
-                    battleManager.deadUnit(target);
+                    BattleManager.deadUnit(target);
                 else if (!target.effected)
                     applyEffect(target, skill);
         }
@@ -367,64 +402,64 @@ public class CombatStateMachine : MonoBehaviour
     //AOE Attack states
     private void AOEattack(basePlayer unit, baseEnemy target, baseSkill skill)
     {
-        int enemiesLeft = battleManager.enemyParty.Count;
+        int enemiesLeft = BattleManager.enemyParty.Count;
         int damage = skill.cast(unit);
         for (int i = 0; i < enemiesLeft; ++i)
         {
-            if (battleManager.enemyParty[i] != null)
+            if (BattleManager.enemyParty[i] != null)
             {
-                battleManager.enemyParty[i].currentHP -= damage;
-                if (battleManager.enemyParty[i].currentHP <= 0)
+                BattleManager.enemyParty[i].currentHP -= damage;
+                if (BattleManager.enemyParty[i].currentHP <= 0)
                 {
-                    battleManager.deadUnit(battleManager.enemyParty[i]);
+                    BattleManager.deadUnit(BattleManager.enemyParty[i]);
                 }
             }
         }
     }
     private void AOEattack(basePlayer unit, basePlayer target, baseSkill skill)
     {
-        int playersLeft = battleManager.playerParty.Count;
+        int playersLeft = BattleManager.playerParty.Count;
         int damage = skill.cast(unit);
         for (int i = 0; i < playersLeft; ++i)
         {
-            if (battleManager.playerParty[i] != null)
+            if (BattleManager.playerParty[i] != null)
             {
-                battleManager.playerParty[i].currentHP -= skill.cast(unit);
-                if (battleManager.playerParty[i].currentHP <= 0)
+                BattleManager.playerParty[i].currentHP -= damage;
+                if (BattleManager.playerParty[i].currentHP <= 0)
                 {
-                    battleManager.deadUnit(battleManager.playerParty[i]);
+                    BattleManager.deadUnit(BattleManager.playerParty[i]);
                 }
             }
         }
     }
     private void AOEattack(baseEnemy unit, basePlayer target, baseSkill skill)
     {
-        int playersLeft = battleManager.playerParty.Count;
+        int playersLeft = BattleManager.playerParty.Count;
         int damage = skill.cast(unit);
         for (int i = 0; i < playersLeft; ++i)
         {
-            if (battleManager.playerParty[i] != null)
+            if (BattleManager.playerParty[i] != null)
             {
-                battleManager.playerParty[i].currentHP -= skill.cast(unit);
-                if (battleManager.playerParty[i].currentHP <= 0)
+                BattleManager.playerParty[i].currentHP -= damage;
+                if (BattleManager.playerParty[i].currentHP <= 0)
                 {
-                    battleManager.deadUnit(battleManager.playerParty[i]);
+                    BattleManager.deadUnit(BattleManager.playerParty[i]);
                 }
             }
         }
     }
     private void AOEattack(baseEnemy unit, baseEnemy target, baseSkill skill)
     {
-        int enemiesLeft = battleManager.enemyParty.Count;
+        int enemiesLeft = BattleManager.enemyParty.Count;
         int damage = skill.cast(unit);
         for (int i = 0; i < enemiesLeft; ++i)
         {
-            if (battleManager.enemyParty[i] != null)
+            if (BattleManager.enemyParty[i] != null)
             {
-                battleManager.enemyParty[i].currentHP -= skill.cast(unit);
-                if (battleManager.enemyParty[i].currentHP <= 0)
+                BattleManager.enemyParty[i].currentHP -= damage;
+                if (BattleManager.enemyParty[i].currentHP <= 0)
                 {
-                    battleManager.deadUnit(battleManager.enemyParty[i]);
+                    BattleManager.deadUnit(BattleManager.enemyParty[i]);
                 }
             }
         }
@@ -499,18 +534,18 @@ public class CombatStateMachine : MonoBehaviour
         if (coin == 0)
         {
             //Attack allies 
-            int unitIndex = Random.Range(0, battleManager.playerParty.Count);
+            int unitIndex = Random.Range(0, BattleManager.playerParty.Count);
             --unit.duration;
-            if (battleManager.playerParty[unitIndex] != null)
-                playerAttack(unit, battleManager.playerParty[unitIndex], skill);
+            if (BattleManager.playerParty[unitIndex] != null)
+                playerAttack(unit, BattleManager.playerParty[unitIndex], skill);
         }
         else
         {
             // Attack Enemy 
-            int unitIndex = Random.Range(0, battleManager.enemyParty.Count);
+            int unitIndex = Random.Range(0, BattleManager.enemyParty.Count);
             --unit.duration;
-            if (battleManager.enemyParty[unitIndex] != null)
-                playerAttack(unit, battleManager.enemyParty[unitIndex], skill);
+            if (BattleManager.enemyParty[unitIndex] != null)
+                playerAttack(unit, BattleManager.enemyParty[unitIndex], skill);
         }
 
     }
@@ -520,18 +555,18 @@ public class CombatStateMachine : MonoBehaviour
         if (coin == 0)
         {
             //Attack allies - No Effect applied (For Now)
-            int unitIndex = Random.Range(0, battleManager.playerParty.Count);
+            int unitIndex = Random.Range(0, BattleManager.playerParty.Count);
             --unit.duration;
-            if (battleManager.playerParty[unitIndex] != null)
-                playerBuff(unit, battleManager.playerParty[unitIndex], skill);
+            if (BattleManager.playerParty[unitIndex] != null)
+                playerBuff(unit, BattleManager.playerParty[unitIndex], skill);
         }
         else
         {
             // Attack Enemy - No Effect applied (For Now)
-            int unitIndex = Random.Range(0, battleManager.enemyParty.Count);
+            int unitIndex = Random.Range(0, BattleManager.enemyParty.Count);
             --unit.duration;
-            if (battleManager.enemyParty[unitIndex] != null)
-                playerBuff(unit, battleManager.enemyParty[unitIndex], skill);
+            if (BattleManager.enemyParty[unitIndex] != null)
+                playerBuff(unit, BattleManager.enemyParty[unitIndex], skill);
         }
     
     }
@@ -541,18 +576,18 @@ public class CombatStateMachine : MonoBehaviour
         if (coin == 0)
         {
             //Attack allies - No Effect applied (For Now)
-            int unitIndex = Random.Range(0, battleManager.playerParty.Count);
+            int unitIndex = Random.Range(0, BattleManager.playerParty.Count);
             --unit.duration;
-            if (battleManager.playerParty[unitIndex] != null)
-                enemyAttack(unit, battleManager.enemyParty[unitIndex],unit.basicAttack);
+            if (BattleManager.playerParty[unitIndex] != null)
+                enemyAttack(unit, BattleManager.enemyParty[unitIndex],unit.basicAttack);
         }
         else
         {
             // Attack Enemy - No Effect applied (For Now)
-            int unitIndex = Random.Range(0, battleManager.enemyParty.Count);
+            int unitIndex = Random.Range(0, BattleManager.enemyParty.Count);
             --unit.duration;
-            if (battleManager.enemyParty[unitIndex] != null)
-                enemyAttack(unit, battleManager.playerParty[unitIndex], unit.basicAttack);
+            if (BattleManager.enemyParty[unitIndex] != null)
+                enemyAttack(unit, BattleManager.playerParty[unitIndex], unit.basicAttack);
         }
 
     }
@@ -568,7 +603,6 @@ public class CombatStateMachine : MonoBehaviour
     private void unitStunned(baseEnemy unit,baseSkill skill)
     {
         // Stunned effect. Actions minus/ Player doesnt take turn
-        --battleManager.actions;
         --unit.duration;
         if (unit.duration == 0)
             clearEffect(unit,skill);
@@ -578,7 +612,6 @@ public class CombatStateMachine : MonoBehaviour
     private void unitDOTed(basePlayer unit,baseSkill skill)
     {
         //Apply DOT on turn attacking before attack, check for health.
-        --battleManager.actions;
         if (unit.duration == 0){
             clearEffect(unit,skill);
         }
@@ -590,7 +623,6 @@ public class CombatStateMachine : MonoBehaviour
     private void unitDOTed(baseEnemy unit,baseSkill skill)
     {
         //check for 0
-        --battleManager.actions;
         if (unit.duration == 0){
             clearEffect(unit,skill);
         }
@@ -601,7 +633,7 @@ public class CombatStateMachine : MonoBehaviour
         }
         
         if (unit.currentHP <= 0)
-            battleManager.deadUnit(unit);
+            BattleManager.deadUnit(unit);
         
     }
     private void unitSkipped(basePlayer unit,baseEnemy target, baseSkill skill) {

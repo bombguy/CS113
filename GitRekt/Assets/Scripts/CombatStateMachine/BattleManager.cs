@@ -3,43 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BattleManager : MonoBehaviour {
-    public basePlayer _selectedUnit;
-    public basePlayer _buffTarget;
-    public baseEnemy _attackTarget;
-    public baseSkill _skill;
+    public static basePlayer _unit;
+    public static basePlayer _buffTarget;
+    public static baseEnemy _attackTarget;
+    public static baseSkill _skill;
    
-    public List<basePlayer> playerParty;
-    public List<baseEnemy> enemyParty;   
-    public   int actions;
-    public   int turnCounter;
+    public static List<basePlayer> playerParty;
+    public static List<baseEnemy> enemyParty;
+    public static int turnCounter;
 
-    public bool playerPlayer;
-    public bool playerEnemy;
-
-    //GUI Manager
-    public GUIManager _gui;
+    public static bool playerPlayer;
+    public static bool playerEnemy;
+    //CombatStateMachine
+    CombatStateMachine csm;
 	void Awake () {
+        //GameInformation.loadGame();
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
-        _gui = GameObject.Find("GUIManager").GetComponentInChildren<GUIManager>();
+        csm = GetComponent<CombatStateMachine>();
 	}
     void Start() {
-        testBattle();
+        InitBattle();
+        csm.updateMachine();
     }
     void InitBattle() {
-        LoadInformation.LoadAllInformation();
         turnCounter = 1;
-        actions = 4;
-        for(int i = 0; i<GameInformation.players.Length;++i)
-            playerParty.Add(GameInformation.players[i]);
-        for (int i = 0; i < GameInformation.enemies.Length; ++i)
-            enemyParty.Add(GameInformation.enemies[i]);
-        
-        _gui.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
+        for (int i = 0; i < GameInformation.players.Length; ++i) {
+            playerParty.Add(GameInformation.players[i].deepCopy());
+        }
+            
+        if(GameInformation.level == 1)
+            for (int i = 0; i < GameInformation.enemies.Length; ++i)
+                enemyParty.Add(GameInformation.enemies[i]);
+        GUIManager.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
+
+
     }
     void testBattle() {
         turnCounter = 1;
-        actions = 4;
         basePlayer ls = gameObject.AddComponent<ls>();
         basePlayer mkdir = gameObject.AddComponent<mkdir>();
         basePlayer rmdir = gameObject.AddComponent<rmdir>();
@@ -58,56 +59,66 @@ public class BattleManager : MonoBehaviour {
         enemyParty.Add(c2);
         enemyParty.Add(python);
 
-        _gui.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
+        GUIManager.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
     }
 
 	void Update () {
-        _gui.updateGUI();
-        updateBM();
 	}
+    void LateUpdate() {
+        updateBM();   
+    }
     public void updateBM() {
-        if (_gui.action) {
-            _selectedUnit = _gui._unit;
-            _skill = _gui._skill;
-            if (_gui.attack)
-            {
-                _attackTarget = _gui._enemy;
-                playerPlayer = true;
-            }
-            else
-            {
-                _buffTarget = _gui._buffUnit;
+        if (GUIManager.action) {
+            if (GUIManager.attack == true) {
+                _unit = GUIManager._unit;
+                _skill = GUIManager._skill;
+                _attackTarget = GUIManager._enemy;
                 playerEnemy = true;
+                csm.updateMachine();
+            }
+            else {
+                _unit = GUIManager._unit;
+                _skill = GUIManager._skill;
+                _buffTarget = GUIManager._buffUnit;
+                playerPlayer = true;
+                csm.updateMachine();
             }
         }
     }
 
-    public void endAction() {
+    public static void endAction() {
         playerEnemy = false;
         playerPlayer = false;
-        --actions;
-        _gui.endAction();
+        GUIManager.endAction();
+        //Debug.LogError("After gui.EndAction");
     }
-    public void beginTurn()
+    public static void beginTurn()
     {
-        ++turnCounter;
-        actions = 4;
-        _gui.beginTurn();
+        Debug.Log("BattleManager Begin Turn :" + turnCounter);
+        Debug.Log("Players Health :");
+        for (int i = 0; i < playerParty.Count; ++i)
+            Debug.Log(playerParty[i].name +" "+ playerParty[i].currentHP);
+        Debug.Log("Enemies Health :");
+        for (int i = 0; i < enemyParty.Count; ++i)
+            Debug.Log(enemyParty[i].name +" "+ enemyParty[i].currentHP);
+        GUIManager.beginTurn();
     }
-    public void endTurn() {
-        _gui.endTurn();
+    public static void endTurn() {
+        ++turnCounter;
+        Debug.Log("BattleManager End Turn :" + turnCounter);
+        GUIManager.endTurn();
     }
     
-    public void endBattle()
+    public static void endBattle()
     {
         SaveInformation.SaveAllInformation();
         ChangeScene.ChangeToScene("Map");
     }
-    public void deadUnit(basePlayer unit) {
+    public static void deadUnit(basePlayer unit) {
         playerParty.Remove(unit);
         Destroy(unit);
     }
-    public void deadUnit(baseEnemy unit) {
+    public static void deadUnit(baseEnemy unit) {
         enemyParty.Remove(unit);
         Destroy(unit);
     }
