@@ -83,7 +83,9 @@ public class CombatStateMachine : MonoBehaviour
                 }
                 break;
             case (CombatStates.ENEMY):
-                StartCoroutine("enemyTurn");
+                actions = BattleManager.enemyParty.Count;
+                for (int i = 0; i < actions; ++i )
+                    StartCoroutine("enemyTurn");
                 if (goal)
                 {
                     Debug.Log("(CSM) E->GOAL(L)");
@@ -218,12 +220,11 @@ public class CombatStateMachine : MonoBehaviour
         actions = BattleManager.enemyParty.Count;
         Debug.Log("In enemy Action");
         Debug.Log("Actions Left: " + actions);
-        for (int i = 0; i < actions; i++)
-        {
-            baseEnemy attacker = BattleManager.enemyParty[Random.Range(0, BattleManager.enemyParty.Count)];
-            basePlayer target = enemy.lowestHealthTarget(BattleManager.playerParty);
-            enemyAction(attacker, target, attacker.basicAttack);
-        }
+        
+        baseEnemy attacker = BattleManager.enemyParty[Random.Range(0, BattleManager.enemyParty.Count)];
+        basePlayer target = enemy.lowestHealthTarget(BattleManager.playerParty);
+        enemyAction(attacker, target, attacker.basicAttack);
+        
         yield return null;
     }
 

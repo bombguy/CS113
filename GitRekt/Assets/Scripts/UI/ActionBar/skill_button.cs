@@ -72,7 +72,10 @@ public class skill_button : MonoBehaviour {
     public void setButton(baseSkill in_skill)
     {
         _skill = in_skill;
-        _skillButton.image.sprite = Resources.Load<Sprite>("Skill/" + _skill.skillName);
+        if (_skill.skillName == "Basic Attack")
+            _skillButton.image.sprite = Resources.Load<Sprite>("Skill/Basic Attack");
+        else
+            _skillButton.image.sprite = in_skill.skillIcon;
         _skillName.text = in_skill.skillName;
         _skillDescription.text = in_skill.skillDescription;
         _skillButton.GetComponentsInChildren<Text>()[1].enabled = false;

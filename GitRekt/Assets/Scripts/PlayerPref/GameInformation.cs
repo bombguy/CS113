@@ -17,6 +17,7 @@ public class GameInformation : MonoBehaviour {
     void Start() {
         // Need a way to load a level.
         players[0] = gameObject.AddComponent<sudo>();
+        
         players[1] = gameObject.AddComponent<rmdir>();
         players[2] = gameObject.AddComponent<mkdir>();
         players[3] = gameObject.AddComponent<ls>();

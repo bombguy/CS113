@@ -29,7 +29,7 @@ public class Arrays : baseSkill {
 	
 	public override int cast(basePlayer caster) {
 		//skill effect
-        additionalEffect.power = (caster.networkMastery*10);
+        additionalEffect.power = (caster.networkMastery * 10);
 		//skill experience gain
 		skillExperience++;
 		
