@@ -8,6 +8,7 @@ public class LoadInformation{
 		
 	public static void LoadAllInformation(){
 
+		Debug.Log ("Start");
 		BinaryFormatter bformatter = new BinaryFormatter();
 
 		Stream stream = File.Open("Players.gr", FileMode.Open);
@@ -15,7 +16,7 @@ public class LoadInformation{
 		GameInformation.players[1] = (rmdir)bformatter.Deserialize(stream);
 		GameInformation.players[2] = (mkdir)bformatter.Deserialize(stream);
 		GameInformation.players[3] = (ls)bformatter.Deserialize(stream);
-
+		Debug.Log ("End of Players");
 		stream.Close ();
 
 //		Stream inventoryStream = File.Open ("Inventory.gr", FileMode.Open);
@@ -29,18 +30,38 @@ public class LoadInformation{
 //		GameInformation.players [0].skill2 = (baseSkill)bformatter.Deserialize (stream);
 //		GameInformation.players [0].skill3 = (baseSkill)bformatter.Deserialize (stream);
 //		GameInformation.players [0].skill4 = (baseSkill)bformatter.Deserialize (stream);
+		Debug.Log ("Start Inventory");
 		Stream stream1 = File.Open("Inventory.gr", FileMode.Open);
-		GameInformation.inventorySkills [0] = (Arrays)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [1] = (DDOS)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [2] = (DefaultFunctions)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [3] = (FireWall)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [4] = (FunctionsWithInputOutput)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [5] = (FunctionsWithOutput)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [6] = (Hash)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [7] = (IfElse)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [8] = (InfiniteLoop)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [9] = (PacketSniffing)bformatter.Deserialize (stream1);
-		GameInformation.inventorySkills [11] = (Stack)bformatter.Deserialize (stream1);
+		Debug.Log ("Inventory open");
+		GameInformation.inventorySkills [0] = bformatter.Deserialize (stream1) as Arrays;		
+		Debug.Log ("Array");
+//		GameInformation.inventorySkills [1] = bformatter.Deserialize (stream1) as BreakAndContinue;
+//		Debug.Log ("BreakAndContinue");
+//		GameInformation.inventorySkills [2] = bformatter.Deserialize (stream1) as DDOS;
+//		Debug.Log ("DDOS");
+//		GameInformation.inventorySkills [3] = bformatter.Deserialize (stream1) as DefaultFunctions;	
+//		Debug.Log ("DefaultFunctions");
+//		GameInformation.inventorySkills [4] = bformatter.Deserialize (stream1) as FireWall;
+//		Debug.Log ("FireWall");
+//		GameInformation.inventorySkills [5] = bformatter.Deserialize (stream1) as FunctionsWithInputOutput;
+//		Debug.Log ("FunctionsWithInputOutput");
+//		GameInformation.inventorySkills [6] = bformatter.Deserialize (stream1) as FunctionsWithOutput;
+//		Debug.Log ("FunctionsWithOutput");
+//		GameInformation.inventorySkills [7] = bformatter.Deserialize (stream1) as Hash;
+//		Debug.Log ("Hash");
+//		GameInformation.inventorySkills [8] = bformatter.Deserialize (stream1) as IfElse;
+//		Debug.Log ("IfElse");
+//		GameInformation.inventorySkills [9] = bformatter.Deserialize (stream1) as InfiniteLoop;
+//		Debug.Log ("InfiniteLoop");
+//		GameInformation.inventorySkills [10] = bformatter.Deserialize (stream1) as Loop;
+//		Debug.Log ("Loop");
+//		GameInformation.inventorySkills [11] = bformatter.Deserialize (stream1) as PacketSniffing;
+//		Debug.Log ("PacketSniffing");
+//		GameInformation.inventorySkills [12] = bformatter.Deserialize (stream1) as Recursion;
+//		Debug.Log ("Recursion");
+//		GameInformation.inventorySkills [13] = bformatter.Deserialize (stream1) as Stack;
+//		Debug.Log ("Stack");
+
 
 
 	}
@@ -52,40 +73,28 @@ public class LoadInformation{
 		{
 			case "Arrays":
 				return (Arrays)bformatter.Deserialize(stream);
-				break;
 			case "DDOS":
 				return (DDOS)bformatter.Deserialize(stream);
-				break;
 			case "DefaultFunctions":
 				return (DefaultFunctions)bformatter.Deserialize(stream);
-				break;
 			case "FireWall":
 				return (FireWall)bformatter.Deserialize(stream);
-				break;
 			case "FunctionsWithInputOutput"	:
 				return (FunctionsWithInputOutput)bformatter.Deserialize(stream);
-				break;
 			case "FunctionsWithOutput"	:
 				return (FunctionsWithOutput)bformatter.Deserialize(stream);
-				break;
 			case "Hash":
 				return (Hash)bformatter.Deserialize(stream);
-				break;
 			case "IfElse":
 				return (IfElse)bformatter.Deserialize(stream);
-				break;
 			case "InfiniteLoop":
 				return (InfiniteLoop)bformatter.Deserialize(stream);
-				break;
 			case "PacketSniffing":
 				return (PacketSniffing)bformatter.Deserialize(stream);
-				break;
 			case "Recursion":
 				return (Recursion)bformatter.Deserialize(stream);
-				break;
 			case "Stack":
 				return (Stack)bformatter.Deserialize(stream);
-				break;
 			default:
 				return (baseSkill)bformatter.Deserialize(stream);
 
