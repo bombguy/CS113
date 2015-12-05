@@ -17,6 +17,7 @@ public class slot : MonoBehaviour, IDropHandler {
 		{
 			if (!item) {
 			DragHandeler.itemBeingDragged.transform.SetParent (transform);
+			ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject,null,(x,y) => x.HasChanged ());
 			}
 		}
 
