@@ -1,7 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+/************************************
+ * Combat State Machine
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ ************************************/
 
 public class CombatStateMachine : MonoBehaviour
 {

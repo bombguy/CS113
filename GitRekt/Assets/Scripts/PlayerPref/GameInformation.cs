@@ -71,8 +71,6 @@ public class GameInformation : MonoBehaviour {
         
 	}
 
-
-
 	public static void saveGame(){
 		SaveInformation.SaveAllInformation();
 		Debug.Log ("saved");

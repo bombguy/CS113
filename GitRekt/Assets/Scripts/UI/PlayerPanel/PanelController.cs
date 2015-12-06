@@ -40,6 +40,7 @@ public class PanelController : MonoBehaviour
         for (int i = 0; i < _playerButtons.Length; ++i)
         {
             _playerButtons[i].buttonEnable();
+            _playerButtons[i]._playerBattleStats.updateBattlePanel();
         }
     }
     public int count() {
