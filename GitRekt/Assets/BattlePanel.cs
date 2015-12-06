@@ -25,7 +25,7 @@ public class BattlePanel : MonoBehaviour {
             "Effects : " + _unit.effect.ToString() + "\n" +
             "Flow Mastery :" + _unit.flowMastery + "\n" +
             "Function Mastery :" + _unit.functionMastery + "\n" +
-            "Data Structure Mastery :" + _unit.networkMastery;
+            "Data Structure Mastery :" + _unit.datastructureMastery;
     }
     public void updateBattlePanel() {
         battleStats.text = 
@@ -34,7 +34,7 @@ public class BattlePanel : MonoBehaviour {
             "Effects : " + _unit.effect.ToString() + "\n" +
             "Flow Mastery :" + _unit.flowMastery + "\n" +
             "Function Mastery :" + _unit.functionMastery + "\n" +
-            "Data Structure Mastery :" + _unit.networkMastery;
+            "Data Structure Mastery :" + _unit.datastructureMastery;
     }
     public void hidePanel() {
         background.enabled = false;

@@ -1,16 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-/************************************
- * Combat State Machine
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- ************************************/
 
 public class CombatStateMachine : MonoBehaviour
 {
@@ -192,6 +182,7 @@ public class CombatStateMachine : MonoBehaviour
     //Player targeted other player
     IEnumerator player_target_player()
     {
+        Debug.Log(BattleManager._unit.name +" "+ BattleManager._buffTarget.name +" "+BattleManager._skill.skillName);
         switch (BattleManager._unit.effect)
         {
             //All possible states our players can be in

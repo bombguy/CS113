@@ -27,12 +27,20 @@ public class PanelController : MonoBehaviour
         fetchActionBar(_currentPlayer).endAction();
         fetchPlayerButton(_currentPlayer).buttonDisable();
         _currentPlayer = null;
+        for (int i = 0; i < _playerButtons.Length; ++i) {
+            _playerButtons[i]._playerBattleStats.updateBattlePanel();
+        }
     }
+    //Ends an action when _currentPlayer is a target of a buff.
     public void endAction(basePlayer unit) {
         fetchActionBar(unit).endAction();
         fetchPlayerButton(unit).buttonDisable();
         fetchActionBar(_currentPlayer).hideActionBar();
         _currentPlayer = null;
+        for (int i = 0; i < _playerButtons.Length; ++i)
+        {
+            _playerButtons[i]._playerBattleStats.updateBattlePanel();
+        }
     }
     public void beginTurn() {
         //Start of each turn update Cooldowns and enable all buttons to press.
@@ -40,6 +48,7 @@ public class PanelController : MonoBehaviour
         for (int i = 0; i < _playerButtons.Length; ++i)
         {
             _playerButtons[i].buttonEnable();
+            _playerButtons[i]._actionBar.updateCooldowns();
             _playerButtons[i]._playerBattleStats.updateBattlePanel();
         }
     }
