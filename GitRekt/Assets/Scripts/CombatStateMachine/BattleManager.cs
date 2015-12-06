@@ -21,9 +21,11 @@ public class BattleManager : MonoBehaviour {
 	void Awake () {
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
-        _gui = GetComponent<Canvas>().GetComponentInChildren<GUIManager>();
-
+        _gui = GameObject.Find("GUIManager").GetComponentInChildren<GUIManager>();
 	}
+    void Start() {
+        testBattle();
+    }
     void InitBattle() {
         LoadInformation.LoadAllInformation();
         turnCounter = 1;
@@ -31,11 +33,32 @@ public class BattleManager : MonoBehaviour {
         for(int i = 0; i<GameInformation.players.Length;++i)
             playerParty.Add(GameInformation.players[i]);
         for (int i = 0; i < GameInformation.enemies.Length; ++i)
-            //enemyParty.Add(GameInformation.enemies[i]);
-            enemyParty.Add(new C());
+            enemyParty.Add(GameInformation.enemies[i]);
         
         _gui.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
+    }
+    void testBattle() {
+        turnCounter = 1;
+        actions = 4;
+        basePlayer ls = gameObject.AddComponent<ls>();
+        basePlayer mkdir = gameObject.AddComponent<mkdir>();
+        basePlayer rmdir = gameObject.AddComponent<rmdir>();
+        basePlayer sudo = gameObject.AddComponent<sudo>();
+        playerParty.Add(ls);
+        playerParty.Add(mkdir);
+        playerParty.Add(rmdir);
+        playerParty.Add(sudo);
 
+        baseEnemy c = gameObject.AddComponent<C>();
+        baseEnemy cpp = gameObject.AddComponent<Cpp>();
+        baseEnemy c2= gameObject.AddComponent<C>();
+        baseEnemy python= gameObject.AddComponent<Python>();
+        enemyParty.Add(c);
+        enemyParty.Add(cpp);
+        enemyParty.Add(c2);
+        enemyParty.Add(python);
+
+        _gui.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
     }
 
 	void Update () {
@@ -43,27 +66,23 @@ public class BattleManager : MonoBehaviour {
         updateBM();
 	}
     public void updateBM() {
-        if (_gui.hasAction()) {
-            _selectedUnit = _gui.getUnit();
-            _skill = _gui.getSkill();
-            if (_gui.hasAttack())
+        if (_gui.action) {
+            _selectedUnit = _gui._unit;
+            _skill = _gui._skill;
+            if (_gui.attack)
             {
-                _attackTarget = _gui.getEnemy();
+                _attackTarget = _gui._enemy;
                 playerPlayer = true;
             }
             else
             {
-                _buffTarget = _gui.getBuffed();
+                _buffTarget = _gui._buffUnit;
                 playerEnemy = true;
             }
         }
     }
 
     public void endAction() {
-        _selectedUnit = null;
-        _buffTarget = null;
-        _attackTarget = null;
-        _skill = null;
         playerEnemy = false;
         playerPlayer = false;
         --actions;

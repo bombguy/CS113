@@ -8,95 +8,67 @@ public class LoadInformation{
 		
 	public static void LoadAllInformation(){
 
-		Debug.Log ("Start");
-		BinaryFormatter bformatter = new BinaryFormatter();
-
-		Stream stream = File.Open("Players.gr", FileMode.Open);
-		GameInformation.players[0] = (sudo)bformatter.Deserialize(stream);
-		GameInformation.players[1] = (rmdir)bformatter.Deserialize(stream);
-		GameInformation.players[2] = (mkdir)bformatter.Deserialize(stream);
-		GameInformation.players[3] = (ls)bformatter.Deserialize(stream);
-		Debug.Log ("End of Players");
-		stream.Close ();
-
-//		Stream inventoryStream = File.Open ("Inventory.gr", FileMode.Open);
-//		for(int i = 0;i<25;i++)
-//		{
-//			GameInformation.inventorySkills[i] = 
-//		}
+//		Debug.Log ("Start");
+//		BinaryFormatter bformatter = new BinaryFormatter();
+//		FileStream stream = new FileStream (Application.persistentDataPath +"/Players.gr", FileMode.Open);
+		GameInformation.players [0] = new sudo ("load");
+		GameInformation.players [1] = new rmdir ("load");
+		GameInformation.players [2] = new mkdir ("load");
+		GameInformation.players [3] = new ls ("load");
 
 
-//		GameInformation.players [0].skill1 = (baseSkill)bformatter.Deserialize (stream);
-//		GameInformation.players [0].skill2 = (baseSkill)bformatter.Deserialize (stream);
-//		GameInformation.players [0].skill3 = (baseSkill)bformatter.Deserialize (stream);
-//		GameInformation.players [0].skill4 = (baseSkill)bformatter.Deserialize (stream);
-		Debug.Log ("Start Inventory");
-		Stream stream1 = File.Open("Inventory.gr", FileMode.Open);
-		Debug.Log ("Inventory open");
-		GameInformation.inventorySkills [0] = bformatter.Deserialize (stream1) as Arrays;		
-		Debug.Log ("Array");
-//		GameInformation.inventorySkills [1] = bformatter.Deserialize (stream1) as BreakAndContinue;
-//		Debug.Log ("BreakAndContinue");
-//		GameInformation.inventorySkills [2] = bformatter.Deserialize (stream1) as DDOS;
-//		Debug.Log ("DDOS");
-//		GameInformation.inventorySkills [3] = bformatter.Deserialize (stream1) as DefaultFunctions;	
-//		Debug.Log ("DefaultFunctions");
-//		GameInformation.inventorySkills [4] = bformatter.Deserialize (stream1) as FireWall;
-//		Debug.Log ("FireWall");
-//		GameInformation.inventorySkills [5] = bformatter.Deserialize (stream1) as FunctionsWithInputOutput;
-//		Debug.Log ("FunctionsWithInputOutput");
-//		GameInformation.inventorySkills [6] = bformatter.Deserialize (stream1) as FunctionsWithOutput;
-//		Debug.Log ("FunctionsWithOutput");
-//		GameInformation.inventorySkills [7] = bformatter.Deserialize (stream1) as Hash;
-//		Debug.Log ("Hash");
-//		GameInformation.inventorySkills [8] = bformatter.Deserialize (stream1) as IfElse;
-//		Debug.Log ("IfElse");
-//		GameInformation.inventorySkills [9] = bformatter.Deserialize (stream1) as InfiniteLoop;
-//		Debug.Log ("InfiniteLoop");
-//		GameInformation.inventorySkills [10] = bformatter.Deserialize (stream1) as Loop;
-//		Debug.Log ("Loop");
-//		GameInformation.inventorySkills [11] = bformatter.Deserialize (stream1) as PacketSniffing;
-//		Debug.Log ("PacketSniffing");
-//		GameInformation.inventorySkills [12] = bformatter.Deserialize (stream1) as Recursion;
-//		Debug.Log ("Recursion");
-//		GameInformation.inventorySkills [13] = bformatter.Deserialize (stream1) as Stack;
-//		Debug.Log ("Stack");
-
-
+		GameInformation.inventorySkills [0] = new Arrays ("load");
+		GameInformation.inventorySkills [1] = new BreakAndContinue ("load");
+		GameInformation.inventorySkills [2] = new DDOS ("load");
+		GameInformation.inventorySkills [3] = new DefaultFunctions ("load");
+		GameInformation.inventorySkills [4] = new FireWall ("load");
+		GameInformation.inventorySkills [5] = new FunctionsWithInputOutput ("load");
+		GameInformation.inventorySkills [6] = new FunctionsWithOutput ("load");
+		GameInformation.inventorySkills [7] = new Hash ("load");
+		GameInformation.inventorySkills [8] = new IfElse ("load");
+		GameInformation.inventorySkills [9] = new InfiniteLoop ("load");
+		GameInformation.inventorySkills [10] = new Loop ("load");
+		GameInformation.inventorySkills [11] = new PacketSniffing ("load");
+		GameInformation.inventorySkills [12] = new Recursion ("load");
+		GameInformation.inventorySkills [13] = new Stack ("load");
 
 	}
 
 	//we may be able to avoid this if always store each spell in the same order every time. i'll think about it
-	private baseSkill createSkill(string name, Stream stream, BinaryFormatter bformatter)
+	public static baseSkill createSkill(string name)
 	{
 		switch (name) 
 		{
-			case "Arrays":
-				return (Arrays)bformatter.Deserialize(stream);
-			case "DDOS":
-				return (DDOS)bformatter.Deserialize(stream);
-			case "DefaultFunctions":
-				return (DefaultFunctions)bformatter.Deserialize(stream);
-			case "FireWall":
-				return (FireWall)bformatter.Deserialize(stream);
-			case "FunctionsWithInputOutput"	:
-				return (FunctionsWithInputOutput)bformatter.Deserialize(stream);
-			case "FunctionsWithOutput"	:
-				return (FunctionsWithOutput)bformatter.Deserialize(stream);
-			case "Hash":
-				return (Hash)bformatter.Deserialize(stream);
-			case "IfElse":
-				return (IfElse)bformatter.Deserialize(stream);
-			case "InfiniteLoop":
-				return (InfiniteLoop)bformatter.Deserialize(stream);
-			case "PacketSniffing":
-				return (PacketSniffing)bformatter.Deserialize(stream);
-			case "Recursion":
-				return (Recursion)bformatter.Deserialize(stream);
-			case "Stack":
-				return (Stack)bformatter.Deserialize(stream);
-			default:
-				return (baseSkill)bformatter.Deserialize(stream);
+		case "Arrays":
+			return GameInformation.inventorySkills[0];
+		case "BreakAndContinue":
+			return GameInformation.inventorySkills[1];
+		case "DDOS":
+			return GameInformation.inventorySkills[2];
+		case "DefaultFunctions":
+			return GameInformation.inventorySkills[3];
+		case "FireWall":
+			return GameInformation.inventorySkills[4];
+		case "FunctionsWithInputOutput"	:
+			return GameInformation.inventorySkills[5];
+		case "FunctionsWithOutput"	:
+			return GameInformation.inventorySkills[6];
+		case "Hash":
+			return GameInformation.inventorySkills[7];
+		case "IfElse":
+			return GameInformation.inventorySkills[8];
+		case "InfiniteLoop":
+			return GameInformation.inventorySkills[9];
+		case "Loop":
+			return GameInformation.inventorySkills[10];
+		case "PacketSniffing":
+			return GameInformation.inventorySkills[11];
+		case "Recursion":
+			return GameInformation.inventorySkills[12];
+		case "Stack":
+			return GameInformation.inventorySkills[13];
+		default:
+			return null;
 
 
 

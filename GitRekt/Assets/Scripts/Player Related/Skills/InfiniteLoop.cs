@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
-[System.Serializable]
 public class InfiniteLoop : baseSkill {
 	public GameInformation gameInformation;
 	
@@ -27,10 +25,10 @@ public class InfiniteLoop : baseSkill {
 		skillCoolDown = 5;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
 		
 		//skill experience gain
@@ -39,29 +37,46 @@ public class InfiniteLoop : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return 0;
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
-	public InfiniteLoop(SerializationInfo info, StreamingContext ctxt)
+	public InfiniteLoop(string load)
 	{
+		skillID = 12;
 		skillName = "Infinite Loop";
 		skillDescription = "Lines of code appears in front of target, stunning them for one turn.";
+		hasAdditionalEffect = true;
+		targetEnemy = true;
+		targetPlayer = false;
 		
-		skillLevel = (int)info.GetValue("INFINITELOOP_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("INFINITELOOP_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("INFINITELOOP_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("INFINITELOOP_SKILLPOWER",typeof(int));
+		//define effect
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.STUN;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
+
+		skillLevel = PlayerPrefs.GetInt("INFINITELOOP_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("INFINITELOOP_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("INFINITELOOP_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetFloat("INFINITELOOP_POWER",0);
+
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("INFINITELOOP_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("INFINITELOOP_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("INFINITELOOP_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("INFINITELOOP_SKILLPOWER", skillPower, typeof(int));
-		
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("INFINITELOOP_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("INFINITELOOP_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("INFINITELOOP_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("INFINITELOOP_POWER", (float)skillPower);
+
 		
 	}
 	

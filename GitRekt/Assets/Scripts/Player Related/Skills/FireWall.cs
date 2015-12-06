@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
-[System.Serializable]
 public class FireWall : baseSkill {
 	public GameInformation gameInformation;
 	
@@ -27,10 +25,10 @@ public class FireWall : baseSkill {
 		skillCoolDown = 5;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
 		int defense = (skillLevel * 5) + 10;
 
@@ -40,29 +38,48 @@ public class FireWall : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return defense;
-
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
-	public FireWall(SerializationInfo info, StreamingContext ctxt)
+	public FireWall(string load)
 	{
+		skillID = 6;
 		skillName = "Fire Wall";
 		skillDescription = "Builds a firewall in front of target, increasing defense for three turns.";
+		hasAdditionalEffect = true;
+		targetEnemy = false;
+		targetPlayer = true;
 		
-		skillLevel = (int)info.GetValue("FIREWALL_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("FIREWALL_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("FIREWALL_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("FIREWALL_SKILLPOWER",typeof(int));
+		//define effect
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.DEFENSE;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
+		
+		
+		skillLevel = PlayerPrefs.GetInt("FIREWALL_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("FIREWALL_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("FIREWALL_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetFloat("FIREWALL_POWER",0);
+
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("FIREWALL_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("FIREWALL_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("FIREWALL_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("FIREWALL_SKILLPOWER", skillPower, typeof(int));
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("FIREWALL_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("FIREWALL_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("FIREWALL_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("FIREWALL_POWER", (float)skillPower);
+
+		
 	}
 	
 }

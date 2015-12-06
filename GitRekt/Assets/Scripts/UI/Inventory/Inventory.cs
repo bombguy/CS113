@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class Inventory : MonoBehaviour {
-
+	public static int height;
+	public static int width;
 	public GameObject slots;
 
 	public int maxRow;
@@ -12,6 +13,8 @@ public class Inventory : MonoBehaviour {
 	private int y = 110;
 
 	public int index;
+
+
 
 	// Use this for initialization
 	void Start () {

@@ -2,139 +2,113 @@
 using System.Collections;
 
 public class GUIManager : MonoBehaviour {
-    ActionBar[] actionBars;
-    ActionBar displayBar;
 
     PanelController playerPanel;
     enemyPanelController enemyPanel;
     
-    basePlayer _unit;
-    baseSkill _skill;
-    basePlayer _buffUnit;
-    baseEnemy _enemy;
+    public basePlayer _unit;
+    public baseSkill _skill;
+    public basePlayer _buffUnit;
+    public baseEnemy _enemy;
 
-    bool action;
-    bool attack;
+    public bool action;
+    public bool attack;
 
-    void Awake() { 
-        actionBars = GetComponentsInChildren<ActionBar>();
+    void Awake() {
         playerPanel = GetComponentInChildren<PanelController>();
         enemyPanel = GetComponentInChildren<enemyPanelController>();
     }
-    // Use this for initialization
-	void Start () {
-	}
-    public bool hasAttack() { return attack; } // if True we are attacking. If false we are buffing.
-    public bool hasAction() { return action; }
-    public basePlayer getUnit() { return _unit; }
-    public baseSkill getSkill() { return _skill; }
-    public baseEnemy getEnemy() { return _enemy; }
-    public basePlayer getBuffed() { return _buffUnit; }
     
     //Load in GUI based on players and enemies
     public void loadGUI(basePlayer[] players, baseEnemy[] enemies)
     {
+        Debug.Log("In Load GUI");
         for (int i = 0; i < players.Length; ++i)
-        {
-            actionBars[i].setActionBar(players[i]);
-        }
-        displayBar = actionBars[actionBars.Length - 1];
+            Debug.Log("Player :" + players[i]);
         playerPanel.setPlayerButtons(players);
         enemyPanel.setEnemyButtons(enemies);
     }
-    //Update TheG UI with a chance of setting off an action.
+    //Update The GUI with a chance of setting off an action.
     public void updateGUI(){
         updatePlayerPanel();
-        updateDisplayBar();
-        updateActiveBar();
         updateEnemyPanel();
-    }
-    //Update the DisplayActionBar
-    public void updateDisplayBar() {
-        if (_unit == null) {
-            displayBar.setBlank();
-        }
-        if (_unit != null)
-            displayBar.setActionBar(fetchActionBar(_unit));
-    }
-    //check if display bar has picked a skll yet.
-    public void updateActiveBar() {
-        if (displayBar.hasSelected()) {
-            _skill = displayBar.getSkill();
-            displayBar.resetSelected();
-        }
     }
     //Update the PlayerPanel choice.
     public void updatePlayerPanel()
     {
-        if (playerPanel.isSelected())
-        {
-            if (_unit == null)
-            {
-                _unit = playerPanel.getPlayer();
+        //Check if player unit has been selected
+        if (playerPanel.hasSelected){
+            //No unit selected
+            if (_unit == null){
+                _unit = playerPanel._currentPlayer;
+                _skill = playerPanel._currentSkill;
             }
-            else if (_unit == playerPanel.getPlayer())
-            {
+            //Unit selected again
+            else if (_unit == playerPanel._currentPlayer){
                 _unit = null;
+                _skill = null;
             }
-            else
-            {
-                if (_skill != null && _skill.targetPlayer)
-                {
-                    _buffUnit = playerPanel.getPlayer();
-                    action = true;
-                    attack = false;
+            //Unit Different from the original target
+            else if(_unit != null && _unit!=playerPanel._currentPlayer){
+                //Check if target mode is on.
+                if (playerPanel.targetMode){
+                    //If spell can target player. Take action. Else do nothing
+                    if (_skill.targetPlayer){
+                        _buffUnit = playerPanel._currentPlayer;
+                        playerPanel.hasSelected = false;
+                        action = true;
+                        attack = false;
+                    }
+                    else{
+                        Debug.Log("Attempted to use a spell that cannot be casted on a player unit.");
+                    }
                 }
-                else
-                    Debug.LogError("Tried to Attack friendly Unit with Damaging Spell");
+                //Target mode is off. so _unit and _skill change.
+                else {
+                    _unit = playerPanel._currentPlayer;
+                    _skill = playerPanel._currentSkill;
+                }
             }
-            playerPanel.resetSelected();
+            playerPanel.hasSelected = false;
         }
     }
     //update the enemyPanel choice.
     public void updateEnemyPanel() {
-        if (enemyPanel.hasSelected)
+        if (enemyPanel._hasSelected)
         {
-            if (_skill != null && _skill.targetEnemy)
+            if (_skill == null)
             {
-                _enemy = enemyPanel.getEnemy();
+                _enemy = enemyPanel._selectedEnemy;
+            }
+            else if (_skill.targetEnemy)
+            {
+                _enemy = enemyPanel._selectedEnemy;
                 action = true;
                 attack = true;
             }
             else
-                Debug.Log("Attempted to Buff a EnemyTarget");
-            enemyPanel.resetSelected();
+                Debug.Log("Cant buff an enemy Player.");
+            enemyPanel._hasSelected = false;
+                
         }
-    }
-    //Used to find the right actionBar when updating the displayBar
-    ActionBar fetchActionBar(basePlayer unit) {
-        for (int i = 0; i < actionBars.Length; ++i) {
-            if (unit == actionBars[i].getUnit())
-                return actionBars[i];
-        }
-        return actionBars[0];
-    }
-    //Applys an action to the GUI
-    public void endAction(){
-        playerPanel.applyPlayerSelection();
-        displayBar.applySkillSelection();
-        fetchActionBar(_unit).setActionBar(displayBar);
-        action = false;
-    }
-    //Usedon end turn.
-    public void beginTurn() {
-        playerPanel.enablePlayers();
-        displayBar.setBlank();
-    }
-    public void endTurn() { }
-    // Update is called once per frame
-	void Update () {
-        
     }
 
-    void updateDebug()
-    {
-        Debug.Log("Unit " + _unit.name);
-        Debug.Log("Skill " + _skill.skillName);
+    //handle turn and action logic
+    public void endAction() {
+        playerPanel.endAction();
+    }
+    public void endTurn() { 
+    //Force all triggers to false.
+        action = false;
+        attack = false;
+        for (int i = 0; i < playerPanel.count(); ++i)
+            playerPanel.endTurn();
+    }
+    public void beginTurn() {
+        playerPanel.beginTurn();
+    }
+    // Update is called once per frame
+	void Update () {
+        updateGUI();
     }
 }

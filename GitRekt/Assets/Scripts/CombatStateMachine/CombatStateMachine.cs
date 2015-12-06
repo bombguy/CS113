@@ -21,7 +21,7 @@ public class CombatStateMachine : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(CurrentState);
+        //Debug.Log(CurrentState);
         switch (CurrentState)
         {
             case(CombatStates.STARTTURN):
@@ -193,7 +193,7 @@ public class CombatStateMachine : MonoBehaviour
     {
         for (int i = 0; i < battleManager.actions; i++)
         {
-            baseEnemy attacker = battleManager.enemyParty[Random.Range(0, GameInformation.enemies.Length)];
+            baseEnemy attacker = battleManager.enemyParty[Random.Range(0, battleManager.enemyParty.Count)];
             basePlayer target = enemy.lowestHealthTarget(battleManager.playerParty);
             enemyTurnPhase(attacker, target, attacker.basicAttack);
         }
@@ -218,7 +218,7 @@ public class CombatStateMachine : MonoBehaviour
             }
             else
             {
-                target.currentHP -= skill.cast(unit, target);
+                target.currentHP -= skill.cast(unit);
                 if (target.currentHP >= 0)
                     if (!target.effected)
                         applyEffect(target, skill);
@@ -244,7 +244,7 @@ public class CombatStateMachine : MonoBehaviour
             }
             else
             {
-                target.currentHP -= skill.cast(unit, target);
+                target.currentHP -= skill.cast(unit);
                 if (target.currentHP >= 0)
                     if (!target.effected)
                         applyEffect(target, skill);
@@ -260,18 +260,18 @@ public class CombatStateMachine : MonoBehaviour
         {
             if (skill.additionalEffect.status == baseSkill.Effect.Status.ATTACK && skill.targetPlayer)
             {
-                target.attack += skill.cast(unit, target);
+                target.attack += skill.cast(unit);
                 applyEffect(target, skill);
             }
             else if (skill.additionalEffect.status == baseSkill.Effect.Status.DEFENSE && skill.targetPlayer)
             {
-                target.defense += skill.cast(unit, target);
+                target.defense += skill.cast(unit);
                 applyEffect(target, skill);
             }
         }
         else if (skill.additionalEffect.status == baseSkill.Effect.Status.HEAL && skill.targetPlayer)
         {
-            target.currentHP += skill.cast(unit, target);
+            target.currentHP += skill.cast(unit);
             //Check here for effects. HOTS?
         }
     }
@@ -281,18 +281,18 @@ public class CombatStateMachine : MonoBehaviour
         {
             if (skill.additionalEffect.status == baseSkill.Effect.Status.ATTACK && skill.targetPlayer)
             {
-                target.attack += skill.cast(unit, target);
+                target.attack += skill.cast(unit);
                 applyEffect(target, skill);
             }
             else if (skill.additionalEffect.status == baseSkill.Effect.Status.DEFENSE && skill.targetPlayer)
             {
-                target.defense += skill.cast(unit, target);
+                target.defense += skill.cast(unit);
                 applyEffect(target, skill);
             }
         }
         else if (skill.additionalEffect.status == baseSkill.Effect.Status.HEAL && skill.targetPlayer)
         {
-            target.currentHP += skill.cast(unit, target);
+            target.currentHP += skill.cast(unit);
             //Check here for effects. HOTS?
         }
     }
@@ -339,7 +339,7 @@ public class CombatStateMachine : MonoBehaviour
         }
         else
         {
-            target.currentHP -= skill.cast(attacker, target);
+            target.currentHP -= skill.cast(attacker);
             if (skill.hasAdditionalEffect)
                 if (target.currentHP <= 0)
                     battleManager.deadUnit(target);
@@ -356,7 +356,7 @@ public class CombatStateMachine : MonoBehaviour
         }
         else
         {
-            target.currentHP -= skill.cast(attacker, target);
+            target.currentHP -= skill.cast(attacker);
             if (skill.hasAdditionalEffect)
                 if (target.currentHP <= 0)
                     battleManager.deadUnit(target);
@@ -368,11 +368,12 @@ public class CombatStateMachine : MonoBehaviour
     private void AOEattack(basePlayer unit, baseEnemy target, baseSkill skill)
     {
         int enemiesLeft = battleManager.enemyParty.Count;
+        int damage = skill.cast(unit);
         for (int i = 0; i < enemiesLeft; ++i)
         {
             if (battleManager.enemyParty[i] != null)
             {
-                battleManager.enemyParty[i].currentHP -= skill.cast(unit, battleManager.enemyParty[i]);
+                battleManager.enemyParty[i].currentHP -= damage;
                 if (battleManager.enemyParty[i].currentHP <= 0)
                 {
                     battleManager.deadUnit(battleManager.enemyParty[i]);
@@ -383,11 +384,12 @@ public class CombatStateMachine : MonoBehaviour
     private void AOEattack(basePlayer unit, basePlayer target, baseSkill skill)
     {
         int playersLeft = battleManager.playerParty.Count;
+        int damage = skill.cast(unit);
         for (int i = 0; i < playersLeft; ++i)
         {
             if (battleManager.playerParty[i] != null)
             {
-                battleManager.playerParty[i].currentHP -= skill.cast(unit, battleManager.playerParty[i]);
+                battleManager.playerParty[i].currentHP -= skill.cast(unit);
                 if (battleManager.playerParty[i].currentHP <= 0)
                 {
                     battleManager.deadUnit(battleManager.playerParty[i]);
@@ -398,11 +400,12 @@ public class CombatStateMachine : MonoBehaviour
     private void AOEattack(baseEnemy unit, basePlayer target, baseSkill skill)
     {
         int playersLeft = battleManager.playerParty.Count;
+        int damage = skill.cast(unit);
         for (int i = 0; i < playersLeft; ++i)
         {
             if (battleManager.playerParty[i] != null)
             {
-                battleManager.playerParty[i].currentHP -= skill.cast(unit, battleManager.playerParty[i]);
+                battleManager.playerParty[i].currentHP -= skill.cast(unit);
                 if (battleManager.playerParty[i].currentHP <= 0)
                 {
                     battleManager.deadUnit(battleManager.playerParty[i]);
@@ -413,11 +416,12 @@ public class CombatStateMachine : MonoBehaviour
     private void AOEattack(baseEnemy unit, baseEnemy target, baseSkill skill)
     {
         int enemiesLeft = battleManager.enemyParty.Count;
+        int damage = skill.cast(unit);
         for (int i = 0; i < enemiesLeft; ++i)
         {
             if (battleManager.enemyParty[i] != null)
             {
-                battleManager.enemyParty[i].currentHP -= skill.cast(unit, battleManager.enemyParty[i]);
+                battleManager.enemyParty[i].currentHP -= skill.cast(unit);
                 if (battleManager.enemyParty[i].currentHP <= 0)
                 {
                     battleManager.deadUnit(battleManager.enemyParty[i]);
@@ -603,21 +607,19 @@ public class CombatStateMachine : MonoBehaviour
     private void unitSkipped(basePlayer unit,baseEnemy target, baseSkill skill) {
         if (unit.duration == 0)
         {
-            unit.currentHP -= skill.cast(unit, target);
+            unit.currentHP -= skill.cast(unit);
             clearEffect(target,skill);
         }
         else
             --unit.duration;
-        --battleManager.actions;
     }
     private void unitSkipped(baseEnemy unit,basePlayer target,baseSkill skill) {
         if (unit.duration == 0)
         {
-            unit.currentHP -= skill.cast(unit, target);
+            unit.currentHP -= skill.cast(unit);
             clearEffect(target,skill);
         }
         else
             --unit.duration;
-        --battleManager.actions;
     }
 }

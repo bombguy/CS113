@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
-[System.Serializable]
 public class Stack : baseSkill {
 	public GameInformation gameInformation;
 	
@@ -23,10 +21,10 @@ public class Stack : baseSkill {
 		skillCoolDown = 5;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
 		int attack = 50 + (skillLevel * 5);
 
@@ -36,29 +34,43 @@ public class Stack : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return attack;
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
-	public Stack(SerializationInfo info, StreamingContext ctxt)
+	public Stack(string load)
 	{
+		skillID = 16;
 		skillName = "Stack";
 		skillDescription = "Unit shoots a stack of discs at the opponent, dealing damage.";
+		hasAdditionalEffect = false;
+		targetEnemy = true;
+		targetPlayer = false;
 		
-		skillLevel = (int)info.GetValue("STACK_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("STACK_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("STACK_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("STACK_SKILLPOWER",typeof(int));
+		//define effect
+		additionalEffect = new Effect ();
+
+		skillLevel = PlayerPrefs.GetInt("STACK_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("STACK_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("STACK_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetInt("STACK_POWER",0);
+
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("STACK_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("STACK_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("STACK_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("STACK_SKILLPOWER", skillPower, typeof(int));
-		
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("STACK_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("STACK_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("STACK_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("STACK_POWER", (float)skillPower);
+
 		
 	}
 	

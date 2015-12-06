@@ -29,10 +29,10 @@ public class BasicConnection : baseSkill {
 		skillCoolDown = 3;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//is it player?
 		//if (target.GetType ().IsAssignableFrom (basePlayer)) {
 		//	Debug.Log ("its a player");
@@ -48,10 +48,14 @@ public class BasicConnection : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return attack;
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
 	public BasicConnection(SerializationInfo info, StreamingContext ctxt)
 	{
@@ -65,11 +69,11 @@ public class BasicConnection : baseSkill {
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("BASICCONNECTIONS_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("BASICCONNECTION_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("BASICCONNECTION_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("BASICCONNECTION_SKILLPOWER", skillPower, typeof(int));
+	public override void 	saveSkill() {
+//		info.AddValue("BASICCONNECTIONS_SKILLLEVEL", skillLevel, typeof(int));
+//		info.AddValue("BASICCONNECTION_SKILLEXPERIENCE", skillExperience, typeof(int));
+//		info.AddValue("BASICCONNECTION_COOLDOWN", skillCoolDown, typeof(int));
+//		info.AddValue("BASICCONNECTION_SKILLPOWER", skillPower, typeof(int));
 		
 		
 	}

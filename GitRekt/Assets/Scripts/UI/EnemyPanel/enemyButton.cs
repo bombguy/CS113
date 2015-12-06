@@ -2,28 +2,19 @@
 using System.Collections;
 using UnityEngine.UI;
 public class enemyButton : MonoBehaviour {
-    Button _enemyButton;
-    baseEnemy _enemy;
-    bool selected;
+   Button _enemyButton;
+   public baseEnemy _enemy;
+   public bool selected;
 	// Use this for initialization
     void Awake() {
-        _enemy = GetComponent<baseEnemy>();
         _enemyButton = GetComponent<Button>();
+        _enemy = gameObject.AddComponent<baseEnemy>();
     }
 	void Start () {
-        if (_enemy != null)
-            _enemyButton.GetComponentInChildren<Text>().text = _enemy.name;
-        else
-            _enemyButton.GetComponent<Text>().text = "-";
+        _enemyButton.GetComponentInChildren<Text>().text = "-";
         selected = false;
 	}
     void Update() { }
-    public void resetSelected() { selected = false; }
-    public bool isSelected() { return selected; }
-    public baseEnemy getEnemy()
-    {
-        return _enemy;
-    }
 
     public void enemySelected()
     {
@@ -40,6 +31,7 @@ public class enemyButton : MonoBehaviour {
     }
     public void setButton(baseEnemy input)
     {
+        Debug.Log("In setButton");
         _enemy = input;
         _enemyButton.GetComponentInChildren<Text>().text = _enemy.name;
     }

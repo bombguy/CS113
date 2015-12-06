@@ -22,7 +22,7 @@ public class GameInformation : MonoBehaviour {
 
 		enemies = new baseEnemy[2];
 
-		inventorySkills = new baseSkill[25];
+		inventorySkills = new baseSkill[14];
 		inventorySkills [0] = new Arrays ();
 		inventorySkills [1] = new BreakAndContinue ();
 		inventorySkills [2] = new DDOS ();
@@ -44,6 +44,7 @@ public class GameInformation : MonoBehaviour {
 
 	void Awake(){
 		DontDestroyOnLoad (transform.gameObject);
+		Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
 	}
 
 	public static int level{ get; set;}

@@ -7,18 +7,22 @@ public class NoSkill : baseSkill {
 	
 	public NoSkill () {
 		skillName = "-";
-		skillDescription = "";
+		skillDescription = " ";
 		skillLevel = 0;
 		skillExperience = 0;
 		skillCoolDown = 0;
 		skillPower = 0;
 	}
 
-	public override int	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int	cast(basePlayer caster) {
 		return 0 ;
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
+	public override void 	saveSkill(){
 		return;
 	}
 }

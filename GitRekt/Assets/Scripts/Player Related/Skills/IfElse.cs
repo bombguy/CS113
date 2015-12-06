@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
-[System.Serializable]
 public class IfElse : baseSkill {
 	public GameInformation gameInformation;
 	
@@ -23,10 +21,10 @@ public class IfElse : baseSkill {
 		skillCoolDown = 3;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
 		int attack = (10 + (skillLevel * 5)) * 2;
         if (Random.Range(0, 1) != 0)
@@ -38,31 +36,42 @@ public class IfElse : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return attack;
-
 	}
-	
-	public IfElse(SerializationInfo info, StreamingContext ctxt)
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
+	public IfElse(string load)
 	{
+		skillID = 11;
 		skillName = "If Else";
 		skillDescription = "All or Nothing, Doubles the attack or nothing at all.";
+		hasAdditionalEffect = false;
+		targetEnemy = true;
+		targetPlayer = false;
 		
-		skillLevel = (int)info.GetValue("IFELSE_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("IFELSE_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("IFELSE_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("IFELSE_SKILLPOWER",typeof(int));
+		//define effect
+		additionalEffect = new Effect ();
+
+		skillLevel = PlayerPrefs.GetInt("IFELSE_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("IFELSE_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("IFELSE_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetFloat("IFELSE_POWER",0);
+
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("IFELSE_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("IFELSE_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("IFELSE_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("IFELSE_SKILLPOWER", skillPower, typeof(int));
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("IFELSE_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("IFELSE_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("IFELSE_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("IFELSE_POWER", (float)skillPower);
+
 		
-		
-	}
-	
+	}	
 }

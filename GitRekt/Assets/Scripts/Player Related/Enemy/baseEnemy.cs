@@ -26,5 +26,4 @@ public class baseEnemy : MonoBehaviour{
         DEFENSE,
         SKIP
     }
-
 }

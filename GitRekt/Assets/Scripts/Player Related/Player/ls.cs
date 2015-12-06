@@ -1,6 +1,8 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
-[System.Serializable]
+using UnityEngine;
+
+
 public class ls : basePlayer
 {
     public ls()
@@ -43,37 +45,47 @@ public class ls : basePlayer
 
         return copy;
     }
-    public ls(SerializationInfo info, StreamingContext ctxt)
+    public ls(string load)
     {
-        name = (string)info.GetValue("LS_NAME", typeof(string));
-        maxHP = (int)info.GetValue("LS_HEALTH", typeof(int));
-        attack = (int)info.GetValue("LS_ATTACK", typeof(int));
-        defense = (int)info.GetValue("LS_DEFENSE", typeof(int));
+        name = "Lisa";
+        maxHP = PlayerPrefs.GetInt ("LS_HEALTH", 0);
+        attack = PlayerPrefs.GetInt ("LS_ATTACK", 0);
+        defense = PlayerPrefs.GetInt ("LS_DEFENSE", 0);
+        currentHP = maxHP;
 
-        flowMastery = (int)info.GetValue("LS_FLOWCONTROL_MASTERY", typeof(int));
-        functionMastery = (int)info.GetValue("LS_FUNCTION_MASTERY", typeof(int));
-        datastructureMastery = (int)info.GetValue("LS_DATABASE_MASTERY", typeof(int));
-        networkMastery = (int)info.GetValue("LS_NETWORK_MASTERY", typeof(int));
+        flowMastery = PlayerPrefs.GetInt ("LS_FLOW_CONTROL_MASTERY", 0);
+        functionMastery = PlayerPrefs.GetInt ("LS_FUNCTION_MASTERY", 0);
+        datastructureMastery = PlayerPrefs.GetInt ("LS_DATABASE_MASTERY", 0);
+        networkMastery = PlayerPrefs.GetInt ("LS_NETWORK_MASTERY", 0);
+
+        string skill1name = PlayerPrefs.GetString ("LS_SPELL1", "");
+        string skill2name = PlayerPrefs.GetString ("LS_SPELL2", "");
+        string skill3name = PlayerPrefs.GetString ("LS_SPELL3", "");
+        string skill4name = PlayerPrefs.GetString ("LS_SPELL4", "");
+
+        skill1 = LoadInformation.createSkill (skill1name);
+        skill2 = LoadInformation.createSkill (skill2name);
+        skill3 = LoadInformation.createSkill (skill3name);
+        skill4 = LoadInformation.createSkill (skill4name);
+
     }
 
-    public override void GetObjectData(SerializationInfo info, StreamingContext context)
-    {
-        info.AddValue("LS_NAME", name, typeof(string));
-        info.AddValue("LS_HEALTH", maxHP, typeof(int));
-        info.AddValue("LS_ATTACK", attack, typeof(int));
-        info.AddValue("LS_DEFENSE", defense, typeof(int));
+    public override void savePlayer() {
 
-        //info.AddValue("RMDIR_SPELL1_EXP", playerName, typeof(int));
+        PlayerPrefs.SetInt ("LS_HEALTH", maxHP);
+        PlayerPrefs.SetInt ("LS_ATTACK", attack);
+        PlayerPrefs.SetInt ("LS_DEFENSE", defense);
 
-        info.AddValue("LS_FLOWCONTROL_MASTERY", flowMastery, typeof(int));
-        info.AddValue("LS_FUNCTION_MASTERY", functionMastery, typeof(int));
-        info.AddValue("LS_DATABASE_MASTERY", datastructureMastery, typeof(int));
-        info.AddValue("LS_NETWORK_MASTERY", networkMastery, typeof(int));
 
-        info.AddValue("LS_SPELL1", skill1.skillName, typeof(string));
-        info.AddValue("LS_SPELL2", skill2.skillName, typeof(string));
-        info.AddValue("LS_SPELL3", skill3.skillName, typeof(string));
-        info.AddValue("LS_SPELL4", skill4.skillName, typeof(string));
+        PlayerPrefs.SetInt ("LS_FLOWCONTROL_MASTERY", flowMastery);
+        PlayerPrefs.SetInt ("LS_FUNCTION_MASTERY", functionMastery);
+        PlayerPrefs.SetInt ("LS_DATABASE_MASTERY", datastructureMastery);
+        PlayerPrefs.SetInt ("LS_NETWORK_MASTERY", networkMastery);
+    
 
+        PlayerPrefs.SetString ("LS_SPELL1", skill1.skillName);
+        PlayerPrefs.SetString ("LS_SPELL2", skill2.skillName);
+        PlayerPrefs.SetString ("LS_SPELL3", skill3.skillName);
+        PlayerPrefs.SetString ("LS_SPELL4", skill4.skillName);
     }
 }

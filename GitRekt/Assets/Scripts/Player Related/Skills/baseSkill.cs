@@ -1,9 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
-[System.Serializable]
-public abstract class baseSkill: ISerializable{
+public abstract class baseSkill{
 	public enum SkillCategory
 	{
 		FLOWCONTROL,
@@ -53,6 +51,7 @@ public abstract class baseSkill: ISerializable{
 	public double			skillPower;
 	public Sprite			skillIcon;
 
-	public abstract int 	cast(MonoBehaviour castor, MonoBehaviour target);
-	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
+	public abstract int 	cast(basePlayer caster);
+    public abstract int     cast(baseEnemy caster);
+	public abstract void 	saveSkill();
 }

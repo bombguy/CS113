@@ -27,10 +27,10 @@ public class Graph : baseSkill {
 		skillCoolDown = 5;
 		skillPower = 0;
 		
-		skillIcon = Resources.Load<Sprite> ("Spell/" + skillName);
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
 	
-	public override int 	cast(MonoBehaviour castor, MonoBehaviour target) {
+	public override int cast(basePlayer caster) {
 		//skill effect
 		
 		//skill experience gain
@@ -39,10 +39,14 @@ public class Graph : baseSkill {
 		//if skill experience hits 10, skill/category level up
 		if (skillExperience % 10 == 0) {
 			skillLevel++;
-			(castor as basePlayer).networkMastery++;
+			caster.networkMastery++;
 		}
 		return 0;
 	}
+    public override int cast(baseEnemy caster)
+    {
+        return 0;
+    }
 	
 	public Graph(SerializationInfo info, StreamingContext ctxt)
 	{
@@ -56,14 +60,7 @@ public class Graph : baseSkill {
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("GRAPH_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("GRAPH_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("GRAPH_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("GRAPH_SKILLPOWER", skillPower, typeof(int));
-		
-		
-	}
+	public override void 	saveSkill(){}
 	
 }
 
