@@ -17,6 +17,7 @@ public abstract class baseSkill: ISerializable{
 	{
 		public enum Status
 		{
+            NONE,
 			STUN,
 			CONFUSED,
 			AOE,

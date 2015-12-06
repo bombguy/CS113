@@ -10,9 +10,21 @@ public class ActionBar : MonoBehaviour {
     public baseSkill _skill;
 
     public void endAction() {
+        for (int i = 0; i < _buttons.Length; ++i) {
+            if (_buttons[i]._skill == _skill)
+            {
+                _buttons[i].applyCooldown();
+
+            }
+        }
         _hasSelected = false;
         _skill = null;
         hideActionBar();
+    }
+    public void updateCooldowns() {
+        for (int i = 0; i < _buttons.Length; ++i) {
+            _buttons[i].updateCooldown();
+        }
     }
     
 	void Awake(){

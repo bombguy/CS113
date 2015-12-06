@@ -65,7 +65,7 @@ public class skill_button : MonoBehaviour {
         if (onCoolDown)
         {
             //Mod math forces us to add 1 to the cooldown_duration. ie. cooldown = 1; n%1 = 0. 
-            if (BattleManager.turnCounter % cooldown_duration + 1 == 0)
+            if (BattleManager.turnCounter % (cooldown_duration + 1) == 0)
                 clearCooldown();
         }
     }
@@ -77,7 +77,8 @@ public class skill_button : MonoBehaviour {
         else
             _skillButton.image.sprite = in_skill.skillIcon;
         _skillName.text = in_skill.skillName;
-        _skillDescription.text = in_skill.skillDescription;
+        _skillDescription.text = _skill.skillName+" : "+ in_skill.skillDescription+"\n"+
+                                   "Skill Level  "+_skill.skillLevel;
         _skillButton.GetComponentsInChildren<Text>()[1].enabled = false;
         cooldown_duration = _skill.skillCoolDown;
     }

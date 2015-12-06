@@ -16,7 +16,7 @@ public class Arrays : baseSkill {
 		//define effect
 		additionalEffect = new Effect ();
 		additionalEffect.status = Effect.Status.DEFENSE;
-		additionalEffect.power = 0;
+		additionalEffect.power = 1;
 		additionalEffect.duration = 3;
 		
 		skillLevel = 1;
@@ -29,7 +29,7 @@ public class Arrays : baseSkill {
 	
 	public override int cast(basePlayer caster) {
 		//skill effect
-        additionalEffect.power = (caster.networkMastery * 10);
+        additionalEffect.power = (caster.networkMastery * 10)+skillLevel;
 		//skill experience gain
 		skillExperience++;
 		
