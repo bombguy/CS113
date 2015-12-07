@@ -69,11 +69,11 @@ public class BasicConnection : baseSkill {
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("BASICCONNECTIONS_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("BASICCONNECTION_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("BASICCONNECTION_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("BASICCONNECTION_SKILLPOWER", skillPower, typeof(int));
+	public override void 	saveSkill() {
+//		info.AddValue("BASICCONNECTIONS_SKILLLEVEL", skillLevel, typeof(int));
+//		info.AddValue("BASICCONNECTION_SKILLEXPERIENCE", skillExperience, typeof(int));
+//		info.AddValue("BASICCONNECTION_COOLDOWN", skillCoolDown, typeof(int));
+//		info.AddValue("BASICCONNECTION_SKILLPOWER", skillPower, typeof(int));
 		
 		
 	}

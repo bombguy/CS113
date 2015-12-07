@@ -62,12 +62,7 @@ public class Tree : baseSkill {
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("TREE_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("TREE_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("TREE_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("TREE_SKILLPOWER", skillPower, typeof(int));
-		
+	public override void 	saveSkill(){
 		
 	}
 	

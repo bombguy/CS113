@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
 public class FunctionsWithInputOutput : baseSkill {
 	public GameInformation gameInformation;
@@ -44,24 +43,33 @@ public class FunctionsWithInputOutput : baseSkill {
         return 0;
     }
 	
-	public FunctionsWithInputOutput(SerializationInfo info, StreamingContext ctxt)
+	public FunctionsWithInputOutput(string load)
 	{
-		skillName = "Functions With I/O";
+		skillID = 7;
+		skillName = "Functions With IO";
 		skillDescription = "Unit will be supplying health, to deal massive damage to opponent.";
+		hasAdditionalEffect = false;
+		targetEnemy = false;
+		targetPlayer = true;
 		
-		skillLevel = (int)info.GetValue("FUNCTIONSWITHINPUTOUTPUT_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("FUNCTIONSWITHINPUTOUTPUT_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("FUNCTIONSWITHINPUTOUTPUT_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("FUNCTIONSWITHINPUTOUTPUT_SKILLPOWER",typeof(int));
+		additionalEffect = new Effect ();
+
+		skillLevel = PlayerPrefs.GetInt("FUNCTIONSWITHINPUTOUTPUT_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("FUNCTIONSWITHINPUTOUTPUT_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("FUNCTIONSWITHINPUTOUTPUT_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetFloat("FUNCTIONSWITHINPUTOUTPUT_POWER",0);
+
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("FUNCTIONSWITHINPUTOUTPUT_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("FUNCTIONSWITHINPUTOUTPUT_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("FUNCTIONSWITHINPUTOUTPUT_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("FUNCTIONSWITHINPUTOUTPUT_SKILLPOWER", skillPower, typeof(int));
-		
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("FUNCTIONSWITHINPUTOUTPUT_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("FUNCTIONSWITHINPUTOUTPUT_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("FUNCTIONSWITHINPUTOUTPUT_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("FUNCTIONSWITHINPUTOUTPUT_POWER", (float)skillPower);
+
 		
 	}
 	

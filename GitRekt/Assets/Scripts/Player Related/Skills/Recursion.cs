@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
 public class Recursion : baseSkill {
 	public GameInformation gameInformation;
@@ -48,24 +47,37 @@ public class Recursion : baseSkill {
         return 0;
     }
 	
-	public Recursion(SerializationInfo info, StreamingContext ctxt)
+	public Recursion(string load)
 	{
+		skillID = 15;
 		skillName = "Recursion";
 		skillDescription = "A giant loop surrounds opponent's side of the field, dealing damage to all opponents.";
+		hasAdditionalEffect = true;
+		targetEnemy = true;
+		targetPlayer = false;
 		
-		skillLevel = (int)info.GetValue("RECURSION_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("RECURSION_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("RECURSION_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("RECURSION_SKILLPOWER",typeof(int));
+		//define effect
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.AOE;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
+
+		skillLevel = PlayerPrefs.GetInt("RECURSION_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("RECURSION_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("RECURSION_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetFloat("RECURSION_POWER",0);
+
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("RECURSION_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("RECURSION_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("RECURSION_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("RECURSION_SKILLPOWER", skillPower, typeof(int));
-		
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("RECURSION_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("RECURSION_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("RECURSION_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("RECURSION_POWERL",(float) skillPower);
+
 		
 	}
 	

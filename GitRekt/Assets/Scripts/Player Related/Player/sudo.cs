@@ -1,6 +1,6 @@
-﻿using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
-[System.Serializable] 
+using UnityEngine;
+
 public class sudo : basePlayer {
 	public sudo () {
 		name = "Susan Domo";
@@ -40,37 +40,48 @@ public class sudo : basePlayer {
         copy.networkMastery = this.networkMastery;
         return copy;
     }
-	public sudo(SerializationInfo info, StreamingContext ctxt)
+	public sudo(string load)
 	{
-		name = (string)info.GetValue("SUDO_NAME",typeof(string));
-		maxHP = (int)info.GetValue("SUDO_HEALTH",typeof(int));
-		attack = (int)info.GetValue("SUDO_ATTACK",typeof(int));
-		defense = (int)info.GetValue ("SUDO_DEFENSE", typeof(int));
+		name = "Susan Domo";
+		maxHP = PlayerPrefs.GetInt ("SUDO_HEALTH", 0);
+		attack = PlayerPrefs.GetInt ("SUDO_ATTACK", 0);
+		defense = PlayerPrefs.GetInt ("SUDO_DEFENSE", 0);
 		currentHP = maxHP;
-		
-		flowMastery = (int)info.GetValue("SUDO_FLOWCONTROL_MASTERY",typeof(int));
-		functionMastery = (int)info.GetValue("SUDO_FUNCTION_MASTERY",typeof(int));
-		datastructureMastery = (int)info.GetValue("SUDO_DATABASE_MASTERY",typeof(int));
-		networkMastery = (int)info.GetValue ("SUDO_NETWORK_MASTERY", typeof(int));
+
+		flowMastery = PlayerPrefs.GetInt ("SUDO_FLOW_CONTROL_MASTERY", 0);
+		functionMastery = PlayerPrefs.GetInt ("SUDO_FUNCTION_MASTERY", 0);
+		datastructureMastery = PlayerPrefs.GetInt ("SUDO_DATABASE_MASTERY", 0);
+		networkMastery = PlayerPrefs.GetInt ("SUDO_NETWORK_MASTERY", 0);
+
+		string skill1name = PlayerPrefs.GetString ("SUDO_SPELL1","");
+		string skill2name = PlayerPrefs.GetString ("SUDO_SPELL2","");
+		string skill3name = PlayerPrefs.GetString ("SUDO_SPELL3","");
+		string skill4name = PlayerPrefs.GetString ("SUDO_SPELL4","");
+
+		skill1 = LoadInformation.createSkill (skill1name);
+		skill2 = LoadInformation.createSkill (skill2name);
+		skill3 = LoadInformation.createSkill (skill3name);
+		skill4 = LoadInformation.createSkill (skill4name);
+
 	}
 
-	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("SUDO_NAME", name, typeof(string));
-		info.AddValue("SUDO_HEALTH", maxHP, typeof(int));
-		info.AddValue("SUDO_ATTACK", attack, typeof(int));
-		info.AddValue("SUDO_DEFENSE", defense, typeof(int));
+	public override void savePlayer() {
 
-		//info.AddValue("SUDO_SPELL1_EXP", playerName, typeof(int));
 
-		info.AddValue("SUDO_FLOWCONTROL_MASTERY", flowMastery, typeof(int));
-		info.AddValue("SUDO_FUNCTION_MASTERY", functionMastery, typeof(int));
-		info.AddValue("SUDO_DATABASE_MASTERY", datastructureMastery, typeof(int));
-		info.AddValue("SUDO_NETWORK_MASTERY", networkMastery, typeof(int));
+		PlayerPrefs.SetInt ("SUDO_HEALTH", maxHP);
+		PlayerPrefs.SetInt ("SUDO_ATTACK", attack);
+		PlayerPrefs.SetInt ("SUDO_DEFENSE", defense);
 
-		info.AddValue ("SUDO_SPELL1", skill1.skillName, typeof(string));
-		info.AddValue ("SUDO_SPELL2", skill2.skillName, typeof(string));
-		info.AddValue ("SUDO_SPELL3", skill3.skillName, typeof(string));
-		info.AddValue ("SUDO_SPELL4", skill4.skillName, typeof(string));
 
+		PlayerPrefs.SetInt ("SUDO_FLOWCONTROL_MASTERY", flowMastery);
+		PlayerPrefs.SetInt ("SUDO_FUNCTION_MASTERY", functionMastery);
+		PlayerPrefs.SetInt ("SUDO_DATABASE_MASTERY", datastructureMastery);
+		PlayerPrefs.SetInt ("SUDO_NETWORK_MASTERY", networkMastery);
+	
+
+		PlayerPrefs.SetString ("SUDO_SPELL1", skill1.skillName);
+		PlayerPrefs.SetString ("SUDO_SPELL2", skill2.skillName);
+		PlayerPrefs.SetString ("SUDO_SPELL3", skill3.skillName);
+		PlayerPrefs.SetString ("SUDO_SPELL4", skill4.skillName);
 	}
 }

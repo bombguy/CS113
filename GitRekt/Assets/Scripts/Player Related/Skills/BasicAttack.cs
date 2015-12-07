@@ -3,6 +3,7 @@ using System.Collections;
 using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
 
+
 public class BasicAttack : baseSkill {
 	public GameInformation gameInformation;
 	
@@ -40,7 +41,7 @@ public class BasicAttack : baseSkill {
     {
         return caster.attack;
     }
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
+	public override void 	saveSkill() {
 		return;
 	}
 

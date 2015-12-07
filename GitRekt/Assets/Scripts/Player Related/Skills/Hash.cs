@@ -1,6 +1,5 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
 public class Hash : baseSkill {
 	public GameInformation gameInformation;
@@ -47,24 +46,37 @@ public class Hash : baseSkill {
         return 0;
     }
 	
-	public Hash(SerializationInfo info, StreamingContext ctxt)
+	public Hash(string load)
 	{
+		skillID = 10;
 		skillName = "Hash";
 		skillDescription = "Guaranteed to block an attack.";
+		hasAdditionalEffect = true;
+		targetEnemy = false;
+		targetPlayer = true;
 		
-		skillLevel = (int)info.GetValue("HASH_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("HASH_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("HASH_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("HASH_SKILLPOWER",typeof(int));
+		//define effect
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.GOD;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
+
+		skillLevel = PlayerPrefs.GetInt("HASH_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("HASH_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("HASH_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetFloat("HASH_POWER",0);
+
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("HASH_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("HASH_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("HASH_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("HASH_SKILLPOWER", skillPower, typeof(int));
-		
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("HASH_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("HASH_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("HASH_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("HASH_POWER", (float)skillPower);
+
 		
 	}
 	

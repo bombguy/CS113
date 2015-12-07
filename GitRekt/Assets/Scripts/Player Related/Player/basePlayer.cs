@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
 
-[System.Serializable] 
-public abstract class basePlayer: MonoBehaviour, ISerializable {
+
+public abstract class basePlayer: MonoBehaviour {
 	public string		name;
 	public int			maxHP;
 	public int			currentHP;
@@ -38,5 +37,5 @@ public abstract class basePlayer: MonoBehaviour, ISerializable {
     public int          duration;
     public baseSkill effective_skill;
     public abstract basePlayer deepCopy();
-	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
+	public abstract void 	savePlayer();
 }

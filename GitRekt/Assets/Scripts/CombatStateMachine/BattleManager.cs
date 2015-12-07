@@ -94,7 +94,7 @@ public class BattleManager : MonoBehaviour {
     }
     public static void beginTurn()
     {
-        Debug.Log("BattleManager Begin Turn :" + turnCounter);
+       // Debug.Log("BattleManager Begin Turn :" + turnCounter);
         Debug.Log("Players Health :");
         for (int i = 0; i < playerParty.Count; ++i)
             Debug.Log(playerParty[i].name +" "+ playerParty[i].currentHP);

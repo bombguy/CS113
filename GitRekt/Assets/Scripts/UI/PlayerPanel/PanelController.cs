@@ -8,6 +8,7 @@ using UnityEngine.UI;
  */
 public class PanelController : MonoBehaviour
 {
+    bool[] _interactableStates; // Use parallel arrays to set interactable states for player/player targeting
     playerButton[] _playerButtons;
     basePlayer _currentPlayer;
     Text playerInformation;
@@ -42,14 +43,17 @@ public class PanelController : MonoBehaviour
             _playerButtons[i]._playerBattleStats.updateBattlePanel();
         }
     }
+    public void Targeting() { 
+        
+    }
     public void beginTurn() {
         //Start of each turn update Cooldowns and enable all buttons to press.
-        Debug.Log("Begin Turn- PanelController.");
         for (int i = 0; i < _playerButtons.Length; ++i)
         {
             if (_playerButtons[i]._player.currentHP > 0)
             {
                 _playerButtons[i].buttonEnable();
+                _interactableStates[i] = true;
                 _playerButtons[i]._actionBar.updateCooldowns();
                 _playerButtons[i]._playerBattleStats.updateBattlePanel();
             }
@@ -77,7 +81,7 @@ public class PanelController : MonoBehaviour
     
     // Late update after Update is called once per frame
     void Update() {
-        updateUnit();    
+        updateUnit();
     }
     //Logic to displayActionBars.
     void updateUnit()
@@ -114,7 +118,7 @@ public class PanelController : MonoBehaviour
                     _playerButtons[i]._actionBar.displayActionBar();
                     _playerButtons[i]._selected = false;
                 }
-                Debug.Log("Unit chosen " + _currentPlayer);
+                //Debug.Log("Unit chosen " + _currentPlayer);
             }
         }
     }

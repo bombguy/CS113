@@ -54,7 +54,7 @@ public class GUIManager : MonoBehaviour {
     {
         playerPanel.setPlayerButtons(players);
         enemyPanel.setEnemyButtons(enemies);
-        Debug.Log("GUI Loaded.");
+        //Debug.Log("GUI Loaded.");
     }
 
     //handle turn and action logic

@@ -22,7 +22,7 @@ public class NoSkill : baseSkill {
         return 0;
     }
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
+	public override void 	saveSkill(){
 		return;
 	}
 }
