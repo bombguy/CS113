@@ -8,7 +8,7 @@ using UnityEngine.UI;
  */
 public class PanelController : MonoBehaviour
 {
-    bool[] _interactableStates; // Use parallel arrays to set interactable states for player/player targeting
+    //bool[] _interactableStates; // Use parallel arrays to set interactable states for player/player targeting
     playerButton[] _playerButtons;
     basePlayer _currentPlayer;
     Text playerInformation;
@@ -53,7 +53,7 @@ public class PanelController : MonoBehaviour
             if (_playerButtons[i]._player.currentHP > 0)
             {
                 _playerButtons[i].buttonEnable();
-                _interactableStates[i] = true;
+                //_interactableStates[i] = true;
                 _playerButtons[i]._actionBar.updateCooldowns();
                 _playerButtons[i]._playerBattleStats.updateBattlePanel();
             }

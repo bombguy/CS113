@@ -7,21 +7,12 @@ public class GameInformation : MonoBehaviour {
 	public static basePlayer[] players;
 	public static baseSkill[] inventorySkills;
 
-<<<<<<< HEAD
     public static int level { get; set; }
-=======
-	void Start() {
-		players = new basePlayer[4];
-		players [0] = gameObject.AddComponent<sudo> ();
-		players [1] = gameObject.AddComponent<rmdir> ();
-		players [2] = gameObject.AddComponent<mkdir> ();
-		players [3] = gameObject.AddComponent<ls> ();
 
 //		players [0] = new sudo ();
 //		players [1] = new rmdir ();
 //		players [2] = new mkdir ();
 //		players [3] = new ls ();
->>>>>>> 6f9e8fad1445f634e63dbb262b345de02b11ae47
 
     public void initPlayers(){
         players[0] = gameObject.AddComponent<sudo>();
@@ -76,39 +67,13 @@ public class GameInformation : MonoBehaviour {
         level = 1;
         players = new basePlayer[4];
         enemies = new baseEnemy[4];
+        Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
     }
 
-<<<<<<< HEAD
     void Start() {
         initPlayers();
         initLevel();
         initInventory();
-        
-=======
-		inventorySkills = new baseSkill[14];
-		inventorySkills [0] = new Arrays ();
-		inventorySkills [1] = new BreakAndContinue ();
-		inventorySkills [2] = new DDOS ();
-		inventorySkills [3] = new DefaultFunctions ();
-		inventorySkills [4] = new FireWall ();
-		inventorySkills [5] = new FunctionsWithInputOutput ();
-		inventorySkills [6] = new FunctionsWithOutput ();
-		inventorySkills [7] = new Hash ();
-		inventorySkills [8] = new IfElse ();
-		inventorySkills [9] = new InfiniteLoop ();
-		inventorySkills [10] = new Loop ();
-		inventorySkills [11] = new PacketSniffing ();
-		inventorySkills [12] = new Recursion ();
-		inventorySkills [13] = new Stack (); 
-
-
-
-	}
-
-	void Awake(){
-		DontDestroyOnLoad (transform.gameObject);
-		Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
->>>>>>> 6f9e8fad1445f634e63dbb262b345de02b11ae47
 	}
 
 	public static void saveGame(){
