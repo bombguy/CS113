@@ -111,18 +111,17 @@ public class BattleManager : MonoBehaviour {
     
     public static void endBattle()
     {
-        SaveInformation.SaveAllInformation();
+        for (int i = 0; i < playerParty.Count; ++i)
+            GameInformation.players[i] = playerParty[i];    
+        GameInformation.saveGame();
         ChangeScene.ChangeToScene("Map");
     }
     public static void deadUnit(basePlayer unit) {
         GUIManager.deadUnit(unit);
-        playerParty.Remove(unit);
         
     }
     public static void deadUnit(baseEnemy unit) {
         GUIManager.deadUnit(unit);
-        enemyParty.Remove(unit);
-        
     }
 
 }

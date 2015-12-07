@@ -2,44 +2,56 @@
 using System.Collections;
 
 public class enemyPanelController : MonoBehaviour {
-    public enemyButton[] _enemyButtons;
 
+    public enemyButton[] _enemies;
     public baseEnemy _selectedEnemy;
-    public baseEnemy[] _enemies;
     public bool _hasSelected;
 
     public void Awake() {
-        _enemyButtons = GetComponentsInChildren<enemyButton>();
+        _enemies = GetComponentsInChildren<enemyButton>();
+
     }
     public void Start() {
         _hasSelected = false;
         _selectedEnemy = null;
     }
     public void testEnemies() {
-        _enemies = new baseEnemy[4];
-        _enemies[0] = gameObject.AddComponent<C>();
-        _enemies[1] = gameObject.AddComponent<Cpp>();
-        _enemies[2] = gameObject.AddComponent<C>();
-        _enemies[3] = gameObject.AddComponent<Python>();
-        setEnemyButtons(_enemies);
+        baseEnemy[] _testEnemies;
+        _testEnemies = new baseEnemy[4];
+        _testEnemies[0] = gameObject.AddComponent<C>();
+        _testEnemies[1] = gameObject.AddComponent<Cpp>();
+        _testEnemies[2] = gameObject.AddComponent<C>();
+        _testEnemies[3] = gameObject.AddComponent<Python>();
+        setEnemyButtons(_testEnemies);
+    }
+    //Targeting mode
+    public void enableTargetMode() {
+        for (int i = 0; i < _enemies.Length; ++i) {
+            if (_enemies[i]._enemy.currentHP > 0) {
+                _enemies[i].buttonEnable();
+            }
+                
+        }
+    }
+    public void disableTargetMode() {
+        for (int i = 0; i < _enemies.Length; ++i) {
+            _enemies[i].buttonDisable();
+        }
     }
     public void setEnemyButtons(baseEnemy[] enemies)
     {
-        _enemies = new baseEnemy[enemies.Length];
         for (int i = 0; i < enemies.Length; ++i)
         {
-
-            _enemyButtons[i].setButton(enemies[i]);
-            _enemies[i] = enemies[i];
+            _enemies[i].setButton(enemies[i]);
         }
     }
     public enemyButton fetchEnemyButton(baseEnemy unit) {
-        for (int i = 0; i < _enemyButtons.Length; ++i) {
-            if (_enemyButtons[i]._enemy == unit) {
-                return _enemyButtons[i];
+        for (int i = 0; i < _enemies.Length; ++i) {
+            if (_enemies[i]._enemy == unit) {
+                return _enemies[i];
             }
         }   
-        return _enemyButtons[0];
+        return _enemies[0];
     }
     
     // Update is called once per frame
@@ -57,12 +69,12 @@ public class enemyPanelController : MonoBehaviour {
 
     void updateSelected()
     {
-        for (int i = 0; i < _enemyButtons.Length; ++i)
+        for (int i = 0; i < _enemies.Length; ++i)
         {
-            if (_enemyButtons[i].selected == true)
+            if (_enemies[i].selected == true)
             {
-                _selectedEnemy = _enemyButtons[i]._enemy;
-                _enemyButtons[i].selected = false;
+                _selectedEnemy = _enemies[i]._enemy;
+                _enemies[i].selected = false;
                 _hasSelected = true;
                 Debug.Log("Enemy :" + _selectedEnemy.name);
             }

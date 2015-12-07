@@ -9,6 +9,7 @@ public class playerButton : MonoBehaviour
     public ActionBar _actionBar;
     public basePlayer _player;
     public bool _selected;
+    public bool _takenAction;
 
     void Awake() {
         _playerButton = GetComponent<Button>();
@@ -18,10 +19,12 @@ public class playerButton : MonoBehaviour
     void Start() {
         _actionBar.hideActionBar();
         _playerBattleStats.hidePanel();
+        _takenAction = false;
         
     }
     //Action/Turn things.
     public void endAction() {
+        _takenAction = true;
         _playerButton.interactable = false;
         _actionBar.hideActionBar();
         _playerBattleStats.updateBattlePanel();

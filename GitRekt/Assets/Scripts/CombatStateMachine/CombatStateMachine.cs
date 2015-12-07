@@ -50,7 +50,7 @@ public class CombatStateMachine : MonoBehaviour
             case (CombatStates.PLAYERENEMY):
                 --actions; 
                 StartCoroutine("player_target_enemy");
-                checkWin();
+                goal = checkWin();
                 StartCoroutine("endAction");
                 Debug.Log("ACTIONS : "+ actions);
                 if (goal == true) {
@@ -89,6 +89,7 @@ public class CombatStateMachine : MonoBehaviour
                 actions = BattleManager.enemyParty.Count;
                 for (int i = 0; i < actions; ++i )
                     StartCoroutine("enemyTurn");
+                goal = checkLoss();
                 if (goal)
                 {
                     Debug.Log("(CSM) E->GOAL(L)");
@@ -110,18 +111,40 @@ public class CombatStateMachine : MonoBehaviour
     }
     private void win()
     {
-        //pass back application to map
-        BattleManager.endBattle();
+        for (int i = 0; i < BattleManager.playerParty.Count; ++i)
+        {
+            clearEffect(BattleManager.playerParty[i], BattleManager.playerParty[i].effective_skill);
+            BattleManager.playerParty[i].currentHP = BattleManager.playerParty[i].maxHP;
+        }
+            //pass back application to map
+            BattleManager.endBattle();
     }
     private void loss()
     {
+        for (int i = 0; i < BattleManager.playerParty.Count; ++i)
+        {
+            clearEffect(BattleManager.playerParty[i], BattleManager.playerParty[i].effective_skill);
+            BattleManager.playerParty[i].currentHP = BattleManager.playerParty[i].maxHP;
+        }        
         //pass back application to map
         BattleManager.endBattle();
     }
-    private void checkWin()
+    private bool checkWin()
     {
-        if (BattleManager.enemyParty.Count == 0)
-            goal = true;
+        for (int i = 0; i < BattleManager.enemyParty.Count; ++i) {
+            if (BattleManager.enemyParty[i].currentHP > 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    private bool checkLoss() {
+        for (int i = 0; i < BattleManager.enemyParty.Count; ++i) {
+            if (BattleManager.playerParty[i].currentHP > 0)
+                return false;
+        }
+        return true;
     }
     /*
      * Coroutine stops the update function so we can decide what the hell the enemy is doing.

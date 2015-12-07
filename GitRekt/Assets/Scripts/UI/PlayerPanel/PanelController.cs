@@ -8,74 +8,103 @@ using UnityEngine.UI;
  */
 public class PanelController : MonoBehaviour
 {
-    //bool[] _interactableStates; // Use parallel arrays to set interactable states for player/player targeting
-    playerButton[] _playerButtons;
+    
+    playerButton[] _players;
     basePlayer _currentPlayer;
     Text playerInformation;
 
     void Awake() {
-        _playerButtons = GetComponentsInChildren<playerButton>();
+        _players = GetComponentsInChildren<playerButton>();
+        
     }
     void Start(){
 
     }
+  
     public void setPlayerButtons(basePlayer[] players) {
-        for (int i = 0; i < _playerButtons.Length; ++i) {
-            _playerButtons[i].setButton(players[i]);
+        for (int i = 0; i < _players.Length; ++i) {
+            _players[i].setButton(players[i]);
         }
     }
     public void endAction() {
-        fetchActionBar(_currentPlayer).endAction();
-        fetchPlayerButton(_currentPlayer).buttonDisable();
-        _currentPlayer = null;
-        for (int i = 0; i < _playerButtons.Length; ++i) {
-            _playerButtons[i]._playerBattleStats.updateBattlePanel();
+        for (int i = 0; i < _players.Length; ++i) {
+            _players[i]._playerBattleStats.updateBattlePanel();
+            if (_currentPlayer == _players[i]._player) {
+                _players[i]._takenAction = true;
+                _players[i].endAction();
+                fetchActionBar(_currentPlayer).endAction();
+            }
         }
+        _currentPlayer = null;
     }
     //Ends an action when _currentPlayer is a target of a buff.
-    public void endAction(basePlayer unit) {
-        fetchActionBar(unit).endAction();
-        fetchPlayerButton(unit).buttonDisable();
-        fetchActionBar(_currentPlayer).hideActionBar();
-        _currentPlayer = null;
-        for (int i = 0; i < _playerButtons.Length; ++i)
+    public void endAction(basePlayer caster) {
+        for (int i = 0; i < _players.Length; ++i)
         {
-            _playerButtons[i]._playerBattleStats.updateBattlePanel();
+            if (_currentPlayer == _players[i]._player) {
+
+                _players[i]._actionBar.hideActionBar();
+            }
+
+            if (caster == _players[i]._player) {
+                _players[i]._takenAction = true;
+                _players[i].endAction();
+                _players[i]._actionBar.endAction();
+            }
+            _players[i]._playerBattleStats.updateBattlePanel();
         }
+        _currentPlayer = null;
     }
-    public void Targeting() { 
-        
-    }
+    
     public void beginTurn() {
         //Start of each turn update Cooldowns and enable all buttons to press.
-        for (int i = 0; i < _playerButtons.Length; ++i)
+        for (int i = 0; i < _players.Length; ++i)
         {
-            if (_playerButtons[i]._player.currentHP > 0)
+            if (_players[i]._player.currentHP > 0)
             {
-                _playerButtons[i].buttonEnable();
-                //_interactableStates[i] = true;
-                _playerButtons[i]._actionBar.updateCooldowns();
-                _playerButtons[i]._playerBattleStats.updateBattlePanel();
+                _players[i]._takenAction = false;
+                _players[i].buttonEnable();
+                _players[i]._actionBar.updateCooldowns();
+                _players[i]._playerBattleStats.updateBattlePanel();
             }
         }
     }
     public int count() {
-        return _playerButtons.Length;
+        return _players.Length;
+    }
+
+    public void enableTargetMode() {
+        for (int i = 0; i < _players.Length; ++i) {
+            _players[i].buttonEnable();
+        }
+    }
+    public void disableTargetMode() {
+        for (int i = 0; i < _players.Length; ++i) {
+            if (_players[i]._takenAction == true)
+                _players[i].buttonDisable();
+            else
+                _players[i].buttonEnable();
+        }
+    }
+    public void enemyTargetMode() {
+        for (int i = 0; i < _players.Length; ++i) {
+            _players[i].buttonDisable();
+        }
     }
     public ActionBar fetchActionBar(basePlayer unit) {
-        for (int i = 0; i < _playerButtons.Length; ++i) {
-            if (_playerButtons[i]._player == unit) {
-                return _playerButtons[i]._actionBar;
+        for (int i = 0; i < _players.Length; ++i) {
+            if (_players[i]._player == unit) {
+                return _players[i]._actionBar;
             }
         }
-        return _playerButtons[0]._actionBar;
+        return _players[0]._actionBar;
     }
     public playerButton fetchPlayerButton(basePlayer unit) {
-        for (int i = 0; i < _playerButtons.Length; ++i) {
-            if (_playerButtons[i]._player == unit)
-                return _playerButtons[i];
+        for (int i = 0; i < _players.Length; ++i) {
+            if (_players[i]._player == unit)
+                return _players[i];
         }
-        return _playerButtons[0];
+        return _players[0];
     }
 
     
@@ -87,10 +116,10 @@ public class PanelController : MonoBehaviour
     void updateUnit()
     {
         // each player Button
-        for (int i = 0; i < _playerButtons.Length; ++i)
+        for (int i = 0; i < _players.Length; ++i)
         {
             //Check if they are selected
-            if (_playerButtons[i]._selected)
+            if (_players[i]._selected)
             {
                 /*
                 * Cases:
@@ -100,23 +129,23 @@ public class PanelController : MonoBehaviour
                 */ 
                 if (_currentPlayer == null)
                 {
-                    _currentPlayer = _playerButtons[i]._player;
-                    _playerButtons[i]._actionBar.displayActionBar();
-                    _playerButtons[i]._selected = false;
+                    _currentPlayer = _players[i]._player;
+                    _players[i]._actionBar.displayActionBar();
+                    _players[i]._selected = false;
                 }
-                else if (_currentPlayer == _playerButtons[i]._player)
+                else if (_currentPlayer == _players[i]._player)
                 {
                     _currentPlayer = null;
-                    _playerButtons[i]._actionBar._skill = null;
-                    _playerButtons[i]._actionBar.hideActionBar();
-                    _playerButtons[i]._selected = false;
+                    _players[i]._actionBar._skill = null;
+                    _players[i]._actionBar.hideActionBar();
+                    _players[i]._selected = false;
                 }
-                else if (_currentPlayer != _playerButtons[i]._player)
+                else if (_currentPlayer != _players[i]._player)
                 {
                     fetchActionBar(_currentPlayer).hideActionBar();
-                    _currentPlayer = _playerButtons[i]._player;
-                    _playerButtons[i]._actionBar.displayActionBar();
-                    _playerButtons[i]._selected = false;
+                    _currentPlayer = _players[i]._player;
+                    _players[i]._actionBar.displayActionBar();
+                    _players[i]._selected = false;
                 }
                 //Debug.Log("Unit chosen " + _currentPlayer);
             }
