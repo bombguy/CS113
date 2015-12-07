@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
-using System.Runtime.Serialization;
 
-[System.Serializable]
 public class Arrays : baseSkill {
 	//public GameInformation gameInformation;
 	
