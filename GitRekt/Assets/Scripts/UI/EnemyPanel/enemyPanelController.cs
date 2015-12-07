@@ -33,6 +33,14 @@ public class enemyPanelController : MonoBehaviour {
             _enemies[i] = enemies[i];
         }
     }
+    public enemyButton fetchEnemyButton(baseEnemy unit) {
+        for (int i = 0; i < _enemyButtons.Length; ++i) {
+            if (_enemyButtons[i]._enemy == unit) {
+                return _enemyButtons[i];
+            }
+        }   
+        return _enemyButtons[0];
+    }
     
     // Update is called once per frame
     void Update()

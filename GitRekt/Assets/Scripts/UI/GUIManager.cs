@@ -82,4 +82,13 @@ public class GUIManager : MonoBehaviour {
     // Update is called once per frame
 	void Update () {
     }
+    //Death Functions- Basically make sure they cannot be interacted with.
+    public static void deadUnit(basePlayer unit)
+    {
+        playerPanel.fetchPlayerButton(unit).buttonDisable();
+    }
+    public static void deadUnit(baseEnemy unit)
+    {
+        enemyPanel.fetchEnemyButton(unit).buttonDisable(); 
+    }
 }

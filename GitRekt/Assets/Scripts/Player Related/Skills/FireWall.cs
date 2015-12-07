@@ -16,12 +16,12 @@ public class FireWall : baseSkill {
 		//define effect
 		additionalEffect = new Effect ();
 		additionalEffect.status = Effect.Status.DEFENSE;
-		additionalEffect.power = 0;
+		additionalEffect.power = 1;
 		additionalEffect.duration = 1;
 		
 		
 		
-		skillLevel = 0;
+		skillLevel = 1;
 		skillExperience = 0;
 		skillCoolDown = 5;
 		skillPower = 0;

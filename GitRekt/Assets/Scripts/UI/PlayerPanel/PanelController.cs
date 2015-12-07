@@ -47,9 +47,12 @@ public class PanelController : MonoBehaviour
         Debug.Log("Begin Turn- PanelController.");
         for (int i = 0; i < _playerButtons.Length; ++i)
         {
-            _playerButtons[i].buttonEnable();
-            _playerButtons[i]._actionBar.updateCooldowns();
-            _playerButtons[i]._playerBattleStats.updateBattlePanel();
+            if (_playerButtons[i]._player.currentHP > 0)
+            {
+                _playerButtons[i].buttonEnable();
+                _playerButtons[i]._actionBar.updateCooldowns();
+                _playerButtons[i]._playerBattleStats.updateBattlePanel();
+            }
         }
     }
     public int count() {
@@ -70,6 +73,8 @@ public class PanelController : MonoBehaviour
         }
         return _playerButtons[0];
     }
+
+    
     // Late update after Update is called once per frame
     void Update() {
         updateUnit();    

@@ -16,12 +16,10 @@ public class DefaultFunctions : baseSkill {
 		//define effect
 		additionalEffect = new Effect ();
 		additionalEffect.status = Effect.Status.ATTACK;
-		additionalEffect.power = 0;
+		additionalEffect.power = 1;
 		additionalEffect.duration = 3;
-
-		
-		
-		skillLevel = 0;
+        
+		skillLevel = 1;
 		skillExperience = 0;
 		skillCoolDown = 1;
 		skillPower = 0;

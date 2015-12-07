@@ -115,12 +115,14 @@ public class BattleManager : MonoBehaviour {
         ChangeScene.ChangeToScene("Map");
     }
     public static void deadUnit(basePlayer unit) {
+        GUIManager.deadUnit(unit);
         playerParty.Remove(unit);
-        Destroy(unit);
+        
     }
     public static void deadUnit(baseEnemy unit) {
+        GUIManager.deadUnit(unit);
         enemyParty.Remove(unit);
-        Destroy(unit);
+        
     }
 
 }

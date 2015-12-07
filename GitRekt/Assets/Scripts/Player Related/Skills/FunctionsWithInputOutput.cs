@@ -15,7 +15,7 @@ public class FunctionsWithInputOutput : baseSkill {
 		
 		additionalEffect = new Effect ();
 
-		skillLevel = 0;
+		skillLevel = 1;
 		skillExperience = 0;
 		skillCoolDown = 4;
 		skillPower = 0;

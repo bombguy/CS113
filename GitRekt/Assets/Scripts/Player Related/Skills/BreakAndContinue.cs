@@ -17,10 +17,10 @@ public class BreakAndContinue : baseSkill {
 		//Skip a turn then deal damage
 		additionalEffect = new Effect ();
 		additionalEffect.status = Effect.Status.SKIP;
-		additionalEffect.power = 0;
+		additionalEffect.power = 1;
 		additionalEffect.duration = 1;
 		
-		skillLevel = 0;
+		skillLevel = 1;
 		skillExperience = 0;
 		skillCoolDown = 5;
 		skillPower = 0;

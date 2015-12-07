@@ -53,7 +53,11 @@ public class CombatStateMachine : MonoBehaviour
                 checkWin();
                 StartCoroutine("endAction");
                 Debug.Log("ACTIONS : "+ actions);
-                if (actions == 0)
+                if (goal == true) {
+                    Debug.Log("(CSM) PE->GOAL (Win)");
+                    CurrentState = CombatStates.WIN;
+                }
+                else if (actions == 0)
                 {
                     Debug.Log("(CSM) PE->E");
                     BattleManager.endTurn();
@@ -118,12 +122,6 @@ public class CombatStateMachine : MonoBehaviour
     {
         if (BattleManager.enemyParty.Count == 0)
             goal = true;
-        if (goal)
-        {
-            Debug.Log("(CSM) PE->GOAL(W)");
-            BattleManager.endTurn();
-            CurrentState = CombatStates.WIN;
-        }
     }
     /*
      * Coroutine stops the update function so we can decide what the hell the enemy is doing.
