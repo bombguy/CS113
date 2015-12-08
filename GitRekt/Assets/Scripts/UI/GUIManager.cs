@@ -63,7 +63,7 @@ public class GUIManager : MonoBehaviour {
     public static void loadGUI(basePlayer[] players, baseEnemy[] enemies)
     {
         playerPanel.setPlayerButtons(players);
-        enemyPanel.setEnemyButtons(enemies);
+        //enemyPanel.setEnemyButtons(enemies);
         //Debug.Log("GUI Loaded.");
     }
 
@@ -75,6 +75,8 @@ public class GUIManager : MonoBehaviour {
         }
         else
             playerPanel.endAction();
+
+        enemyPanel.endAction();
         action = false;
         attack = false;
         _unit = null;

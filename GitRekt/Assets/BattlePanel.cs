@@ -5,6 +5,7 @@ public class BattlePanel : MonoBehaviour {
     Image background;
     Text battleStats;
     basePlayer _unit;
+    baseEnemy _enemyUnit;
     void Awake() {
         battleStats = GetComponentInChildren<Text>();
         background = GetComponent<Image>();
@@ -19,22 +20,76 @@ public class BattlePanel : MonoBehaviour {
 	}
     public void setBattlePanel(basePlayer unit) {
         _unit = unit;
-        battleStats.text = 
-            "Name : " + _unit.name + "\n" +
-            "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
-            "Effects : " + _unit.effect.ToString() + "\n" +
-            "Flow Mastery :" + _unit.flowMastery + "\n" +
-            "Function Mastery :" + _unit.functionMastery + "\n" +
-            "Data Structure Mastery :" + _unit.datastructureMastery;
+        if (unit.effected) {
+            battleStats.text =
+               "Name : " + _unit.name + "\n" +
+               "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
+               "Status Effect : " + _unit.effect.ToString() + "\n" +
+               "Duration :" + _unit.duration + "\n" +
+               "Flow Mastery :" + _unit.flowMastery + "\n" +
+               "Function Mastery :" + _unit.functionMastery + "\n" +
+               "Data Structure Mastery :" + _unit.datastructureMastery;       
+        }
+        else
+            battleStats.text = 
+                "Name : " + _unit.name + "\n" +
+                "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
+                "Status Effect : " + _unit.effect.ToString() + "\n" +
+                "Flow Mastery :" + _unit.flowMastery + "\n" +
+                "Function Mastery :" + _unit.functionMastery + "\n" +
+                "Data Structure Mastery :" + _unit.datastructureMastery;
+    }
+    public void setBattlePanel(baseEnemy unit) {
+        _enemyUnit = unit;
+        if (_enemyUnit.effected)
+            battleStats.text =
+                "Name : " + _enemyUnit.name + "\n" +
+                "HP :" + _enemyUnit.currentHP + "/" + _enemyUnit.maxHP + "\n" +
+                "Status Effect : " + _enemyUnit.effect.ToString() + "\n"+
+                "Duration: "+_enemyUnit.duration;
+        else
+            battleStats.text =
+                "Name : " + _enemyUnit.name + "\n" +
+                "HP :" + _enemyUnit.currentHP + "/" + _enemyUnit.maxHP + "\n" +
+                "Status Effect : " + _enemyUnit.effect.ToString() + "\n";
     }
     public void updateBattlePanel() {
-        battleStats.text = 
-            "Name : " + _unit.name + "\n" +
-            "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
-            "Effects : " + _unit.effect.ToString() + "\n" +
-            "Flow Mastery :" + _unit.flowMastery + "\n" +
-            "Function Mastery :" + _unit.functionMastery + "\n" +
-            "Data Structure Mastery :" + _unit.datastructureMastery;
+        if (_unit != null)
+        {
+            if (_unit.effected)
+            {
+                battleStats.text =
+                   "Name : " + _unit.name + "\n" +
+                   "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
+                   "Status Effect : " + _unit.effect.ToString() + "\n" +
+                   "Duration :" + _unit.duration + "\n" +
+                   "Flow Mastery :" + _unit.flowMastery + "\n" +
+                   "Function Mastery :" + _unit.functionMastery + "\n" +
+                   "Data Structure Mastery :" + _unit.datastructureMastery;
+            }
+            else
+                battleStats.text =
+                    "Name : " + _unit.name + "\n" +
+                    "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
+                    "Status Effect : " + _unit.effect.ToString() + "\n" +
+                    "Flow Mastery :" + _unit.flowMastery + "\n" +
+                    "Function Mastery :" + _unit.functionMastery + "\n" +
+                    "Data Structure Mastery :" + _unit.datastructureMastery;
+        }
+        else {
+            if (_enemyUnit.effected)
+                battleStats.text =
+                    "Name : " + _enemyUnit.name + "\n" +
+                    "HP :" + _enemyUnit.currentHP + "/" + _enemyUnit.maxHP + "\n" +
+                    "Status Effect : " + _enemyUnit.effect.ToString() + "\n" +
+                    "Duration: " + _enemyUnit.duration;
+            else
+                battleStats.text =
+                    "Name : " + _enemyUnit.name + "\n" +
+                    "HP :" + _enemyUnit.currentHP + "/" + _enemyUnit.maxHP + "\n" +
+                    "Status Effect : " + _enemyUnit.effect.ToString() + "\n";
+        }
+
     }
     public void hidePanel() {
         background.enabled = false;

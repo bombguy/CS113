@@ -11,7 +11,6 @@ public class PanelController : MonoBehaviour
     
     playerButton[] _players;
     basePlayer _currentPlayer;
-    Text playerInformation;
 
     void Awake() {
         _players = GetComponentsInChildren<playerButton>();
