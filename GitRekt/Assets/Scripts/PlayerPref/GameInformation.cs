@@ -28,7 +28,7 @@ public class GameInformation : MonoBehaviour {
             case 1:
                 for (int i = 0; i < enemies.Length; ++i)
                 {
-                    enemies[i] = gameObject.AddComponent<C>();
+                    enemies[i] = gameObject.AddComponent<Python>();
                 }
                 break;
             default:
@@ -65,7 +65,7 @@ public class GameInformation : MonoBehaviour {
 
     void Start() {
         initPlayers();
-        initLevel();
+        //initLevel();
         initInventory();
 	}
 

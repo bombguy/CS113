@@ -8,12 +8,14 @@ public class enemyPanelController : MonoBehaviour {
     public bool _hasSelected;
 
     public void Awake() {
-        _enemyButtons = GetComponentsInChildren<enemyButton>();
     }
     public void Start() {
- 
+        demo();
         _hasSelected = false;
         _selectedEnemy = null;
+    }
+    public void demo() {
+        _enemyButtons = GetComponentsInChildren<enemyButton>();
     }
     public void testEnemies() {
         baseEnemy[] _testEnemies;

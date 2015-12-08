@@ -8,4 +8,14 @@ public class ChangeScene : MonoBehaviour {
 		//note: can check index from build menu and change index of scenes
 		Application.LoadLevel(sceneToChangeTo);
 	}
+    public static void changeToDemo() {
+        Debug.Log("Loading demo Level.");
+        Application.LoadLevel("BattleScene");
+    }
+    public void changeToDemoWrapper() {
+        changeToDemo();
+    }
+    public void changeToSceneWrapper(string sceneToChageTo) {
+        ChangeToScene(sceneToChageTo);
+    }
 }

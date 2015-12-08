@@ -7,12 +7,16 @@ public class enemyButton : MonoBehaviour {
    public Button _enemyButton;
    public baseEnemy _enemy;
    public bool selected;
+   public void demo() { 
+    _enemy = GetComponent<Python>();
+   }
 	// Use this for initialization
     void Awake() {
         _enemyButton = GetComponent<Button>();
         _enemyBattleStats = GetComponentInChildren<BattlePanel>();
     }
 	void Start () {
+        demo();
         if (_enemy != null)
             setButton(_enemy);
         else
@@ -20,6 +24,7 @@ public class enemyButton : MonoBehaviour {
         selected = false;
         _enemyBattleStats.hidePanel();
 	}
+    
 
     void Update() { }
 
@@ -47,6 +52,7 @@ public class enemyButton : MonoBehaviour {
     //Set button here.
     public void setButton(baseEnemy input)
     {
+        BattleManager.enemyParty.Add(input);
         _enemy = input;
         _enemyBattleStats.setBattlePanel(input);
     }

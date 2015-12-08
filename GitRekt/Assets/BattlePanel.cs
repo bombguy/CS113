@@ -60,7 +60,9 @@ public class BattlePanel : MonoBehaviour {
             {
                 battleStats.text =
                    _unit.name + "\n \n" +
-                   "HP :" + _unit.currentHP + "/" + _unit.maxHP + "    Attack :" + _unit.attack + "\n" +
+                   "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n"+
+                   "Attack :" + _unit.attack + "\n" +
+                   "Defense :"+ _unit.defense + "\n" +
                    "Status Effect : " + _unit.effect.ToString() + "\n" +
                    "Duration :" + _unit.duration + "\n" +
                    "Flow Mastery :" + _unit.flowMastery + "\n" +
@@ -70,7 +72,9 @@ public class BattlePanel : MonoBehaviour {
             else
                 battleStats.text =
                     _unit.name + "\n \n" +
-                    "HP :" + _unit.currentHP + "/" + _unit.maxHP + "    Attack :" + _unit.attack + "\n" +
+                   "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
+                   "Attack :" + _unit.attack + "\n" +
+                   "Defense :" + _unit.defense + "\n" +
                     "Status Effect : " + _unit.effect.ToString() + "\n" +
                     "Flow Mastery :" + _unit.flowMastery + "\n" +
                     "Function Mastery :" + _unit.functionMastery + "\n" +

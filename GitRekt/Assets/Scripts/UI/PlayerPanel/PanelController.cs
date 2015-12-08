@@ -74,7 +74,8 @@ public class PanelController : MonoBehaviour
 
     public void enableTargetMode() {
         for (int i = 0; i < _players.Length; ++i) {
-            _players[i].buttonEnable();
+            if(_players[i]._player.currentHP>0)
+                _players[i].buttonEnable();
         }
     }
     public void disableTargetMode() {

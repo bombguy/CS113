@@ -60,7 +60,7 @@ public class GUIManager : MonoBehaviour {
         }  
     }
     //Load in GUI based on players and enemies
-    public static void loadGUI(basePlayer[] players, baseEnemy[] enemies)
+    public static void loadGUI(basePlayer[] players)
     {
         playerPanel.setPlayerButtons(players);
         //enemyPanel.setEnemyButtons(enemies);

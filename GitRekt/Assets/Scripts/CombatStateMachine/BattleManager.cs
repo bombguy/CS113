@@ -31,13 +31,12 @@ public class BattleManager : MonoBehaviour {
         for (int i = 0; i < GameInformation.players.Length; ++i) {
             playerParty.Add(GameInformation.players[i].deepCopy());
         }
-            
+       /*     
         if(GameInformation.level == 1)
             for (int i = 0; i < GameInformation.enemies.Length; ++i)
                 enemyParty.Add(GameInformation.enemies[i]);
-        GUIManager.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
-
-
+        */
+        GUIManager.loadGUI(playerParty.ToArray());
     }
     void testBattle() {
         turnCounter = 1;
@@ -50,6 +49,7 @@ public class BattleManager : MonoBehaviour {
         playerParty.Add(rmdir);
         playerParty.Add(sudo);
 
+
         baseEnemy c = gameObject.AddComponent<C>();
         baseEnemy cpp = gameObject.AddComponent<Cpp>();
         baseEnemy c2= gameObject.AddComponent<C>();
@@ -59,7 +59,7 @@ public class BattleManager : MonoBehaviour {
         enemyParty.Add(c2);
         enemyParty.Add(python);
 
-        GUIManager.loadGUI(playerParty.ToArray(), enemyParty.ToArray());
+        GUIManager.loadGUI(playerParty.ToArray());
     }
 
 	void Update () {
@@ -114,7 +114,7 @@ public class BattleManager : MonoBehaviour {
         for (int i = 0; i < playerParty.Count; ++i)
             GameInformation.players[i] = playerParty[i];    
         GameInformation.saveGame();
-        ChangeScene.ChangeToScene("Map");
+        ChangeScene.ChangeToScene("Main Menu");
     }
     public static void deadUnit(basePlayer unit) {
         GUIManager.deadUnit(unit);
