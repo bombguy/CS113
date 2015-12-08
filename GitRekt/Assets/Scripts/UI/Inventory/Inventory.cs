@@ -1,42 +1,47 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour {
-	public static int height;
-	public static int width;
-	public GameObject slots;
+namespace UnityEngine.EventSystems {
+	public interface IHasChanged : IEventSystemHandler {
+		void HasChanged();
+	}
+}
 
-	public int maxRow;
-	public int maxCol;
-
-	private int x = -110;
-	private int y = 110;
-
-	public int index;
-
-
+public class Inventory : MonoBehaviour, IHasChanged {
+	public GameObject slot_prefab;
+	public GameObject skill_prefab;
+	public GameObject[] slots;
+	public int inventory_size;
 
 	// Use this for initialization
 	void Start () {
-	
-		for (int row= 0; row < maxRow; row++) {
-			for (int col=0; col < maxCol; col++) {
-				GameObject slot = (GameObject)Instantiate(slots);
-				SlotScript slotscript = slot.GetComponent<SlotScript>();
-				int index = (row*5)+col;
-				slotscript.addSkillToSlot(GameInformation.inventorySkills[index]);
-				slot.transform.SetParent(this.transform);
-				slot.GetComponent<RectTransform>().localPosition = new Vector3(x,y,0);
-				x += 55;
-				if(col == maxCol-1)
-					x = -110;
-			}
-			y -= 55;
+		slots = new GameObject[inventory_size];
+		for (int i = 0; i < inventory_size; i++) {
+			slots[i] = (GameObject)Instantiate (slot_prefab);
+			slots[i].transform.SetParent (this.transform);
+			slots[i].transform.name += i;
+		}
+		StartCoroutine(LoadInventory());
+	}
+
+	IEnumerator LoadInventory() {
+		yield return new WaitForSeconds(1);
+		int i = 0;
+		foreach (baseSkill skill in GameInformation.inventorySkills) {
+			SlotScript slotscript = slots[i].GetComponent<SlotScript> ();
+			slotscript.skill = skill;
+			GameObject skill_in_slot = (GameObject)Instantiate(skill_prefab);
+			skill_in_slot.GetComponent<Image>().sprite = skill.skillIcon;
+			skill_in_slot.transform.SetParent(slots[i++].transform);
 		}
 	}
 
-	// Update is called once per frame
-	void Update () {
-	
+	#region IHasChanged implementation
+	public void HasChanged ()
+	{	
+		Debug.Log ("something changed");
 	}
+	#endregion
 }

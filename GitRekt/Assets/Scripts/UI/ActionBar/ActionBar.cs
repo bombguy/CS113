@@ -6,7 +6,6 @@ public class ActionBar : MonoBehaviour {
     skill_button[] _buttons;
     
     public bool _hasSelected;
-    public skill_button _selectedButton;
     public baseSkill _skill;
 
     public void endAction() {
@@ -31,9 +30,7 @@ public class ActionBar : MonoBehaviour {
         _buttons = GetComponentsInChildren<skill_button>();
     }
     void Start() {
-        _selectedButton = _buttons[_buttons.Length - 1];
         testActionBar();
-        _selectedButton.hideButton();
     }
     public void testActionBar() {
             _buttons[0].setButton(new FireWall());
@@ -62,6 +59,7 @@ public class ActionBar : MonoBehaviour {
     public void hideActionBar() {
         for (int i = 0; i < _buttons.Length; ++i) {
             _buttons[i].hideButton();
+            _buttons[i]._skillPanel.hidePanel();
         }
         GetComponent<Image>().enabled = false;
     }
@@ -82,21 +80,17 @@ public class ActionBar : MonoBehaviour {
             {
                 if (_skill == null) {
                     _skill = _buttons[i]._skill;
-                    _selectedButton.setButton(_buttons[i]._skill);
-                    _selectedButton.displayButton();
                     _buttons[i].selected = false;
                     _hasSelected = true;    
                 }
                 else if (_skill == _buttons[i]._skill)
                 {
                     _skill = null;
-                    _selectedButton.hideButton();
                     _buttons[i].selected = false;
                     _hasSelected = false;
                 }
                 else {
                     _skill = _buttons[i]._skill;
-                    _selectedButton.setButton(_skill);
                     _buttons[i].selected = false;
                     _hasSelected = true;
                 }

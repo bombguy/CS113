@@ -19,7 +19,9 @@ public class GameInformation : MonoBehaviour {
         players[1] = gameObject.AddComponent<rmdir>();
         players[2] = gameObject.AddComponent<mkdir>();
         players[3] = gameObject.AddComponent<ls>();
+		Debug.Log ("Finished Loading Player");
     }
+
     public void initLevel() {
         switch (level)
         {
@@ -31,7 +33,8 @@ public class GameInformation : MonoBehaviour {
                 break;
             default:
                 break;
-        }   
+        }
+		Debug.Log ("Finished Loading Level");
     }
     public void initInventory() {
         inventorySkills = new baseSkill[14];
@@ -48,10 +51,10 @@ public class GameInformation : MonoBehaviour {
 		inventorySkills [10] = new Loop ();
 		inventorySkills [11] = new PacketSniffing ();
 		inventorySkills [12] = new Recursion ();
-		inventorySkills [13] = new Stack (); 
-
-    
+		inventorySkills [13] = new Stack ();
+		Debug.Log ("Finished Loading Inventory");
     }
+
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
         level = 1;

@@ -278,8 +278,9 @@ public class CombatStateMachine : MonoBehaviour
                 if (target.currentHP >= 0)
                     if (!target.effected)
                         applyEffect(target, skill);
-                    else
-                        BattleManager.deadUnit(target);
+                    else { }
+                else
+                    BattleManager.deadUnit(target);
             }
         }
         Debug.Log("Attack Successful");
@@ -303,9 +304,13 @@ public class CombatStateMachine : MonoBehaviour
                 target.currentHP -= skill.cast(unit);
                 if (target.currentHP >= 0)
                     if (!target.effected)
+                    {
                         applyEffect(target, skill);
-                    else
-                        BattleManager.deadUnit(target);
+                    }
+                    else { 
+                    }
+                else
+                    BattleManager.deadUnit(target);
             }
         }
         Debug.Log("Attack Successful");
@@ -397,10 +402,10 @@ public class CombatStateMachine : MonoBehaviour
         else
         {
             target.currentHP -= skill.cast(attacker);
-            if (skill.hasAdditionalEffect)
-                if (target.currentHP <= 0)
-                    BattleManager.deadUnit(target);
-                else if (!target.effected)
+            if (target.currentHP <= 0)
+                BattleManager.deadUnit(target);
+            else if (skill.hasAdditionalEffect)
+                if (!target.effected)
                     applyEffect(target, skill);
         }
     }
@@ -414,10 +419,10 @@ public class CombatStateMachine : MonoBehaviour
         else
         {
             target.currentHP -= skill.cast(attacker);
-            if (skill.hasAdditionalEffect)
-                if (target.currentHP <= 0)
-                    BattleManager.deadUnit(target);
-                else if (!target.effected)
+            if (target.currentHP <= 0)
+                BattleManager.deadUnit(target);
+            else if (skill.hasAdditionalEffect)
+                if (!target.effected)
                     applyEffect(target, skill);
         }
     }
@@ -512,7 +517,7 @@ public class CombatStateMachine : MonoBehaviour
     private void applyEffect(baseEnemy unit, baseSkill skill)
     {
         unit.effect = (baseEnemy.Status)skill.additionalEffect.status;
-        unit.duration = 0;
+        unit.duration = skill.additionalEffect.duration;
         unit.effected = true;
         unit.effective_skill = skill;
     }
