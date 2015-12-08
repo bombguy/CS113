@@ -16,7 +16,7 @@ public class SkillScript : MonoBehaviour, IPointerClickHandler {
 
 	public void OnPointerClick(PointerEventData eventData) {
 		Debug.Log ("Skill Script onclick fired");
-		description += skill.skillName + "\n"
+		description = skill.skillName + "\n"
 			+ "Skill Level: " + skill.skillLevel.ToString() + "\n"
 			+ "Experience: " + skill.skillExperience.ToString() + "\n"
 			+ "Cooldown: " + skill.skillCoolDown.ToString() + "\n"
