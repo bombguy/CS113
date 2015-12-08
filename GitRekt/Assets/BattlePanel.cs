@@ -22,8 +22,8 @@ public class BattlePanel : MonoBehaviour {
         _unit = unit;
         if (unit.effected) {
             battleStats.text =
-               "Name : " + _unit.name + "\n" +
-               "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
+               _unit.name + "\n\n" +
+               "HP :" + _unit.currentHP + "/" + _unit.maxHP +" Attack :"+_unit.attack+"\n" +
                "Status Effect : " + _unit.effect.ToString() + "\n" +
                "Duration :" + _unit.duration + "\n" +
                "Flow Mastery :" + _unit.flowMastery + "\n" +
@@ -32,8 +32,8 @@ public class BattlePanel : MonoBehaviour {
         }
         else
             battleStats.text = 
-                "Name : " + _unit.name + "\n" +
-                "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
+                _unit.name + "\n\n" +
+                "HP :" + _unit.currentHP + "/" + _unit.maxHP + " Attack :" + _unit.attack + "\n" +
                 "Status Effect : " + _unit.effect.ToString() + "\n" +
                 "Flow Mastery :" + _unit.flowMastery + "\n" +
                 "Function Mastery :" + _unit.functionMastery + "\n" +
@@ -43,13 +43,13 @@ public class BattlePanel : MonoBehaviour {
         _enemyUnit = unit;
         if (_enemyUnit.effected)
             battleStats.text =
-                "Name : " + _enemyUnit.name + "\n" +
+                _enemyUnit.name + "\n\n" +
                 "HP :" + _enemyUnit.currentHP + "/" + _enemyUnit.maxHP + "\n" +
                 "Status Effect : " + _enemyUnit.effect.ToString() + "\n"+
                 "Duration: "+_enemyUnit.duration;
         else
             battleStats.text =
-                "Name : " + _enemyUnit.name + "\n" +
+                _enemyUnit.name + "\n\n" +
                 "HP :" + _enemyUnit.currentHP + "/" + _enemyUnit.maxHP + "\n" +
                 "Status Effect : " + _enemyUnit.effect.ToString() + "\n";
     }
@@ -59,8 +59,8 @@ public class BattlePanel : MonoBehaviour {
             if (_unit.effected)
             {
                 battleStats.text =
-                   "Name : " + _unit.name + "\n" +
-                   "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
+                   _unit.name + "\n \n" +
+                   "HP :" + _unit.currentHP + "/" + _unit.maxHP + "    Attack :" + _unit.attack + "\n" +
                    "Status Effect : " + _unit.effect.ToString() + "\n" +
                    "Duration :" + _unit.duration + "\n" +
                    "Flow Mastery :" + _unit.flowMastery + "\n" +
@@ -69,8 +69,8 @@ public class BattlePanel : MonoBehaviour {
             }
             else
                 battleStats.text =
-                    "Name : " + _unit.name + "\n" +
-                    "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
+                    _unit.name + "\n \n" +
+                    "HP :" + _unit.currentHP + "/" + _unit.maxHP + "    Attack :" + _unit.attack + "\n" +
                     "Status Effect : " + _unit.effect.ToString() + "\n" +
                     "Flow Mastery :" + _unit.flowMastery + "\n" +
                     "Function Mastery :" + _unit.functionMastery + "\n" +
@@ -79,13 +79,13 @@ public class BattlePanel : MonoBehaviour {
         else {
             if (_enemyUnit.effected)
                 battleStats.text =
-                    "Name : " + _enemyUnit.name + "\n" +
+                    _enemyUnit.name + "\n\n" +
                     "HP :" + _enemyUnit.currentHP + "/" + _enemyUnit.maxHP + "\n" +
                     "Status Effect : " + _enemyUnit.effect.ToString() + "\n" +
                     "Duration: " + _enemyUnit.duration;
             else
                 battleStats.text =
-                    "Name : " + _enemyUnit.name + "\n" +
+                    _enemyUnit.name + "\n \n" +
                     "HP :" + _enemyUnit.currentHP + "/" + _enemyUnit.maxHP + "\n" +
                     "Status Effect : " + _enemyUnit.effect.ToString() + "\n";
         }

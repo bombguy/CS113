@@ -5,8 +5,7 @@ using UnityEngine.UI;
 public class skill_button : MonoBehaviour {
     public Button _skillButton;
     public Image _skillImage;
-    public Text _skillName;
-    public Text _skillDescription;
+    public skillPanel _skillPanel;
     public baseSkill _skill;
 
     public bool onCoolDown;
@@ -18,10 +17,7 @@ public class skill_button : MonoBehaviour {
     void Awake() {
         _skillButton = GetComponent<Button>();
         _skillImage = GetComponent<Image>();
-        _skillName = _skillButton.GetComponentsInChildren<Text>()[0];
-        _skillName.color = Color.white; 
-        _skillDescription = _skillButton.GetComponentsInChildren<Text>()[1];
-        _skillDescription.color = Color.white;
+        _skillPanel = GetComponentInChildren<skillPanel>();
     }
     // Use this for initialization
     void Start()
@@ -38,10 +34,10 @@ public class skill_button : MonoBehaviour {
     {
     }
     public void onPointerEnter() {
-        _skillButton.GetComponentsInChildren<Text>()[1].enabled = true;        
+        _skillPanel.showPanel();
     }
     public void onPointerExit() {
-        _skillButton.GetComponentsInChildren<Text>()[1].enabled = false;     
+        _skillPanel.hidePanel();
     }
     //public methods
     public void skillSelected()
@@ -76,22 +72,19 @@ public class skill_button : MonoBehaviour {
             _skillButton.image.sprite = Resources.Load<Sprite>("Skill/Basic Attack");
         else
             _skillButton.image.sprite = in_skill.skillIcon;
-        _skillName.text = in_skill.skillName;
-        _skillDescription.text = _skill.skillName+" : "+ in_skill.skillDescription+"\n"+
-                                   "Skill Level  "+_skill.skillLevel;
-        _skillButton.GetComponentsInChildren<Text>()[1].enabled = false;
+
+        _skillPanel.setSkillPanel(in_skill);
         cooldown_duration = _skill.skillCoolDown;
+        _skillPanel.hidePanel();
     }
     public void hideButton() {
         _skillButton.enabled = false;
         _skillImage.enabled = false;
-        _skillName.enabled = false;
-        _skillDescription.enabled = false;
+        _skillPanel.hidePanel();
     }
     public void displayButton() {
         _skillButton.enabled = true;
         _skillImage.enabled = true;
-        _skillName.enabled = true;
     }
     
 
