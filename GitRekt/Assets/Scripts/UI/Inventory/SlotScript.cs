@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class SlotScript : MonoBehaviour, IDropHandler {
 
 	public baseSkill skill;
-
+	
 	public GameObject item {
 		get {
 			if (transform.childCount > 0) {

@@ -19,6 +19,7 @@ public class GameInformation : MonoBehaviour {
         players[1] = gameObject.AddComponent<rmdir>();
         players[2] = gameObject.AddComponent<mkdir>();
         players[3] = gameObject.AddComponent<ls>();
+		players [0].skill1 = new DDOS ();
 		Debug.Log ("Finished Loading Player");
     }
 
