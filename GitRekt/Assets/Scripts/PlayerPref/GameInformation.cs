@@ -50,12 +50,20 @@ public class GameInformation : MonoBehaviour {
 	public static int level{ get; set;}
 
 	public void saveGame(){
+//		GameInformation.players [0].maxHP = 2000;
+//		GameInformation.inventorySkills [0].skillLevel = 9000;
 		SaveInformation.SaveAllInformation ();
 		Debug.Log ("saved");
 	}
 	public void loadGame(){
 		LoadInformation.LoadAllInformation ();
 		Debug.Log ("Loaded");
+//		foreach(basePlayer bp in GameInformation.players){
+//			Debug.Log (bp.maxHP);
+//		}
+//		foreach (baseSkill bs in GameInformation.inventorySkills) {
+//			Debug.Log (bs.skillLevel);
+//		}
 	}
 
 }

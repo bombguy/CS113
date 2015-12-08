@@ -68,7 +68,7 @@ public class LoadInformation{
 		case "Stack":
 			return GameInformation.inventorySkills[13];
 		default:
-			return null;
+			return new NoSkill();
 
 
 
