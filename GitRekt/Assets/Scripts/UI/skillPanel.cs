@@ -27,7 +27,7 @@ public class skillPanel : MonoBehaviour {
     public void setSkillPanel(baseSkill skill)
     {
         _skillName.text = skill.skillName;
-        _skillStats.text = skill.skillDescription + "\n" +
+        _skillStats.text = skill.skillDescription + "\n\n" +
             "Skill Level: " + skill.skillLevel + "\n" +
             "Effect : " + skill.additionalEffect.status.ToString() + "\n" +
             "Effect Duration : " + skill.additionalEffect.duration + "\n" +
@@ -37,7 +37,7 @@ public class skillPanel : MonoBehaviour {
     public void updateSkillPanel(baseSkill skill)
     {
         _skillName.text = skill.skillName;
-        _skillStats.text = skill.skillDescription + "\n" +
+        _skillStats.text = skill.skillDescription + "\n\n" +
             "Skill Level: " + skill.skillLevel + "\n" +
             "Effect : " + skill.additionalEffect.ToString() + "\n" +
             "Effect Duration : " + skill.additionalEffect.duration + "\n" +

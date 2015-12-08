@@ -41,7 +41,7 @@ public class GUIManager : MonoBehaviour {
     public static void updateSkill(baseSkill skill) {
         _skill = skill;
         //Buff Spell Target only Players
-        if (_skill.targetPlayer == true && _skill.targetEnemy == false)
+        if (skill.targetPlayer == true && skill.targetEnemy == false)
         {
             playerPanel.enableTargetMode();
             enemyPanel.disableTargetMode();

@@ -98,6 +98,7 @@ public class CombatStateMachine : MonoBehaviour
                 else
                 {
                     Debug.Log("(CSM) E->ST");
+                    BattleManager.turnCounter++;
                     CurrentState = CombatStates.STARTTURN;
                 }
                  break;
