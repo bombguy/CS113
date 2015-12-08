@@ -3,13 +3,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace UnityEngine.EventSystems {
-	public interface IHasChanged : IEventSystemHandler {
-		void HasChanged();
-	}
-}
-
-public class Inventory : MonoBehaviour, IHasChanged {
+public class Inventory : MonoBehaviour {
 	public GameObject slot_prefab;
 	public GameObject skill_prefab;
 	public GameObject[] slots;
@@ -21,7 +15,6 @@ public class Inventory : MonoBehaviour, IHasChanged {
 		for (int i = 0; i < inventory_size; i++) {
 			slots[i] = (GameObject)Instantiate (slot_prefab);
 			slots[i].transform.SetParent (this.transform);
-			slots[i].transform.name += i;
 		}
 		StartCoroutine(LoadInventory());
 	}
@@ -38,10 +31,4 @@ public class Inventory : MonoBehaviour, IHasChanged {
 		}
 	}
 
-	#region IHasChanged implementation
-	public void HasChanged ()
-	{	
-		Debug.Log ("something changed");
-	}
-	#endregion
 }

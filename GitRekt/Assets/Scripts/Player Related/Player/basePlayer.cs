@@ -31,6 +31,23 @@ public abstract class basePlayer: MonoBehaviour {
         DEFENSE,
         SKIP
     }
+
+	public virtual int GetMastery(int i)
+	{
+		switch (i) {
+		case 0:
+			return flowMastery;
+		case 1:
+			return functionMastery;
+		case 2:
+			return datastructureMastery;
+		case 3:
+			return networkMastery;
+		default:
+			return -1;
+		}
+	}
+
     //Battle Members for effects and the such.
     public bool         effected;
     public Status       effect;
