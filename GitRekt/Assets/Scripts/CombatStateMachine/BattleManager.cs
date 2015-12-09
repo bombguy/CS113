@@ -114,7 +114,7 @@ public class BattleManager : MonoBehaviour {
         for (int i = 0; i < playerParty.Count; ++i)
             GameInformation.players[i] = playerParty[i];    
         GameInformation.saveGame();
-        ChangeScene.ChangeToScene("Main Menu");
+        ChangeScene.ChangeToScene("MainMenu");
     }
     public static void deadUnit(basePlayer unit) {
         GUIManager.deadUnit(unit);
