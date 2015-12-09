@@ -20,24 +20,21 @@ public class BattlePanel : MonoBehaviour {
 	}
     public void setBattlePanel(basePlayer unit) {
         _unit = unit;
-        if (unit.effected) {
+        if (unit.effected)
+        {
             battleStats.text =
                _unit.name + "\n\n" +
-               "HP :" + _unit.currentHP + "/" + _unit.maxHP +" Attack :"+_unit.attack+"\n" +
+               "HP :" + _unit.currentHP + "/" + _unit.maxHP + " Attack :" + _unit.attack + "\n" +
                "Status Effect : " + _unit.effect.ToString() + "\n" +
                "Duration :" + _unit.duration + "\n" +
-               "Flow Mastery :" + _unit.flowMastery + "\n" +
-               "Function Mastery :" + _unit.functionMastery + "\n" +
-               "Data Structure Mastery :" + _unit.datastructureMastery;       
+               "Network Mastery: " + _unit.networkMastery;
         }
         else
-            battleStats.text = 
+            battleStats.text =
                 _unit.name + "\n\n" +
                 "HP :" + _unit.currentHP + "/" + _unit.maxHP + " Attack :" + _unit.attack + "\n" +
                 "Status Effect : " + _unit.effect.ToString() + "\n" +
-                "Flow Mastery :" + _unit.flowMastery + "\n" +
-                "Function Mastery :" + _unit.functionMastery + "\n" +
-                "Data Structure Mastery :" + _unit.datastructureMastery;
+                "Network Mastery :" + _unit.networkMastery;
     }
     public void setBattlePanel(baseEnemy unit) {
         _enemyUnit = unit;
@@ -60,30 +57,26 @@ public class BattlePanel : MonoBehaviour {
             {
                 battleStats.text =
                    _unit.name + "\n \n" +
-                   "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n"+
+                   "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
                    "Attack :" + _unit.attack + "\n" +
-                   "Defense :"+ _unit.defense + "\n" +
+                   "Defense :" + _unit.defense + "\n" +
                    "Status Effect : " + _unit.effect.ToString() + "\n" +
                    "Duration :" + _unit.duration + "\n" +
-                   "Flow Mastery :" + _unit.flowMastery + "\n" +
-                   "Function Mastery :" + _unit.functionMastery + "\n" +
-                   "Data Structure Mastery :" + _unit.datastructureMastery;
+                   "Network Mastery:" + _unit.networkMastery;
             }
             else
                 battleStats.text =
-                    _unit.name + "\n \n" +
+                    _unit.name + "\n" +
                    "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
                    "Attack :" + _unit.attack + "\n" +
                    "Defense :" + _unit.defense + "\n" +
                     "Status Effect : " + _unit.effect.ToString() + "\n" +
-                    "Flow Mastery :" + _unit.flowMastery + "\n" +
-                    "Function Mastery :" + _unit.functionMastery + "\n" +
-                    "Data Structure Mastery :" + _unit.datastructureMastery;
+                    "Network Mastery: " + _unit.networkMastery;
         }
         else {
             if (_enemyUnit.effected)
                 battleStats.text =
-                    _enemyUnit.name + "\n\n" +
+                    _enemyUnit.name + "\n" +
                     "HP :" + _enemyUnit.currentHP + "/" + _enemyUnit.maxHP + "\n" +
                     "Status Effect : " + _enemyUnit.effect.ToString() + "\n" +
                     "Duration: " + _enemyUnit.duration;

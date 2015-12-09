@@ -18,15 +18,15 @@ public class turnInformation : MonoBehaviour {
     public void updateTurnInfo() {
         if (GUIManager._unit == null)
         {
-            turnInfo.text = "Turn :" + BattleManager.turnCounter + "     Enemies Alive: "+BattleManager.enemyParty.Count + "     Players Alive:"+BattleManager.playerParty.Count + "      Select a Unit.";
+            turnInfo.text = "Turn :" + BattleManager.turnCounter + " Action: Select a Unit.";
         }
         else if (GUIManager._skill == null)
         {
-            turnInfo.text = "Turn :" + BattleManager.turnCounter + "     Enemies Alive: "+BattleManager.enemyParty.Count + "     Players Alive:"+BattleManager.playerParty.Count + "      Select a Skill."+
+            turnInfo.text = "Turn :" + BattleManager.turnCounter + " Action: Select a Skill." +
                 "\n Selected Unit :"+ GUIManager._unit.name;
         }
         else
-            turnInfo.text = "Turn :" + BattleManager.turnCounter + "     Enemies Alive: " + BattleManager.enemyParty.Count + "     Players Alive:" + BattleManager.playerParty.Count + "      Select a Target."+
-                "\n Selected Unit: "+GUIManager._unit.name +"     Selected Skill"+GUIManager._skill;
+            turnInfo.text = "Turn :" + BattleManager.turnCounter + " Action: Select a Target." +
+                "\n Selected Unit: "+GUIManager._unit.name +"\n Selected Skill: "+GUIManager._skill;
     }
 }
