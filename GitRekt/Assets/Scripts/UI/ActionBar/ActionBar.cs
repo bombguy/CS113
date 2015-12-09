@@ -30,7 +30,7 @@ public class ActionBar : MonoBehaviour {
         _buttons = GetComponentsInChildren<skill_button>();
     }
     void Start() {
-        testActionBar();
+        //testActionBar();
     }
     public void testActionBar() {
             _buttons[0].setButton(new FireWall());

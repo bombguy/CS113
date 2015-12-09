@@ -19,7 +19,7 @@ public class Arrays : baseSkill {
 		additionalEffect.power = 1;
 		additionalEffect.duration = 3;
 		
-		skillLevel = 1;
+		skillLevel = 4;
 		skillExperience = 0;
 		skillCoolDown = 1;
 		skillPower = 0;

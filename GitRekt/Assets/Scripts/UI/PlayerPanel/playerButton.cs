@@ -53,6 +53,7 @@ public class playerButton : MonoBehaviour
     public void setButton(basePlayer input)
     {
         _player = input;
+        _actionBar.setActionBar(input);
         _playerBattleStats.setBattlePanel(_player);
     }
 }

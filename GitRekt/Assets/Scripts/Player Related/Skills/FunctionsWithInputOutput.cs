@@ -14,7 +14,7 @@ public class FunctionsWithInputOutput : baseSkill {
 		
 		additionalEffect = new Effect ();
 
-		skillLevel = 1;
+		skillLevel = 4;
 		skillExperience = 0;
 		skillCoolDown = 4;
 		skillPower = 0;
@@ -25,7 +25,8 @@ public class FunctionsWithInputOutput : baseSkill {
 	public override int cast(basePlayer caster) {
 		//skill effect
 		int health = 100 / (skillLevel + 1);
-        caster.currentHP -= health; // Trading health for attack.
+        if(health>100)
+            caster.currentHP -= health; // Trading health for attack.
 		int attack = (skillLevel * health) + 10;
 
 		//skill experience gain

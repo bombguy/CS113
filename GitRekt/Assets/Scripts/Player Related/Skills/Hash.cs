@@ -18,9 +18,7 @@ public class Hash : baseSkill {
 		additionalEffect.power = 0;
 		additionalEffect.duration = 1;
 		
-		
-		
-		skillLevel = 0;
+		skillLevel = 4;
 		skillExperience = 0;
 		skillCoolDown = 10;
 		skillPower = 0;

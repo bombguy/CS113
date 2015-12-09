@@ -14,6 +14,7 @@ public class Stack : baseSkill {
 		
 		//define effect
 		additionalEffect = new Effect ();
+        hasAdditionalEffect = false;
 
 		
 		skillLevel = 0;
