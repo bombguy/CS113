@@ -66,7 +66,7 @@ public class BattlePanel : MonoBehaviour {
             }
             else
                 battleStats.text =
-                    _unit.name + "\n" +
+                    _unit.name + "\n\n" +
                    "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
                    "Attack :" + _unit.attack + "\n" +
                    "Defense :" + _unit.defense + "\n" +
