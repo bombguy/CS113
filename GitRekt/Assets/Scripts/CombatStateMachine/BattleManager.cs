@@ -117,10 +117,12 @@ public class BattleManager : MonoBehaviour {
         ChangeScene.ChangeToScene("MainMenu");
     }
     public static void deadUnit(basePlayer unit) {
+        playerParty.Remove(unit);
         GUIManager.deadUnit(unit);
         
     }
     public static void deadUnit(baseEnemy unit) {
+        enemyParty.Remove(unit);
         GUIManager.deadUnit(unit);
     }
 

@@ -9,8 +9,8 @@ public class FunctionsWithInputOutput : baseSkill {
 		skillName = "Functions With IO";
 		skillDescription = "Unit will be supplying health, to deal massive damage to opponent.";
 		hasAdditionalEffect = false;
-		targetEnemy = false;
-		targetPlayer = true;
+		targetEnemy = true;
+		targetPlayer = false;
 		
 		additionalEffect = new Effect ();
 

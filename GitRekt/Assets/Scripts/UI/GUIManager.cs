@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour {
 
@@ -101,11 +102,14 @@ public class GUIManager : MonoBehaviour {
     //Death Functions- Basically make sure they cannot be interacted with.
     public static void deadUnit(basePlayer unit)
     {
+        unit.currentHP = -1;
         playerPanel.fetchPlayerButton(unit).buttonDisable();
+        playerPanel.fetchPlayerButton(unit).GetComponent<Image>().enabled = false;
     }
     public static void deadUnit(baseEnemy unit)
     {
         unit.currentHP = -1;
-        enemyPanel.fetchEnemyButton(unit).buttonDisable(); 
+        enemyPanel.fetchEnemyButton(unit).buttonDisable();
+        enemyPanel.fetchEnemyButton(unit).GetComponent<Image>().enabled = false;
     }
 }

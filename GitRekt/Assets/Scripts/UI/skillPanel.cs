@@ -38,10 +38,9 @@ public class skillPanel : MonoBehaviour {
     {
         _skillName.text = skill.skillName;
         _skillStats.text = skill.skillDescription + "\n\n" +
-            "Skill Level: " + skill.skillLevel + "\n" +
             "Effect : " + skill.additionalEffect.ToString() + "\n" +
-            "Effect Duration : " + skill.additionalEffect.duration + "\n" +
-            "Cooldown :" + skill.skillCoolDown;
+            "Effect Duration : " + skill.additionalEffect.duration +"Turns "+ "\n" +
+            "Cooldown :" + skill.skillCoolDown + "Turns" ;
     }
     public void hidePanel()
     {
