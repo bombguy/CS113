@@ -113,9 +113,15 @@ public class BattleManager : MonoBehaviour {
     {
         for (int i = 0; i < playerParty.Count; ++i)
             GameInformation.players[i] = playerParty[i];    
-        GameInformation.saveGame();
-        ChangeScene.ChangeToScene("MainMenu");
+        //GameInformation.saveGame();
+        if (CombatStateMachine.CurrentState == CombatStateMachine.CombatStates.WIN) {
+            ChangeScene.ChangeToScene("WinVN");
+        }
+        else if (CombatStateMachine.CurrentState == CombatStateMachine.CombatStates.LOSE) {
+            ChangeScene.ChangeToScene("LostVN");
+        }
     }
+    
     public static void deadUnit(basePlayer unit) {
         playerParty.Remove(unit);
         GUIManager.deadUnit(unit);

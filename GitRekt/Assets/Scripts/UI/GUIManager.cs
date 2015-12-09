@@ -40,17 +40,27 @@ public class GUIManager : MonoBehaviour {
         }
     }
     public static void updateSkill(baseSkill skill) {
-        _skill = skill;
-        //Buff Spell Target only Players
-        if (skill.targetPlayer == true && skill.targetEnemy == false)
-        {
-            playerPanel.enableTargetMode();
-            enemyPanel.disableTargetMode();
+        if (_skill == skill) {
+            _skill = null;
+            playerPanel.disableTargetMode();
         }
-        //Any other spell is considered hostile. Target enemies
-        else {
-            enemyPanel.enableTargetMode();
-            playerPanel.enemyTargetMode();
+        else
+            _skill = skill;
+
+        if (_skill != null)
+        {
+            //Buff Spell Target only Players
+            if (skill.targetPlayer == true && skill.targetEnemy == false)
+            {
+                playerPanel.enableTargetMode();
+                enemyPanel.disableTargetMode();
+            }
+            //Any other spell is considered hostile. Target enemies
+            else
+            {
+                enemyPanel.enableTargetMode();
+                playerPanel.enemyTargetMode();
+            }
         }
     }
     public static void updateTarget(baseEnemy enemy){
