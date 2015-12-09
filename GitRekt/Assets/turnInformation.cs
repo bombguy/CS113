@@ -22,9 +22,11 @@ public class turnInformation : MonoBehaviour {
         }
         else if (GUIManager._skill == null)
         {
-            turnInfo.text = "Turn :" + BattleManager.turnCounter + "     Enemies Alive: "+BattleManager.enemyParty.Count + "     Players Alive:"+BattleManager.playerParty.Count + "      Select a Skill.";
+            turnInfo.text = "Turn :" + BattleManager.turnCounter + "     Enemies Alive: "+BattleManager.enemyParty.Count + "     Players Alive:"+BattleManager.playerParty.Count + "      Select a Skill."+
+                "\n Selected Unit :"+ GUIManager._unit.name;
         }
         else
-            turnInfo.text = "Turn :" + BattleManager.turnCounter + "     Enemies Alive: " + BattleManager.enemyParty.Count + "     Players Alive:" + BattleManager.playerParty.Count + "      Select a Target.";
+            turnInfo.text = "Turn :" + BattleManager.turnCounter + "     Enemies Alive: " + BattleManager.enemyParty.Count + "     Players Alive:" + BattleManager.playerParty.Count + "      Select a Target."+
+                "\n Selected Unit: "+GUIManager._unit.name +"     Selected Skill"+GUIManager._skill;
     }
 }
