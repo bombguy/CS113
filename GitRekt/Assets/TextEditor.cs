@@ -28,7 +28,7 @@ public class TextEditor : MonoBehaviour {
 			count++;
 		} 
 		if(count == maxsize){
-			Application.LoadLevel("Level1");
+			Application.LoadLevel("BattleScene");
 		}
 	}
 }
