@@ -13,9 +13,10 @@ public class SkillScript : MonoBehaviour, IPointerClickHandler {
 		TextArea = GameObject.Find("SkillDescription");
 		description = "";
 	}
-
+	
 	public void OnPointerClick(PointerEventData eventData) {
 		Debug.Log ("Skill Script onclick fired");
+		this.skill = this.GetComponentInParent<SlotScript> ().skill;
 		description = skill.skillName + "\n"
 			+ "Skill Level: " + skill.skillLevel.ToString() + "\n"
 			+ "Experience: " + skill.skillExperience.ToString() + "\n"

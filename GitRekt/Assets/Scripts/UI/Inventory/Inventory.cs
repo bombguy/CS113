@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 	IEnumerator LoadInventory() {
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5F);
 		int i = 0;
 		foreach (baseSkill skill in GameInformation.inventorySkills) {
 			SlotScript slotscript = slots[i].GetComponent<SlotScript> ();
