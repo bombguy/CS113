@@ -2,9 +2,9 @@
 public class Python : baseEnemy {
 	public Python() {
 		name = "Python";
-		maxHP = 140;
+		maxHP = 300;
 		currentHP = maxHP;
-		attack = 10;
+		attack = 50;
 		defense = 0;
 		basicAttack = new BasicAttack();
         effected = false;

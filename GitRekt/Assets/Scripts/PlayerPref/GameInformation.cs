@@ -72,8 +72,8 @@ public class GameInformation : MonoBehaviour {
     }
     public static void demoPlayers() {
         //Sudo
-        players[0].maxHP = 200;
-        players[0].currentHP = 200;
+        players[0].maxHP = 100;
+        players[0].currentHP = 100;
         players[0].attack = 30;
         players[0].defense = 30;
         players[0].skill1 = new Arrays();
@@ -85,8 +85,8 @@ public class GameInformation : MonoBehaviour {
         players[0].functionMastery = 1;
         players[0].flowMastery = 1;
         //rmdir
-        players[1].maxHP = 200;
-        players[1].currentHP = 200;
+        players[1].maxHP = 100;
+        players[1].currentHP = 100;
         players[1].attack = 45;
         players[1].defense = 20;
         players[1].skill1 = new IfElse();
@@ -98,8 +98,8 @@ public class GameInformation : MonoBehaviour {
         players[1].functionMastery = 1;
         players[1].flowMastery = 1;
         //mkdir
-        players[2].maxHP = 150;
-        players[2].currentHP = 150;
+        players[2].maxHP = 100;
+        players[2].currentHP = 100;
         players[2].attack = 50;
         players[2].defense = 10;
         players[2].skill1 = new FireWall();
@@ -112,8 +112,8 @@ public class GameInformation : MonoBehaviour {
         players[2].flowMastery = 1;
       
         //ls
-        players[3].maxHP = 185;
-        players[3].currentHP = 185;
+        players[3].maxHP = 100;
+        players[3].currentHP = 100;
         players[3].attack = 20;
         players[3].defense = 40;
         players[3].skill1 = new Loop();
@@ -126,7 +126,6 @@ public class GameInformation : MonoBehaviour {
         players[3].flowMastery = 1;
       
     }
-
 	public static void saveGame(){
 		SaveInformation.SaveAllInformation();
 		Debug.Log ("saved");
@@ -135,5 +134,4 @@ public class GameInformation : MonoBehaviour {
 		LoadInformation.LoadAllInformation();
 		Debug.Log ("Loaded");
 	}
-
 }
