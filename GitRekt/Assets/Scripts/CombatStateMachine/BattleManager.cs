@@ -17,7 +17,6 @@ public class BattleManager : MonoBehaviour {
     //CombatStateMachine
     CombatStateMachine csm;
 	void Awake () {
-        //GameInformation.loadGame();
         playerParty = new List<basePlayer>();
         enemyParty = new List<baseEnemy>();
         csm = GetComponent<CombatStateMachine>();
@@ -113,7 +112,7 @@ public class BattleManager : MonoBehaviour {
     {
         for (int i = 0; i < playerParty.Count; ++i)
             GameInformation.players[i] = playerParty[i];    
-        //GameInformation.saveGame();
+        GameInformation.saveGame();
         if (CombatStateMachine.CurrentState == CombatStateMachine.CombatStates.WIN) {
             ChangeScene.ChangeToScene("WinVN");
         }
@@ -123,6 +122,16 @@ public class BattleManager : MonoBehaviour {
     }
     
     public static void deadUnit(basePlayer unit) {
+        for (int i = 0; i < GameInformation.players.Length; ++i) {
+            if (GameInformation.players[i] == unit) {
+                unit.currentHP = unit.maxHP;
+                unit.effected = false;
+                unit.effective_skill = null;
+                unit.effect = basePlayer.Status.NONE;
+                GameInformation.players[i] = unit;
+            }
+               
+        }
         playerParty.Remove(unit);
         GUIManager.deadUnit(unit);
         

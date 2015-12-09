@@ -126,6 +126,13 @@ public class GameInformation : MonoBehaviour {
         players[3].flowMastery = 1;
       
     }
+    public void _saveGame() {
+        saveGame();
+    }
+    public void _loadGame()
+    {
+        loadGame();
+    }
 	public static void saveGame(){
 		SaveInformation.SaveAllInformation();
 		Debug.Log ("saved");

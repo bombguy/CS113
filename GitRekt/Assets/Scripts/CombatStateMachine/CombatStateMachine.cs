@@ -308,10 +308,14 @@ public class CombatStateMachine : MonoBehaviour
                     {
                         applyEffect(target, skill);
                     }
-                    else { 
+                    else
+                    {
                     }
                 else
+                {
+                    
                     BattleManager.deadUnit(target);
+                }
             }
         }
         Debug.Log("Attack Successful");

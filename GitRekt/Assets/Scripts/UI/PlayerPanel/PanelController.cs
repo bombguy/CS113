@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class PanelController : MonoBehaviour
 {
     playerButton[] _players;
-    basePlayer _currentPlayer;
+    public basePlayer _currentPlayer;
 
     void Awake() {
         _players = GetComponentsInChildren<playerButton>();
@@ -134,10 +134,11 @@ public class PanelController : MonoBehaviour
                 }
                 else if (_currentPlayer == _players[i]._player)
                 {
-                    _currentPlayer = null;
-                    _players[i]._actionBar._skill = null;
-                    _players[i]._actionBar.hideActionBar();
-                    _players[i]._selected = false;
+                        _currentPlayer = null;
+                        _players[i]._actionBar._skill = null;
+                        _players[i]._actionBar.hideActionBar();
+                        _players[i]._selected = false;
+                    
                 }
                 else if (_currentPlayer != _players[i]._player)
                 {

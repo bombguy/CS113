@@ -43,6 +43,10 @@ public class GUIManager : MonoBehaviour {
         if (_skill == skill) {
             _skill = null;
             playerPanel.disableTargetMode();
+            enemyPanel.disableTargetMode();
+            playerPanel.fetchActionBar(_unit).hideActionBar();
+            _unit = null;
+            playerPanel._currentPlayer = null;
         }
         else
             _skill = skill;

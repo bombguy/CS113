@@ -61,8 +61,7 @@ public class BattlePanel : MonoBehaviour {
                    "Attack :" + _unit.attack + "\n" +
                    "Defense :" + _unit.defense + "\n" +
                    "Status Effect : " + _unit.effect.ToString() + "\n" +
-                   "Duration :" + _unit.duration + "\n" +
-                   "Network Mastery:" + _unit.networkMastery;
+                   "Duration :" + _unit.duration + "\n";
             }
             else
                 battleStats.text =
@@ -70,8 +69,7 @@ public class BattlePanel : MonoBehaviour {
                    "HP :" + _unit.currentHP + "/" + _unit.maxHP + "\n" +
                    "Attack :" + _unit.attack + "\n" +
                    "Defense :" + _unit.defense + "\n" +
-                    "Status Effect : " + _unit.effect.ToString() + "\n" +
-                    "Network Mastery: " + _unit.networkMastery;
+                    "Status Effect : " + _unit.effect.ToString() + "\n";
         }
         else {
             if (_enemyUnit.effected)
