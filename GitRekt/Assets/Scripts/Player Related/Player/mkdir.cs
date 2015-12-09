@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
+using UnityEngine;
 
-[System.Serializable]
 public class mkdir : basePlayer{
 	public mkdir () {
 		name = "Miku Dirginham";
@@ -41,41 +41,48 @@ public class mkdir : basePlayer{
         copy.networkMastery = this.networkMastery;
         return copy;
     }
-	public mkdir(SerializationInfo info, StreamingContext ctxt)
+	
+	public mkdir(string load)
 	{
-		name = (string)info.GetValue("MKDIR_NAME",typeof(string));
-		maxHP = (int)info.GetValue("MKDIR_HEALTH",typeof(int));
-		attack = (int)info.GetValue("MKDIR_ATTACK",typeof(int));
-		defense = (int)info.GetValue ("MKDIR_DEFENSE", typeof(int));
-		
-		flowMastery = (int)info.GetValue("MKDIR_FLOWCONTROL_MASTERY",typeof(int));
-		functionMastery = (int)info.GetValue("MKDIR_FUNCTION_MASTERY",typeof(int));
-		datastructureMastery = (int)info.GetValue("MKDIR_DATABASE_MASTERY",typeof(int));
-		networkMastery = (int)info.GetValue ("MKDIR_NETWORK_MASTERY", typeof(int));
+		name = "Miku Dirginham";
+		maxHP = PlayerPrefs.GetInt ("MKDIR_HEALTH", 0);
+		attack = PlayerPrefs.GetInt ("MKDIR_ATTACK", 0);
+		defense = PlayerPrefs.GetInt ("MKDIR_DEFENSE", 0);
+		currentHP = maxHP;
 
+		flowMastery = PlayerPrefs.GetInt ("MKDIR_FLOW_CONTROL_MASTERY", 0);
+		functionMastery = PlayerPrefs.GetInt ("MKDIR_FUNCTION_MASTERY", 0);
+		datastructureMastery = PlayerPrefs.GetInt ("MKDIR_DATABASE_MASTERY", 0);
+		networkMastery = PlayerPrefs.GetInt ("MKDIR_NETWORK_MASTERY", 0);
 
+		string skill1name = PlayerPrefs.GetString ("MKDIR_SPELL1", "");
+		string skill2name = PlayerPrefs.GetString ("MKDIR_SPELL2", "");
+		string skill3name = PlayerPrefs.GetString ("MKDIR_SPELL3", "");
+		string skill4name = PlayerPrefs.GetString ("MKDIR_SPELL4", "");
 
+		skill1 = LoadInformation.createSkill (skill1name);
+		skill2 = LoadInformation.createSkill (skill2name);
+		skill3 = LoadInformation.createSkill (skill3name);
+		skill4 = LoadInformation.createSkill (skill4name);
 
 	}
+
+	public override void savePlayer() {
+
+		PlayerPrefs.SetInt ("MKDIR_HEALTH", maxHP);
+		PlayerPrefs.SetInt ("MKDIR_ATTACK", attack);
+		PlayerPrefs.SetInt ("MKDIR_DEFENSE", defense);
+
+
+		PlayerPrefs.SetInt ("MKDIR_FLOWCONTROL_MASTERY", flowMastery);
+		PlayerPrefs.SetInt ("MKDIR_FUNCTION_MASTERY", functionMastery);
+		PlayerPrefs.SetInt ("MKDIR_DATABASE_MASTERY", datastructureMastery);
+		PlayerPrefs.SetInt ("MKDIR_NETWORK_MASTERY", networkMastery);
 	
-	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("MKDIR_NAME", name, typeof(string));
-		info.AddValue("MKDIR_HEALTH", maxHP, typeof(int));
-		info.AddValue("MKDIR_ATTACK", attack, typeof(int));
-		info.AddValue("MKDIR_DEFENSE", defense, typeof(int));
-		
-		//info.AddValue("RMDIR_SPELL1_EXP", playerName, typeof(int));
-		
-		info.AddValue("MKDIR_FLOWCONTROL_MASTERY", flowMastery, typeof(int));
-		info.AddValue("MKDIR_FUNCTION_MASTERY", functionMastery, typeof(int));
-		info.AddValue("MKDIR_DATABASE_MASTERY", datastructureMastery, typeof(int));
-		info.AddValue("MKDIR_NETWORK_MASTERY", networkMastery, typeof(int));
 
-
-		info.AddValue ("MKDIR_SPELL1", skill1.skillName, typeof(string));
-		info.AddValue ("MKDIR_SPELL2", skill2.skillName, typeof(string));
-		info.AddValue ("MKDIR_SPELL3", skill3.skillName, typeof(string));
-		info.AddValue ("MKDIR_SPELL4", skill4.skillName, typeof(string));
-
+		PlayerPrefs.SetString ("MKDIR_SPELL1", skill1.skillName);
+		PlayerPrefs.SetString ("MKDIR_SPELL2", skill2.skillName);
+		PlayerPrefs.SetString ("MKDIR_SPELL3", skill3.skillName);
+		PlayerPrefs.SetString ("MKDIR_SPELL4", skill4.skillName);
 	}
 }

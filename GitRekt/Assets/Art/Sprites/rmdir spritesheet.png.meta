@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 13b17dedba122544a82b07971d1eab42
-timeCreated: 1449016048
+timeCreated: 1449559144
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -56,32 +56,32 @@ TextureImporter:
     - name: rmdir spritesheet_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 4
         y: 0
-        width: 55
-        height: 76
+        width: 49
+        height: 73
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: rmdir spritesheet_1
       rect:
         serializedVersion: 2
-        x: 55
-        y: 0
-        width: 55
-        height: 76
+        x: 59
+        y: 1
+        width: 49
+        height: 73
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: rmdir spritesheet_2
       rect:
         serializedVersion: 2
-        x: 110
+        x: 112
         y: 0
-        width: 55
-        height: 76
+        width: 49
+        height: 72
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

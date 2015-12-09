@@ -60,14 +60,7 @@ public class Graph : baseSkill {
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("GRAPH_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("GRAPH_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("GRAPH_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("GRAPH_SKILLPOWER", skillPower, typeof(int));
-		
-		
-	}
+	public override void 	saveSkill(){}
 	
 }
 

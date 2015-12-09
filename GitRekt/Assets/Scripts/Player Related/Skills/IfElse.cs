@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
 public class IfElse : baseSkill {
 	public GameInformation gameInformation;
@@ -45,25 +44,34 @@ public class IfElse : baseSkill {
     {
         return 0;
     }
-	public IfElse(SerializationInfo info, StreamingContext ctxt)
+	public IfElse(string load)
 	{
+		skillID = 11;
 		skillName = "If Else";
 		skillDescription = "All or Nothing, Doubles the attack or nothing at all.";
+		hasAdditionalEffect = false;
+		targetEnemy = true;
+		targetPlayer = false;
 		
-		skillLevel = (int)info.GetValue("IFELSE_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("IFELSE_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("IFELSE_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("IFELSE_SKILLPOWER",typeof(int));
+		//define effect
+		additionalEffect = new Effect ();
+
+		skillLevel = PlayerPrefs.GetInt("IFELSE_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("IFELSE_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("IFELSE_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetFloat("IFELSE_POWER",0);
+
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("IFELSE_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("IFELSE_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("IFELSE_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("IFELSE_SKILLPOWER", skillPower, typeof(int));
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("IFELSE_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("IFELSE_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("IFELSE_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("IFELSE_POWER", (float)skillPower);
+
 		
-		
-	}
-	
+	}	
 }

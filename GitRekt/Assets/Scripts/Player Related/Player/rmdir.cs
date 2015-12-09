@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine.EventSystems;
-[System.Serializable] 
+using UnityEngine;
+
 public class rmdir : basePlayer {
 
 	public rmdir () {
@@ -41,35 +42,47 @@ public class rmdir : basePlayer {
         copy.networkMastery = this.networkMastery;
         return copy;
     }
-	public rmdir(SerializationInfo info, StreamingContext ctxt)
+	public rmdir(string load)
 	{
-		name = (string)info.GetValue("RMDIR_NAME",typeof(string));
-		maxHP = (int)info.GetValue("RMDIR_HEALTH",typeof(int));
-		attack = (int)info.GetValue("RMDIR_ATTACK",typeof(int));
-		defense = (int)info.GetValue ("RMDIR_DEFENSE", typeof(int));
-		
-		flowMastery = (int)info.GetValue("RMDIR_FLOWCONTROL_MASTERY",typeof(int));
-		functionMastery = (int)info.GetValue("RMDIR_FUNCTION_MASTERY",typeof(int));
-		datastructureMastery = (int)info.GetValue("RMDIR_DATABASE_MASTERY",typeof(int));
-		networkMastery = (int)info.GetValue ("RMDIR_NETWORK_MASTERY", typeof(int));
+		name = "Raymond Dirginham";
+		maxHP = PlayerPrefs.GetInt ("RMDIR_HEALTH", 0);
+		attack = PlayerPrefs.GetInt ("RMDIR_ATTACK", 0);
+		defense = PlayerPrefs.GetInt ("RMDIR_DEFENSE", 0);
+		currentHP = maxHP;
+
+		flowMastery = PlayerPrefs.GetInt ("RMDIR_FLOW_CONTROL_MASTERY", 0);
+		functionMastery = PlayerPrefs.GetInt ("RMDIR_FUNCTION_MASTERY", 0);
+		datastructureMastery = PlayerPrefs.GetInt ("RMDIR_DATABASE_MASTERY", 0);
+		networkMastery = PlayerPrefs.GetInt ("RMDIR_NETWORK_MASTERY", 0);
+
+		string skill1name = PlayerPrefs.GetString ("RMDIR_SPELL1", "");
+		string skill2name = PlayerPrefs.GetString ("RMDIR_SPELL2", "");
+		string skill3name = PlayerPrefs.GetString ("RMDIR_SPELL3", "");
+		string skill4name = PlayerPrefs.GetString ("RMDIR_SPELL4", "");
+
+		skill1 = LoadInformation.createSkill (skill1name);
+		skill2 = LoadInformation.createSkill (skill2name);
+		skill3 = LoadInformation.createSkill (skill3name);
+		skill4 = LoadInformation.createSkill (skill4name);
+
 	}
 
-	public override void GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("RMDIR_NAME", name, typeof(string));
-		info.AddValue("RMDIR_HEALTH", maxHP, typeof(int));
-		info.AddValue("RMDIR_ATTACK", attack, typeof(int));
-		info.AddValue("RMDIR_DEFENSE", defense, typeof(int));
+	public override void savePlayer() {
 
-		//info.AddValue("RMDIR_SPELL1_EXP", playerName, typeof(int));
+		PlayerPrefs.SetInt ("RMDIR_HEALTH", maxHP);
+		PlayerPrefs.SetInt ("RMDIR_ATTACK", attack);
+		PlayerPrefs.SetInt ("RMDIR_DEFENSE", defense);
 
-		info.AddValue("RMDIR_FLOWCONTROL_MASTERY", flowMastery, typeof(int));
-		info.AddValue("RMDIR_FUNCTION_MASTERY", functionMastery, typeof(int));
-		info.AddValue("RMDIR_DATABASE_MASTERY", datastructureMastery, typeof(int));
-		info.AddValue("RMDIR_NETWORK_MASTERY", networkMastery, typeof(int));
 
-		info.AddValue ("RMDIR_SPELL1", skill1.skillName, typeof(string));
-		info.AddValue ("RMDIR_SPELL2", skill2.skillName, typeof(string));
-		info.AddValue ("RMDIR_SPELL3", skill3.skillName, typeof(string));
-		info.AddValue ("RMDIR_SPELL4", skill4.skillName, typeof(string));
+		PlayerPrefs.SetInt ("RMDIR_FLOWCONTROL_MASTERY", flowMastery);
+		PlayerPrefs.SetInt ("RMDIR_FUNCTION_MASTERY", functionMastery);
+		PlayerPrefs.SetInt ("RMDIR_DATABASE_MASTERY", datastructureMastery);
+		PlayerPrefs.SetInt ("RMDIR_NETWORK_MASTERY", networkMastery);
+	
+
+		PlayerPrefs.SetString ("RMDIR_SPELL1", skill1.skillName);
+		PlayerPrefs.SetString ("RMDIR_SPELL2", skill2.skillName);
+		PlayerPrefs.SetString ("RMDIR_SPELL3", skill3.skillName);
+		PlayerPrefs.SetString ("RMDIR_SPELL4", skill4.skillName);
 	}
 }

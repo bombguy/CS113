@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
 public class DDOS : baseSkill {
 	public GameInformation gameInformation;
@@ -16,15 +15,15 @@ public class DDOS : baseSkill {
 		//define effect
 		additionalEffect = new Effect ();
 		additionalEffect.status = Effect.Status.STUN;
-		additionalEffect.power = 0;
+		additionalEffect.power = 1;
 		additionalEffect.duration = 1;
 			
 		 
 		
-		skillLevel = 0;
+		skillLevel = 1;
 		skillExperience = 0;
 		skillCoolDown = 5;
-		skillPower = 0;
+		skillPower = 1;
 		
 		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 	}
@@ -47,24 +46,39 @@ public class DDOS : baseSkill {
         return 0;
     }
 	
-	public DDOS(SerializationInfo info, StreamingContext ctxt)
+	public DDOS(string load)
 	{
+		skillID = 4;
 		skillName = "DDOS";
 		skillDescription = "Target's computer crashes causing them to panic, resulting in a one turn stun.";
+		hasAdditionalEffect = true;
+		targetEnemy = true;
+		targetPlayer = false;
 		
-		skillLevel = (int)info.GetValue("DDOS_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("DDOS_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("DDOS_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("DDOS_SKILLPOWER",typeof(int));
+		//define effect
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.STUN;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
+			
+		 
+		
+		skillLevel = PlayerPrefs.GetInt("DDOS_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("DDOS_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("DDOS_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetFloat("DDOS_POWER",0);
+		
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("DDOS_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("DDOS_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("DDOS_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("DDOS_SKILLPOWER", skillPower, typeof(int));
-		
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("DDOS_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("DDOS_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("DDOS_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("DDOS_POWER", (float)skillPower);
+
 		
 	}
 	

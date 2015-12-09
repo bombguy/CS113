@@ -2,36 +2,63 @@
 using System.Collections;
 
 public class enemyPanelController : MonoBehaviour {
-    public enemyButton[] _enemyButtons;
 
+    public enemyButton[] _enemyButtons;
     public baseEnemy _selectedEnemy;
-    public baseEnemy[] _enemies;
     public bool _hasSelected;
 
     public void Awake() {
-        _enemyButtons = GetComponentsInChildren<enemyButton>();
     }
     public void Start() {
+        demo();
         _hasSelected = false;
         _selectedEnemy = null;
     }
+    public void demo() {
+        _enemyButtons = GetComponentsInChildren<enemyButton>();
+    }
     public void testEnemies() {
-        _enemies = new baseEnemy[4];
-        _enemies[0] = gameObject.AddComponent<C>();
-        _enemies[1] = gameObject.AddComponent<Cpp>();
-        _enemies[2] = gameObject.AddComponent<C>();
-        _enemies[3] = gameObject.AddComponent<Python>();
-        setEnemyButtons(_enemies);
+        baseEnemy[] _testEnemies;
+        _testEnemies = new baseEnemy[4];
+        _testEnemies[0] = gameObject.AddComponent<C>();
+        _testEnemies[1] = gameObject.AddComponent<Cpp>();
+        _testEnemies[2] = gameObject.AddComponent<C>();
+        _testEnemies[3] = gameObject.AddComponent<Python>();
+        setEnemyButtons(_testEnemies);
+    }
+    public void endAction() {
+        for (int i = 0; i < _enemyButtons.Length; ++i)
+            _enemyButtons[i]._enemyBattleStats.updateBattlePanel();
+    }
+    //Targeting mode
+    public void enableTargetMode() {
+        for (int i = 0; i < _enemyButtons.Length; ++i) {
+            if (_enemyButtons[i]._enemy.currentHP > 0) {
+                _enemyButtons[i].buttonEnable();
+            }
+                
+        }
+    }
+    public void disableTargetMode() {
+        for (int i = 0; i < _enemyButtons.Length; ++i) {
+            _enemyButtons[i].buttonDisable();
+        }
     }
     public void setEnemyButtons(baseEnemy[] enemies)
     {
-        _enemies = new baseEnemy[enemies.Length];
         for (int i = 0; i < enemies.Length; ++i)
         {
-
             _enemyButtons[i].setButton(enemies[i]);
-            _enemies[i] = enemies[i];
         }
+
+    }
+    public enemyButton fetchEnemyButton(baseEnemy unit) {
+        for (int i = 0; i < _enemyButtons.Length; ++i) {
+            if (_enemyButtons[i]._enemy == unit) {
+                return _enemyButtons[i];
+            }
+        }   
+        return _enemyButtons[0];
     }
     
     // Update is called once per frame

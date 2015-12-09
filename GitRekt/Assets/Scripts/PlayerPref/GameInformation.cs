@@ -9,69 +9,66 @@ public class GameInformation : MonoBehaviour {
 
     public static int level { get; set; }
 
+//		players [0] = new sudo ();
+//		players [1] = new rmdir ();
+//		players [2] = new mkdir ();
+//		players [3] = new ls ();
+
     public void initPlayers(){
         players[0] = gameObject.AddComponent<sudo>();
         players[1] = gameObject.AddComponent<rmdir>();
         players[2] = gameObject.AddComponent<mkdir>();
         players[3] = gameObject.AddComponent<ls>();
+		players [0].skill1 = new DDOS ();
+		Debug.Log ("Finished Loading Player");
     }
+
     public void initLevel() {
         switch (level)
         {
             case 1:
                 for (int i = 0; i < enemies.Length; ++i)
                 {
-                    enemies[i] = gameObject.AddComponent<C>();
+                    enemies[i] = gameObject.AddComponent<Python>();
                 }
                 break;
             default:
                 break;
-        }   
+        }
+		Debug.Log ("Finished Loading Level");
     }
     public void initInventory() {
-        inventorySkills = new baseSkill[25];
-        inventorySkills[0] = new Arrays();
-        inventorySkills[1] = new DDOS();
-        inventorySkills[2] = new DefaultFunctions();
-        inventorySkills[3] = new FireWall();
-        inventorySkills[4] = new FunctionsWithInputOutput();
-        inventorySkills[5] = new FunctionsWithOutput();
-        inventorySkills[6] = new Hash();
-        inventorySkills[7] = new IfElse();
-        inventorySkills[8] = new InfiniteLoop();
-        inventorySkills[9] = new PacketSniffing();
-        inventorySkills[11] = new Stack();
-        inventorySkills[12] = new Arrays();
-        inventorySkills[13] = new DDOS();
-        inventorySkills[14] = new DefaultFunctions();
-        inventorySkills[15] = new FireWall();
-        inventorySkills[16] = new FunctionsWithInputOutput();
-        inventorySkills[17] = new FunctionsWithOutput();
-        inventorySkills[18] = new Hash();
-        inventorySkills[19] = new IfElse();
-        inventorySkills[20] = new InfiniteLoop();
-        inventorySkills[21] = new PacketSniffing();
-        inventorySkills[22] = new Recursion();
-        inventorySkills[23] = new Stack();
-        inventorySkills[24] = new DDOS();
-
-    
+        inventorySkills = new baseSkill[14];
+		inventorySkills [0] = new Arrays ();
+		inventorySkills [1] = new BreakAndContinue ();
+		inventorySkills [2] = new DDOS ();
+		inventorySkills [3] = new DefaultFunctions ();
+		inventorySkills [4] = new FireWall ();
+		inventorySkills [5] = new FunctionsWithInputOutput ();
+		inventorySkills [6] = new FunctionsWithOutput ();
+		inventorySkills [7] = new Hash ();
+		inventorySkills [8] = new IfElse ();
+		inventorySkills [9] = new InfiniteLoop ();
+		inventorySkills [10] = new Loop ();
+		inventorySkills [11] = new PacketSniffing ();
+		inventorySkills [12] = new Recursion ();
+		inventorySkills [13] = new Stack ();
+		Debug.Log ("Finished Loading Inventory");
     }
+
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
         level = 1;
         players = new basePlayer[4];
         enemies = new baseEnemy[4];
+        Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
     }
 
     void Start() {
         initPlayers();
-        initLevel();
+        //initLevel();
         initInventory();
-        
 	}
-
-
 
 	public static void saveGame(){
 		SaveInformation.SaveAllInformation();

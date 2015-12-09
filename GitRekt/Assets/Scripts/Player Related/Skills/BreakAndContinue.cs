@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
+
 
 public class BreakAndContinue : baseSkill {
 	public GameInformation gameInformation;
@@ -17,10 +17,10 @@ public class BreakAndContinue : baseSkill {
 		//Skip a turn then deal damage
 		additionalEffect = new Effect ();
 		additionalEffect.status = Effect.Status.SKIP;
-		additionalEffect.power = 0;
+		additionalEffect.power = 1;
 		additionalEffect.duration = 1;
 		
-		skillLevel = 0;
+		skillLevel = 1;
 		skillExperience = 0;
 		skillCoolDown = 5;
 		skillPower = 0;
@@ -46,24 +46,41 @@ public class BreakAndContinue : baseSkill {
         return 0;
     }
 	
-	public BreakAndContinue(SerializationInfo info, StreamingContext ctxt)
+	public BreakAndContinue(string load)
 	{
+		skillID = 4;
 		skillName = "Break and Continue";
 		skillDescription = "Spends one turn to “charge up” attack, spends next turn launching attack, dealing massive damage.";
+		hasAdditionalEffect = true;
+		targetEnemy = true;
+		targetPlayer = false;
 		
-		skillLevel = (int)info.GetValue("BREAKANDCONTINUE_SKILLEVEL",typeof(int));
-		skillExperience = (int)info.GetValue("BREAKANDCONTINUE_SKILLEXPERIENCE",typeof(int));
-		skillCoolDown = (int)info.GetValue("BREAKANDCONTINUE_SKILLCOOLDOWN",typeof(int));
-		skillPower = (int)info.GetValue("BREAKANDCONTINUE_SKILLPOWER",typeof(int));
+		//define effect
+		//Skip a turn then deal damage
+		additionalEffect = new Effect ();
+		additionalEffect.status = Effect.Status.SKIP;
+		additionalEffect.power = 0;
+		additionalEffect.duration = 1;
+		
+		
+		
+		skillLevel = PlayerPrefs.GetInt("BREAKANDCONTINUE_LEVEL",0);
+		skillExperience = PlayerPrefs.GetInt("BREAKANDCONTINUE_EXPERIENCE",0);
+		skillCoolDown = PlayerPrefs.GetInt("BREAKANDCONTINUE_COOLDOWN",0);
+		skillPower = (double)PlayerPrefs.GetFloat("BREAKANDCONTINUE_POWER",0);
+
+		
+		skillIcon = Resources.Load<Sprite> ("Skill/" + skillName);
 		
 	}
 	
-	public override void 	GetObjectData(SerializationInfo info, StreamingContext context) {
-		info.AddValue("BREAKANDCONTINUE_SKILLLEVEL", skillLevel, typeof(int));
-		info.AddValue("BREAKANDCONTINUE_SKILLEXPERIENCE", skillExperience, typeof(int));
-		info.AddValue("BREAKANDCONTINUE_COOLDOWN", skillCoolDown, typeof(int));
-		info.AddValue("BREAKANDCONTINUE_SKILLPOWER", skillPower, typeof(int));
-		
+	public override void 	saveSkill() {
+
+		PlayerPrefs.SetInt ("BREAKANDCONTINUE_LEVEL", skillLevel);
+		PlayerPrefs.SetInt ("BREAKANDCONTINUE_EXPERIENCE", skillExperience);
+		PlayerPrefs.SetInt ("BREAKANDCONTINUE_COOLDOWN", skillCoolDown);
+		PlayerPrefs.SetFloat ("BREAKANDCONTINUE_POWER", (float)skillPower);
+
 		
 	}
 	

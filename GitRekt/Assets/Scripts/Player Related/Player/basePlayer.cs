@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
-using System.Runtime.Serialization;
 
 
-[System.Serializable] 
-public abstract class basePlayer: MonoBehaviour, ISerializable {
+
+public abstract class basePlayer: MonoBehaviour {
 	public string		name;
 	public int			maxHP;
 	public int			currentHP;
@@ -32,11 +31,28 @@ public abstract class basePlayer: MonoBehaviour, ISerializable {
         DEFENSE,
         SKIP
     }
+
+	public virtual int GetMastery(int i)
+	{
+		switch (i) {
+		case 0:
+			return flowMastery;
+		case 1:
+			return functionMastery;
+		case 2:
+			return datastructureMastery;
+		case 3:
+			return networkMastery;
+		default:
+			return -1;
+		}
+	}
+
     //Battle Members for effects and the such.
     public bool         effected;
     public Status       effect;
     public int          duration;
     public baseSkill effective_skill;
     public abstract basePlayer deepCopy();
-	public abstract void 	GetObjectData(SerializationInfo info, StreamingContext context);
+	public abstract void 	savePlayer();
 }

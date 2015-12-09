@@ -40,6 +40,17 @@ public class GUIManager : MonoBehaviour {
     }
     public static void updateSkill(baseSkill skill) {
         _skill = skill;
+        //Buff Spell Target only Players
+        if (skill.targetPlayer == true && skill.targetEnemy == false)
+        {
+            playerPanel.enableTargetMode();
+            enemyPanel.disableTargetMode();
+        }
+        //Any other spell is considered hostile. Target enemies
+        else {
+            enemyPanel.enableTargetMode();
+            playerPanel.enemyTargetMode();
+        }
     }
     public static void updateTarget(baseEnemy enemy){
         if (_skill != null) {
@@ -47,28 +58,34 @@ public class GUIManager : MonoBehaviour {
             action = true;
             attack = true;  
         }  
-        
     }
     //Load in GUI based on players and enemies
-    public static void loadGUI(basePlayer[] players, baseEnemy[] enemies)
+    public static void loadGUI(basePlayer[] players)
     {
         playerPanel.setPlayerButtons(players);
-        enemyPanel.setEnemyButtons(enemies);
-        Debug.Log("GUI Loaded.");
+        //enemyPanel.setEnemyButtons(enemies);
+        //Debug.Log("GUI Loaded.");
     }
 
     //handle turn and action logic
     public static void endAction() {
         if (_buffUnit != null)
+        {
             playerPanel.endAction(_unit);
+        }
         else
             playerPanel.endAction();
+
+        enemyPanel.endAction();
         action = false;
         attack = false;
         _unit = null;
         _skill = null;
         _buffUnit = null;
         _enemy = null;
+
+        playerPanel.disableTargetMode();
+        enemyPanel.disableTargetMode();
         
     }
     public static void endTurn() { 
@@ -78,8 +95,17 @@ public class GUIManager : MonoBehaviour {
     }
     public static void beginTurn() {
         playerPanel.beginTurn();
+        enemyPanel.disableTargetMode();
     }
-    // Update is called once per frame
-	void Update () {
+    
+    //Death Functions- Basically make sure they cannot be interacted with.
+    public static void deadUnit(basePlayer unit)
+    {
+        playerPanel.fetchPlayerButton(unit).buttonDisable();
+    }
+    public static void deadUnit(baseEnemy unit)
+    {
+        unit.currentHP = -1;
+        enemyPanel.fetchEnemyButton(unit).buttonDisable(); 
     }
 }

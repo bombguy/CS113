@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class CombatStateMachine : MonoBehaviour
 {
     public AI enemy;
@@ -51,10 +50,14 @@ public class CombatStateMachine : MonoBehaviour
             case (CombatStates.PLAYERENEMY):
                 --actions; 
                 StartCoroutine("player_target_enemy");
-                checkWin();
+                goal = checkWin();
                 StartCoroutine("endAction");
                 Debug.Log("ACTIONS : "+ actions);
-                if (actions == 0)
+                if (goal == true) {
+                    Debug.Log("(CSM) PE->GOAL (Win)");
+                    CurrentState = CombatStates.WIN;
+                }
+                else if (actions == 0)
                 {
                     Debug.Log("(CSM) PE->E");
                     BattleManager.endTurn();
@@ -86,6 +89,7 @@ public class CombatStateMachine : MonoBehaviour
                 actions = BattleManager.enemyParty.Count;
                 for (int i = 0; i < actions; ++i )
                     StartCoroutine("enemyTurn");
+                goal = checkLoss();
                 if (goal)
                 {
                     Debug.Log("(CSM) E->GOAL(L)");
@@ -94,6 +98,7 @@ public class CombatStateMachine : MonoBehaviour
                 else
                 {
                     Debug.Log("(CSM) E->ST");
+                    BattleManager.turnCounter++;
                     CurrentState = CombatStates.STARTTURN;
                 }
                  break;
@@ -107,24 +112,40 @@ public class CombatStateMachine : MonoBehaviour
     }
     private void win()
     {
-        //pass back application to map
-        BattleManager.endBattle();
+        for (int i = 0; i < BattleManager.playerParty.Count; ++i)
+        {
+            clearEffect(BattleManager.playerParty[i], BattleManager.playerParty[i].effective_skill);
+            BattleManager.playerParty[i].currentHP = BattleManager.playerParty[i].maxHP;
+        }
+            //pass back application to map
+            BattleManager.endBattle();
     }
     private void loss()
     {
+        for (int i = 0; i < BattleManager.playerParty.Count; ++i)
+        {
+            clearEffect(BattleManager.playerParty[i], BattleManager.playerParty[i].effective_skill);
+            BattleManager.playerParty[i].currentHP = BattleManager.playerParty[i].maxHP;
+        }        
         //pass back application to map
         BattleManager.endBattle();
     }
-    private void checkWin()
+    private bool checkWin()
     {
-        if (BattleManager.enemyParty.Count == 0)
-            goal = true;
-        if (goal)
-        {
-            Debug.Log("(CSM) PE->GOAL(W)");
-            BattleManager.endTurn();
-            CurrentState = CombatStates.WIN;
+        for (int i = 0; i < BattleManager.enemyParty.Count; ++i) {
+            if (BattleManager.enemyParty[i].currentHP > 0)
+            {
+                return false;
+            }
         }
+        return true;
+    }
+    private bool checkLoss() {
+        for (int i = 0; i < BattleManager.enemyParty.Count; ++i) {
+            if (BattleManager.playerParty[i].currentHP > 0)
+                return false;
+        }
+        return true;
     }
     /*
      * Coroutine stops the update function so we can decide what the hell the enemy is doing.
@@ -183,6 +204,7 @@ public class CombatStateMachine : MonoBehaviour
     //Player targeted other player
     IEnumerator player_target_player()
     {
+        Debug.Log(BattleManager._unit.name +" "+ BattleManager._buffTarget.name +" "+BattleManager._skill.skillName);
         switch (BattleManager._unit.effect)
         {
             //All possible states our players can be in
@@ -257,8 +279,9 @@ public class CombatStateMachine : MonoBehaviour
                 if (target.currentHP >= 0)
                     if (!target.effected)
                         applyEffect(target, skill);
-                    else
-                        BattleManager.deadUnit(target);
+                    else { }
+                else
+                    BattleManager.deadUnit(target);
             }
         }
         Debug.Log("Attack Successful");
@@ -282,9 +305,13 @@ public class CombatStateMachine : MonoBehaviour
                 target.currentHP -= skill.cast(unit);
                 if (target.currentHP >= 0)
                     if (!target.effected)
+                    {
                         applyEffect(target, skill);
-                    else
-                        BattleManager.deadUnit(target);
+                    }
+                    else { 
+                    }
+                else
+                    BattleManager.deadUnit(target);
             }
         }
         Debug.Log("Attack Successful");
@@ -376,10 +403,10 @@ public class CombatStateMachine : MonoBehaviour
         else
         {
             target.currentHP -= skill.cast(attacker);
-            if (skill.hasAdditionalEffect)
-                if (target.currentHP <= 0)
-                    BattleManager.deadUnit(target);
-                else if (!target.effected)
+            if (target.currentHP <= 0)
+                BattleManager.deadUnit(target);
+            else if (skill.hasAdditionalEffect)
+                if (!target.effected)
                     applyEffect(target, skill);
         }
     }
@@ -393,10 +420,10 @@ public class CombatStateMachine : MonoBehaviour
         else
         {
             target.currentHP -= skill.cast(attacker);
-            if (skill.hasAdditionalEffect)
-                if (target.currentHP <= 0)
-                    BattleManager.deadUnit(target);
-                else if (!target.effected)
+            if (target.currentHP <= 0)
+                BattleManager.deadUnit(target);
+            else if (skill.hasAdditionalEffect)
+                if (!target.effected)
                     applyEffect(target, skill);
         }
     }
@@ -491,7 +518,7 @@ public class CombatStateMachine : MonoBehaviour
     private void applyEffect(baseEnemy unit, baseSkill skill)
     {
         unit.effect = (baseEnemy.Status)skill.additionalEffect.status;
-        unit.duration = 0;
+        unit.duration = skill.additionalEffect.duration;
         unit.effected = true;
         unit.effective_skill = skill;
     }
